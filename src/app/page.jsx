@@ -1,3 +1,4 @@
+'use client';
 import Image from 'next/image';
 import {
 	ChevronLeft,
@@ -7,10 +8,20 @@ import {
 	Youtube,
 } from 'lucide-react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import ModalLogin from './ui/modals/login';
+import { useState } from 'react';
 
 export default function Home() {
+	const router = useRouter();
+	const [showModal, setShowModal] = useState(false);
+
+	const handleClose = () => {
+		setShowModal(false);
+	};
 	return (
-		<div className='flex flex-col h-full'>
+		<div className='flex flex-col flex-1'>
+			{showModal && <ModalLogin onClose={handleClose} />}
 			<div className='relative flex-1'>
 				<Image
 					src='/placeholder.svg'
@@ -29,7 +40,12 @@ export default function Home() {
 
 			<div className='p-6 flex-1 flex gap-2 '>
 				<div className='flex-1 p-5'>
-					<button className='w-full bg-green-600 text-white py-2 rounded-md font-semibold mb-4'>
+					<button
+						className='w-full bg-green-600 text-white py-2 rounded-md font-semibold mb-4'
+						onClick={() => {
+							setShowModal(true);
+						}}
+					>
 						Iniciar sesión
 					</button>
 					<p className='text-sm flex justify-center gap-2'>

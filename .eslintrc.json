@@ -1,26 +1,26 @@
 {
-  "extends": [
-    "next",
-    "next/core-web-vitals",
-    "eslint:recommended",
-    "plugin:react/recommended",
-    "plugin:prettier/recommended" // Agregamos Prettier aquí
-  ],
-  "plugins": ["react", "prettier"], // Agregamos el plugin de Prettier
-  "parserOptions": {
-    "ecmaVersion": 2020,
-    "sourceType": "module",
-    "ecmaFeatures": {
-      "jsx": true
-    }
-  },
-  "rules": {
-    "prettier/prettier": ["error"], // Prettier como regla de ESLint
-    "semi": ["error", "always"],
-    "quotes": ["error", "single"],
-    "no-unused-vars": ["warn"],
-    "no-console": ["warn"],
-    "react/react-in-jsx-scope": "off",
-    "prefer-arrow-callback": ["warn"]
-  }
+	"extends": [
+		"next",
+		"next/core-web-vitals",
+		"eslint:recommended",
+		"plugin:react/recommended",
+		"plugin:prettier/recommended" // Agregamos Prettier aquí
+	],
+	"plugins": ["react", "prettier"], // Agregamos el plugin de Prettier
+	"parserOptions": {
+		"ecmaVersion": 2020,
+		"sourceType": "module",
+		"ecmaFeatures": {
+			"jsx": true
+		}
+	},
+	"rules": {
+		"prettier/prettier": ["error"], // Prettier como regla de ESLint
+		"semi": ["error", "always"],
+		"quotes": ["error", "single"],
+		"no-unused-vars": ["warn"],
+		"no-console": ["warn"],
+		"react/react-in-jsx-scope": "off",
+		"prefer-arrow-callback": ["warn"]
+	}
 }

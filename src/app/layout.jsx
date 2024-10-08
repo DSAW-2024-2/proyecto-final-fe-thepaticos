@@ -29,7 +29,7 @@ export default function RootLayout({ children }) {
 					<header className='sticky top-0'>
 						<NavBar />
 					</header>
-					<main className='bg-white flex-1'>{children}</main>
+					<main className='bg-white flex-1 flex'>{children}</main>
 					<Footer />
 				</div>
 			</body>

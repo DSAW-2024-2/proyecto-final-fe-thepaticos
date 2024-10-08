@@ -1,13 +1,14 @@
 'use client';
 import React, { useState } from 'react';
 
-export default function RegistrationForm() {
+export default function RegisterForm() {
 	const [formData, setFormData] = useState({
 		nombre: '',
 		apellido: '',
 		correo: '',
 		id: '',
 		contacto: '',
+		contraseña: '',
 	});
 
 	const [errors, setErrors] = useState({
@@ -16,6 +17,7 @@ export default function RegistrationForm() {
 		correo: '',
 		id: '',
 		contacto: '',
+		contraseña: '',
 	});
 
 	const handleInputChange = (e) => {
@@ -53,34 +55,36 @@ export default function RegistrationForm() {
 			onSubmit={handleSubmit}
 			className='max-w-md mx-auto mt-6 p-4 border rounded-lg'
 		>
-			{['nombre', 'apellido', 'correo', 'id', 'contacto'].map((field) => (
-				<div key={field} className='mb-4'>
-					<label
-						htmlFor={field}
-						className='block text-gray-700 mb-2 capitalize'
-					>
-						{field}
-					</label>
-					<input
-						type='text'
-						id={field}
-						name={field}
-						placeholder={`e.j: ${
-							field === 'correo'
-								? 'ejemplo@unisabana.edu.co'
-								: field === 'contacto'
-								? '312 456 7890'
-								: ''
-						}`}
-						value={formData[field]}
-						onChange={handleInputChange}
-						className='w-full px-3 py-2 border rounded-lg'
-					/>
-					{errors[field] && (
-						<p className='text-red-500 text-sm mt-1'>*{errors[field]}</p>
-					)}
-				</div>
-			))}
+			{['nombre', 'apellido', 'correo', 'id', 'contacto', 'contraseña'].map(
+				(field) => (
+					<div key={field} className='mb-4'>
+						<label
+							htmlFor={field}
+							className='block text-gray-700 mb-2 capitalize'
+						>
+							{field}
+						</label>
+						<input
+							type='text'
+							id={field}
+							name={field}
+							placeholder={`e.j: ${
+								field === 'correo'
+									? 'ejemplo@unisabana.edu.co'
+									: field === 'contacto'
+									? '312 456 7890'
+									: ''
+							}`}
+							value={formData[field]}
+							onChange={handleInputChange}
+							className='w-full px-3 py-2 border rounded-lg'
+						/>
+						{errors[field] && (
+							<p className='text-red-500 text-sm mt-1'>*{errors[field]}</p>
+						)}
+					</div>
+				)
+			)}
 
 			<button
 				type='submit'
