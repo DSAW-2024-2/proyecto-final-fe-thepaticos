@@ -1,12 +1,6 @@
 'use client';
 import Image from 'next/image';
-import {
-	ChevronLeft,
-	ChevronRight,
-	Facebook,
-	Instagram,
-	Youtube,
-} from 'lucide-react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import ModalLogin from './ui/modals/login';
