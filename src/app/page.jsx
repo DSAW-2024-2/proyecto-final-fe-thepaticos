@@ -20,11 +20,11 @@ export default function Home() {
 		setShowModal(false);
 	};
 	return (
-		<div className='flex flex-col flex-1'>
+		<div className='flex flex-col '>
 			{showModal && <ModalLogin onClose={handleClose} />}
-			<div className='relative flex-1'>
+			<div className='shadow-xl'>
 				<Image
-					src='/placeholder.svg'
+					src='/favicon.ico'
 					alt='Modern university building'
 					width={400}
 					height={200}
@@ -38,8 +38,8 @@ export default function Home() {
 				</button>
 			</div>
 
-			<div className='p-6 flex-1 flex gap-2 '>
-				<div className='flex-1 p-5'>
+			<div className='p-6 flex gap-2 '>
+				<div className='p-5'>
 					<button
 						className='w-full bg-green-600 text-white py-2 rounded-md font-semibold mb-4'
 						onClick={() => {
@@ -55,7 +55,7 @@ export default function Home() {
 						</Link>
 					</p>
 				</div>
-				<p className='flex-1'>
+				<p className='flex'>
 					Conecta con tus compañeros y vive viajes inolvidables. Tu comunidad
 					universitaria viaja contigo...
 				</p>
