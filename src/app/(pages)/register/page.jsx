@@ -1,5 +1,5 @@
 'use client';
-import { useAuth } from '@/app/contexts/sessionContext';
+import { Auth } from '@/app/helpers/api/auth';
 import { userRegSchema } from '@/app/helpers/validators';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { isAxiosError } from 'axios';
@@ -9,7 +9,6 @@ import { useRouter } from 'next/navigation';
 
 export default function Page() {
 	const router = useRouter();
-	const { signup } = useAuth();
 	const {
 		register,
 		handleSubmit,
@@ -20,7 +19,7 @@ export default function Page() {
 
 	const onSubmit = async (data) => {
 		try {
-			await signup(data);
+			await Auth.signup(data);
 			Swal.fire({
 				title: 'Excelente!',
 				text: 'Usuario Registrado Correctamente',
@@ -31,7 +30,7 @@ export default function Page() {
 			if (isAxiosError(error)) {
 				Swal.fire({
 					title: 'Error!',
-					text: error.response.data.message,
+					text: error.response.data.message_error,
 					icon: 'error',
 				});
 			} else {
