@@ -1,20 +1,26 @@
 'use client';
 import Image from 'next/image';
-import {
-	ChevronLeft,
-	ChevronRight,
-	Facebook,
-	Instagram,
-	Youtube,
-} from 'lucide-react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import ModalLogin from './ui/modals/login';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import Swal from 'sweetalert2';
 
 export default function Home() {
-	const router = useRouter();
+	const searchParams = useSearchParams();
+	const message = searchParams.get('message');
 	const [showModal, setShowModal] = useState(false);
+
+	useEffect(() => {
+		if (message === 'loginRequired') {
+			Swal.fire({
+				title: 'Error!',
+				text: 'Debes iniciar sesión primero',
+				icon: 'error',
+			});
+		}
+	}, [message]);
 
 	const handleClose = () => {
 		setShowModal(false);
