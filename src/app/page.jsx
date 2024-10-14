@@ -43,7 +43,7 @@ export default function Home() {
 				<Image
 					src={carousel[currentIndex]}
 					alt='Modern university building'
-					className='w-full h-48 object-cover'
+					className='w-full h-48 object-cover shadow-lg'
 				/>
 				<button className='absolute left-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white rounded-full p-1'>
 					<ChevronLeft size={24} onClick={()=>{changeImage(currentIndex-1)}}/>
@@ -53,24 +53,24 @@ export default function Home() {
 				</button>
 			</div>
 
-			<div className='p-6 flex-1 flex gap-2 '>
-				<div className='flex-1 p-5'>
+			<div className='p-4 flex-1 flex gap-2 '>
+				<div className='flex-1 p-1'>
 					<button
-						className='w-full bg-green-600 text-white py-2 rounded-md font-semibold mb-4'
+						className='bg-[#028747] p-3 w-full text-white rounded-md font-semibold mb-3'
 						onClick={() => {
 							setShowModal(true);
 						}}
 					>
 						Iniciar sesión
 					</button>
-					<p className='text-sm flex justify-center gap-2'>
+					<p className='w-full min-w-40 text-xs flex justify-center gap-2'>
 						No tienes cuenta?
 						<Link href='/register' className='text-blue-500'>
 							Crea una
 						</Link>
 					</p>
 				</div>
-				<p className='flex-1'>
+				<p className='flex-1 text-sm'>
 					Conecta con tus compañeros y vive viajes inolvidables. Tu comunidad
 					universitaria viaja contigo...
 				</p>

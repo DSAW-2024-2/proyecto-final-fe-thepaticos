@@ -10,7 +10,7 @@ export default function Main({ children }) {
 			<header className='sticky top-0 z-10'>
 				<NavBar />
 			</header>
-			<main className='bg-white flex-1 flex'>{children}</main>
+			<main className='bg-white flex-1 flex justify-center items-center'>{children}</main>
 			<Footer />
 		</AuthProvider>
 	);

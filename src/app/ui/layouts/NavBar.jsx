@@ -1,14 +1,25 @@
 import { useAuth } from '@/app/contexts/sessionContext';
-import { Menu } from 'lucide-react';
+import { Link, Menu } from 'lucide-react';
+import Image from 'next/image';
+import logo from '/public/images/logo.png';
 
 import ProfilePhoto from '../components/navbar/profilePhoto';
+import next from 'next';
 
 export default function NavBar() {
 	const { user, signout } = useAuth();
 	return (
-		<div className='bg-green-600 text-white text-center p-4 text-2xl font-bold flex flex-row justify-between'>
+		<div className='bg-[#028747] text-white p-4 flex justify-center items-center'>
 			{user && <Menu />}
-			<div>WHEEL US</div>
+			<div className='flex justify-center items-center gap-3 font-semibold text-4xl'>
+				<Image 
+					src = {logo}
+					alt = 'Logo Wheel US'
+					width = {33}
+					height={33}
+				/>
+				WHEEL US
+			</div>
 			{user && <ProfilePhoto signout={signout} />}
 		</div>
 	);
