@@ -17,7 +17,7 @@ export class Auth {
 	static async signup(data) {
 		const formData = new FormData();
 		for (const key in data) {
-			if (data.hasOwnProperty(key)) {
+			if (key in data) {
 				formData.append(key, data[key]);
 			}
 		}
