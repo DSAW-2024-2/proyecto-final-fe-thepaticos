@@ -1,6 +1,7 @@
 import localFont from 'next/font/local';
 import './globals.css';
 import Main from './ui/layouts/Main';
+import { Suspense } from 'react';
 
 const geistSans = localFont({
 	src: './fonts/GeistVF.woff',
@@ -25,7 +26,9 @@ export default function RootLayout({ children }) {
 				className={`${geistSans.variable} ${geistMono.variable} antialiased`}
 			>
 				<div className='min-h-screen flex flex-col justify-between'>
-					<Main>{children}</Main>
+					<Main>
+						<Suspense fallback={<div>Cargando...</div>}>{children}</Suspense>
+					</Main>
 				</div>
 			</body>
 		</html>
