@@ -1,7 +1,3 @@
-import React from 'react'
-
 export default function page() {
-  return (
-    <div>DashBoard</div>
-  )
+	return <div>DashBoard</div>;
 }

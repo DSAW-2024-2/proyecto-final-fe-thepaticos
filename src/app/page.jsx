@@ -1,14 +1,11 @@
 'use client';
-import Image from 'next/image';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { Suspense, useState } from 'react';
 import ModalLogin from './ui/modals/login';
-import { useState } from 'react';
-import { Suspense } from 'react';
 
 export default function Home() {
-	const router = useRouter();
 	const [showModal, setShowModal] = useState(false);
 
 	const handleClose = () => {

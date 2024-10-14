@@ -4,7 +4,7 @@
 		"next/core-web-vitals",
 		"eslint:recommended",
 		"plugin:react/recommended",
-		"plugin:prettier/recommended"
+		"prettier"
 	],
 	"plugins": ["react", "prettier"],
 	"parserOptions": {
@@ -15,12 +15,13 @@
 		}
 	},
 	"rules": {
-		"prettier/prettier": ["error"], // Prettier como regla de ESLint
 		"semi": ["error", "always"],
 		"quotes": ["error", "single"],
 		"no-unused-vars": ["warn"],
 		"no-console": ["warn"],
 		"react/react-in-jsx-scope": "off",
-		"prefer-arrow-callback": ["warn"]
+		"prefer-arrow-callback": ["warn"],
+		"react/no-unescaped-entities": "off",
+		"@next/next/no-page-custom-font": "off"
 	}
 }

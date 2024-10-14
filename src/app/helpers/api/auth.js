@@ -5,18 +5,14 @@ const api = axios.create({
 });
 export class Auth {
 	static async signin({ email, password }) {
-		try {
-			const config = {
-				headers: {
-					'Content-Type': 'application/json',
-				},
-			};
-			const body = JSON.stringify({ email, password });
-			const res = await api.post('/auth/login', body, config);
-			return res.data.accessToken;
-		} catch (error) {
-			throw error;
-		}
+		const config = {
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		};
+		const body = JSON.stringify({ email, password });
+		const res = await api.post('/auth/login', body, config);
+		return res.data.accessToken;
 	}
 	static async signup(data) {
 		const formData = new FormData();
@@ -30,11 +26,7 @@ export class Auth {
 				'Content-Type': 'multipart/form-data',
 			},
 		};
-		try {
-			const res = await api.post('/auth/register', formData, config);
-			return res.data.accessToken;
-		} catch (error) {
-			throw error;
-		}
+		const res = await api.post('/auth/register', formData, config);
+		return res.data.accessToken;
 	}
 }

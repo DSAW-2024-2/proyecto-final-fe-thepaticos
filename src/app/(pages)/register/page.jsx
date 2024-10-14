@@ -67,8 +67,8 @@ export default function Page() {
 								field === 'email'
 									? 'ejemplo@unisabana.edu.co'
 									: field === 'contact'
-									? '312 456 7890'
-									: ''
+										? '312 456 7890'
+										: ''
 							}`}
 							className='w-full px-3 py-2 border rounded-lg'
 						/>
