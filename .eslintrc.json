@@ -3,10 +3,9 @@
 		"next",
 		"next/core-web-vitals",
 		"eslint:recommended",
-		"plugin:react/recommended",
-		"plugin:prettier/recommended" // Agregamos Prettier aquí
+		"plugin:react/recommended"
 	],
-	"plugins": ["react", "prettier"], // Agregamos el plugin de Prettier
+	"plugins": ["react"], // Agregamos el plugin de Prettier
 	"parserOptions": {
 		"ecmaVersion": 2020,
 		"sourceType": "module",

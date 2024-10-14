@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import ModalLogin from './ui/modals/login';
 import { useState } from 'react';
+import { Suspense } from 'react';
 
 export default function Home() {
 	const router = useRouter();
