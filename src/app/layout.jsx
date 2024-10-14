@@ -22,14 +22,12 @@ export const metadata = {
 export default function RootLayout({ children }) {
 	return (
 		<html lang='en'>
-			<body
-				className={`w-full ${geistSans.variable} ${geistMono.variable} antialiased`}
-			>
-				<div className='min-h-screen flex flex-col justify-between'>
-					<header className='sticky top-0'>
+			<body className={`w-full ${geistSans.variable} ${geistMono.variable}`}>
+				<div className='w-full flex flex-col justify-between'>
+					<header className='w-full'>
 						<NavBar></NavBar>
 					</header>
-					<main className='bg-white w-[320px] flex'>{children}</main>
+					<main className='w-full bg-white flex'>{children}</main>
 					<Footer />
 				</div>
 			</body>
