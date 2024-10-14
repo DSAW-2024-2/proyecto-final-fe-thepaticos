@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
+import { Auth } from '../helpers/api/auth';
 
 const AuthContext = createContext();
 
@@ -15,10 +16,21 @@ export const AuthProvider = ({ children }) => {
 			setUser({ token }); // Ajusta según la estructura de tu usuario
 		}
 	}, []);
+	const signup = async (data) => {
+		const token = await Auth.signup(data);
+		Cookies.set('authToken', token, {
+			path: '/',
+			sameSite: 'Strict',
+		});
+		setUser({ token }); // Ajusta según la estructura de tu usuario
+	};
 
 	const signin = async (email, password) => {
-		// Aquí llamas a tu función signin para obtener el token
 		const token = await Auth.signin({ email, password });
+		Cookies.set('authToken', token, {
+			path: '/',
+			sameSite: 'Strict',
+		});
 		setUser({ token }); // Ajusta según la estructura de tu usuario
 	};
 
@@ -29,7 +41,7 @@ export const AuthProvider = ({ children }) => {
 	};
 
 	return (
-		<AuthContext.Provider value={{ user, signin, signout }}>
+		<AuthContext.Provider value={{ user, signin, signout, signup }}>
 			{children}
 		</AuthContext.Provider>
 	);

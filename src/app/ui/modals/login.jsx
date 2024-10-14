@@ -3,8 +3,10 @@ import { isAxiosError } from 'axios';
 import { ChevronLeft } from 'lucide-react';
 import Swal from 'sweetalert2';
 import { useRouter } from 'next/navigation';
+import { useAuth } from '@/app/contexts/sessionContext';
 
 export default function ModalLogin({ onClose }) {
+	const { user, signout, signin } = useAuth();
 	const router = useRouter();
 
 	const onSubmit = async (event) => {
@@ -13,7 +15,7 @@ export default function ModalLogin({ onClose }) {
 		const email = formData.get('email');
 		const password = formData.get('password');
 		try {
-			await Auth.signin({ email, password });
+			await signin(email, password);
 			Swal.fire({
 				title: 'Excelente!',
 				text: 'Usuario Logueado Correctamente',
@@ -22,6 +24,8 @@ export default function ModalLogin({ onClose }) {
 				router.push('/dashboard');
 			});
 		} catch (error) {
+			
+
 			if (isAxiosError(error)) {
 				Swal.fire({
 					title: 'Error!',

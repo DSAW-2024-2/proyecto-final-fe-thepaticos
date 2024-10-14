@@ -1,5 +1,4 @@
 import axios from 'axios';
-import Cookies from 'js-cookie';
 
 const api = axios.create({
 	baseURL: 'https://proyecto-final-be-thepaticos.vercel.app',
@@ -14,10 +13,6 @@ export class Auth {
 			};
 			const body = JSON.stringify({ email, password });
 			const res = await api.post('/auth/login', body, config);
-			Cookies.set('authToken', res.data.accessToken, {
-				path: '/',
-				sameSite: 'Strict',
-			});
 			return res.data.accessToken;
 		} catch (error) {
 			throw error;
@@ -37,10 +32,6 @@ export class Auth {
 		};
 		try {
 			const res = await api.post('/auth/register', formData, config);
-			Cookies.set('authToken', res.data.accessToken, {
-				path: '/',
-				sameSite: 'Strict',
-			});
 			return res.data.accessToken;
 		} catch (error) {
 			throw error;
