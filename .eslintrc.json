@@ -6,7 +6,7 @@
 		"plugin:react/recommended",
 		"plugin:prettier/recommended" // Agregamos Prettier aquí
 	],
-	"plugins": ["react", "prettier"], // Agregamos el plugin de Prettier
+	"plugins": ["react"], // Agregamos el plugin de Prettier
 	"parserOptions": {
 		"ecmaVersion": 2020,
 		"sourceType": "module",
