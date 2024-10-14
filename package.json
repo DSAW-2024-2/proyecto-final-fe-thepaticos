@@ -1,33 +1,33 @@
 {
-  "name": "proyecto-final-fe-thepaticos",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
-  },
-  "dependencies": {
-    "@hookform/resolvers": "^3.9.0",
-    "axios": "^1.7.7",
-    "js-cookie": "^3.0.5",
-    "lucide-react": "^0.447.0",
-    "next": "14.2.14",
-    "next-auth": "^5.0.0-beta.22",
-    "react": "^18",
-    "react-dom": "^18",
-    "react-hook-form": "^7.53.0",
-    "sweetalert2": "^11.14.3",
-    "zod": "^3.23.8"
-  },
-  "devDependencies": {
-    "eslint": "^8",
-    "eslint-config-next": "14.2.14",
-    "eslint-config-prettier": "^9.1.0",
-    "eslint-plugin-prettier": "^5.2.1",
-    "postcss": "^8",
-    "prettier": "^3.3.3",
-    "tailwindcss": "^3.4.1"
-  }
+	"name": "proyecto-final-fe-thepaticos",
+	"version": "0.1.0",
+	"private": true,
+	"scripts": {
+		"dev": "next dev",
+		"build": "next build",
+		"start": "next start",
+		"lint": "next lint"
+	},
+	"dependencies": {
+		"@hookform/resolvers": "^3.9.0",
+		"axios": "^1.7.7",
+		"js-cookie": "^3.0.5",
+		"lucide-react": "^0.447.0",
+		"next": "14.2.14",
+		"next-auth": "^5.0.0-beta.22",
+		"react": "^18",
+		"react-dom": "^18",
+		"react-hook-form": "^7.53.0",
+		"sweetalert2": "^11.14.3",
+		"zod": "^3.23.8"
+	},
+	"devDependencies": {
+		"eslint": "^8",
+		"eslint-config-next": "14.2.14",
+		"eslint-config-prettier": "^9.1.0",
+		"eslint-plugin-prettier": "^5.2.1",
+		"postcss": "^8",
+		"prettier": "^3.3.3",
+		"tailwindcss": "^3.4.1"
+	}
 }

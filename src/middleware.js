@@ -8,7 +8,6 @@ export function middleware(req) {
 	if (url.startsWith('/_next') || url.startsWith('/static')) {
 		return NextResponse.next();
 	}
-
 	// Permitir el acceso a '/' y '/register' sin autenticación
 	if (url === '/' || url.startsWith('/register')) {
 		return NextResponse.next();
