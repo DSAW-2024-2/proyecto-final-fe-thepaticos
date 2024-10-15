@@ -37,7 +37,7 @@ export default function Home() {
 	  };
 
 	return (
-		<div className='flex flex-col flex-1'>
+		<div className='flex flex-col w-full'>
 			{showModal && <ModalLogin onClose={handleClose} />}
 			<div className='relative flex-1'>
 				<Image
@@ -53,24 +53,24 @@ export default function Home() {
 				</button>
 			</div>
 
-			<div className='p-4 flex-1 flex gap-2 '>
-				<div className='flex-1 p-1'>
+			<div className='p-4 flex gap-2 justify-end items-start'>
+				<div className='flex flex-col p-1 w-1/2 justify-end items-center'>
 					<button
-						className='bg-[#028747] p-3 w-full text-white rounded-md font-semibold mb-3'
+						className='bg-[#028747] p-3 w-full max-w-[360px] text-white rounded-md font-semibold mb-3 text-base sm:text-2xl'
 						onClick={() => {
 							setShowModal(true);
 						}}
 					>
 						Iniciar sesión
 					</button>
-					<p className='w-full min-w-40 text-xs flex justify-center gap-2'>
+					<p className='w-full min-w-40 text-xs sm:text-lg flex justify-center gap-2'>
 						No tienes cuenta?
 						<Link href='/register' className='text-blue-500'>
 							Crea una
 						</Link>
 					</p>
 				</div>
-				<p className='flex-1 text-sm'>
+				<p className='flex text-sm sm:text-2xl w-full'>
 					Conecta con tus compañeros y vive viajes inolvidables. Tu comunidad
 					universitaria viaja contigo...
 				</p>
