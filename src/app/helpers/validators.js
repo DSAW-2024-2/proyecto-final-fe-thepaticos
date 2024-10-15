@@ -1,12 +1,12 @@
 import { z } from 'zod';
 const ACCEPTED_IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/gif'];
 export const userRegSchema = z.object({
-	name: z
+	nombre: z
 		.string()
 		.min(1, 'Espacio requerido')
 		.regex(/^[a-zA-Z]+$/, 'Debe contener solo letras')
 		.trim(),
-	lastname: z
+	apellido: z
 		.string()
 		.min(1, 'Espacio requerido')
 		.regex(/^[a-zA-Z]+$/, 'Debe contener solo letras')
@@ -22,8 +22,8 @@ export const userRegSchema = z.object({
 			/@unisabana\.edu\.co$/,
 			'Debe ser un correo institucional de la Universidad de la Sabana'
 		),
-	password: z.string().min(6, 'Debe contener por lo menos 6 caracteres'),
-	contact: z.string().regex(/^\d/, 'Debe contener solo numeros').min(10),
+	contraseña: z.string().min(6, 'Debe contener por lo menos 6 caracteres'),
+	contacto: z.string().regex(/^\d/, 'Debe contener solo numeros').min(10),
 	photo: z
 		.any()
 		.optional()
