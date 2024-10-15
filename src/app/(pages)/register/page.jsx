@@ -97,6 +97,6 @@ export default function Page() {
 			>
 				Registrarse
 			</button>
-		</form>
+		</>
 	);
 }
