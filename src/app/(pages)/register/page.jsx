@@ -52,7 +52,7 @@ export default function Page() {
 			encType='multipart/form-data'
 		>
 			<a className='text-gray-400 hover:text-gray-800 flex mb-5' href='/'>
-						<ChevronLeft /> Volver
+				<ChevronLeft /> Volver
 			</a>
 			{['nombre', 'apellido', 'email', 'id', 'contacto', 'contraseña'].map(
 				(field) => (

@@ -10,12 +10,13 @@ export default function Footer() {
 				<Youtube size={30} />
 			</div>
 			<div className='text-lg flex gap-2 font-semibold'>
-			<Image
+				<Image
 					src={logo}
 					alt='Logo Wheel US'
 					className='w-[25px] h-[25px] sm:w-[30px] sm:h-[30px]'
 				/>
-			WHEEL US</div>
+				WHEEL US
+			</div>
 		</div>
 	);
 }

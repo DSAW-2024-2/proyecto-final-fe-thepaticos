@@ -75,7 +75,10 @@ export default function Home() {
 					</button>
 					<p className='w-full min-w-40 text-xs sm:text-lg flex justify-center gap-2'>
 						No tienes cuenta?
-						<Link href='/register' className='text-blue-400 hover:text-blue-900 font-semibold'>
+						<Link
+							href='/register'
+							className='text-blue-400 hover:text-blue-900 font-semibold'
+						>
 							Crea una
 						</Link>
 					</p>

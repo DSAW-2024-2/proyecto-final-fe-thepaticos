@@ -51,7 +51,10 @@ export default function ModalLogin({ onClose }) {
 					className='flex flex-col bg-white w-auto rounded-lg'
 					encType='multipart/form-data'
 				>
-					<button className='text-gray-400 hover:text-gray-800 flex py-3 px-1' onClick={onClose}>
+					<button
+						className='text-gray-400 hover:text-gray-800 flex py-3 px-1'
+						onClick={onClose}
+					>
 						<ChevronLeft /> Volver
 					</button>
 					<section className='p-4 w-auto flex flex-col gap-4'>
