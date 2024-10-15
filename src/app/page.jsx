@@ -73,7 +73,7 @@ export default function Home() {
 					>
 						Iniciar Sesión
 					</button>
-					<p className='w-full min-w-40 text-xs sm:text-xl flex justify-center gap-2'>
+					<p className='min-w-60 text-xs sm:text-xl flex justify-center gap-2'>
 						No tienes cuenta?
 						<Link
 							href='/register'
