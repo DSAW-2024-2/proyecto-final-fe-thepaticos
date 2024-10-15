@@ -51,7 +51,7 @@ export default function ModalLogin({ onClose }) {
 					className='flex flex-col bg-white w-auto rounded-lg'
 					encType='multipart/form-data'
 				>
-					<button className='text-gray-400 flex py-3 px-1' onClick={onClose}>
+					<button className='text-gray-400 hover:text-gray-800 flex py-3 px-1' onClick={onClose}>
 						<ChevronLeft /> Volver
 					</button>
 					<section className='p-4 w-auto flex flex-col gap-4'>
@@ -87,7 +87,7 @@ export default function ModalLogin({ onClose }) {
 						</div>
 						<button
 							type='submit'
-							className='w-full bg-green-600 text-white py-2 rounded-md font-semibold mt-4'
+							className='w-full bg-[#028747] hover:bg-[#025C31] text-white py-2 rounded-md font-semibold mt-4'
 						>
 							Iniciar Sesión
 						</button>

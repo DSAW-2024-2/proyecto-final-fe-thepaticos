@@ -3,6 +3,7 @@ import { useAuth } from '@/app/contexts/sessionContext';
 import { userRegSchema } from '@/app/helpers/validators';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { isAxiosError } from 'axios';
+import { ChevronLeft, Link } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import Swal from 'sweetalert2';
 import { useRouter } from 'next/navigation';
@@ -50,6 +51,9 @@ export default function Page() {
 			className='w-full max-w-[600px] p-4 m-10 border rounded-lg shadow-lg'
 			encType='multipart/form-data'
 		>
+			<a className='text-gray-400 hover:text-gray-800 flex mb-5' href='/'>
+						<ChevronLeft /> Volver
+			</a>
 			{['nombre', 'apellido', 'email', 'id', 'contacto', 'contraseña'].map(
 				(field) => (
 					<div key={field} className='mb-4'>

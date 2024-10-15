@@ -9,7 +9,7 @@ import next from 'next';
 export default function NavBar() {
 	const { user, signout } = useAuth();
 	return (
-		<div className='bg-[#028747] text-white p-4 flex justify-center items-center'>
+		<div className='bg-[#028747] text-white p-4 flex justify-center items-center shadow-lime-950 shadow-md'>
 			{user && <Menu />}
 			<div className='flex justify-center items-center gap-3 font-semibold text-4xl sm:text-6xl'>
 				<Image
