@@ -57,7 +57,7 @@ export default function Page() {
 							htmlFor={field}
 							className='block text-gray-700 mb-2 capitalize'
 						>
-							{field.charAt(0).toUpperCase()+field.slice(1)}
+							{field.charAt(0).toUpperCase() + field.slice(1)}
 						</label>
 						<input
 							type='text'
@@ -69,14 +69,14 @@ export default function Page() {
 									: field === 'contacto'
 										? '312 456 7890'
 										: field === 'nombre'
-										? 'Pepito'
-										: field === 'apellido'
-										? 'Pérez'
-										: field === 'id'
-										? '123456'
-										: field === 'contraseña'
-										? 'P@ssWord_123'
-										:''
+											? 'Pepito'
+											: field === 'apellido'
+												? 'Pérez'
+												: field === 'id'
+													? '123456'
+													: field === 'contraseña'
+														? 'P@ssWord_123'
+														: ''
 							}`}
 							className='w-full px-3 py-2 border rounded-lg'
 						/>

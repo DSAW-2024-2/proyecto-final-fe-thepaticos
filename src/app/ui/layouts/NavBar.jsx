@@ -12,9 +12,9 @@ export default function NavBar() {
 		<div className='bg-[#028747] text-white p-4 flex justify-center items-center'>
 			{user && <Menu />}
 			<div className='flex justify-center items-center gap-3 font-semibold text-4xl sm:text-6xl'>
-				<Image 
-					src = {logo}
-					alt = 'Logo Wheel US'
+				<Image
+					src={logo}
+					alt='Logo Wheel US'
 					className='w-[33px] h-[33px] sm:w-[64px] sm:h-[64px]'
 				/>
 				WHEEL US

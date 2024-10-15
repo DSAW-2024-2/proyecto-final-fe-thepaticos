@@ -51,49 +51,46 @@ export default function ModalLogin({ onClose }) {
 					className='flex flex-col bg-white w-auto rounded-lg'
 					encType='multipart/form-data'
 				>
-				<button
-					className='text-gray-400 flex py-3 px-1'
-					onClick={onClose}
-				>
-					<ChevronLeft /> Volver
-				</button>
-				<section className='p-4 w-auto flex flex-col gap-4'>
-					<div className='w-auto'>
-						<label
-							htmlFor='email'
-							className='block text-gray-700 mb-2 capitalize'
-						>
-							Email
-						</label>
-						<input
-							type='text'
-							id='email'
-							name='email'
-							placeholder='ejemplo@unisabana.edu.co'
-							className='w-auto min-w-[250px] px-3 py-2 border rounded-lg'
-						/>
-					</div>
-					<div className='w-auto'>
-						<label
-							htmlFor='password'
-							className='block text-gray-700 mb-2 capitalize'
-						>
-							Password
-						</label>
-						<input
-							type='text'
-							name='password'
-							id='password'
-							placeholder='ej: P@assWord_123'
-							className='w-full px-3 py-2 border rounded-lg'
-						/>
-					</div>
-					<button
-						type='submit'
-						className='w-full bg-green-600 text-white py-2 rounded-md font-semibold mt-4'
-					>
-						Iniciar Sesión
+					<button className='text-gray-400 flex py-3 px-1' onClick={onClose}>
+						<ChevronLeft /> Volver
 					</button>
+					<section className='p-4 w-auto flex flex-col gap-4'>
+						<div className='w-auto'>
+							<label
+								htmlFor='email'
+								className='block text-gray-700 mb-2 capitalize'
+							>
+								Email
+							</label>
+							<input
+								type='text'
+								id='email'
+								name='email'
+								placeholder='ejemplo@unisabana.edu.co'
+								className='w-auto min-w-[250px] px-3 py-2 border rounded-lg'
+							/>
+						</div>
+						<div className='w-auto'>
+							<label
+								htmlFor='password'
+								className='block text-gray-700 mb-2 capitalize'
+							>
+								Password
+							</label>
+							<input
+								type='text'
+								name='password'
+								id='password'
+								placeholder='ej: P@assWord_123'
+								className='w-full px-3 py-2 border rounded-lg'
+							/>
+						</div>
+						<button
+							type='submit'
+							className='w-full bg-green-600 text-white py-2 rounded-md font-semibold mt-4'
+						>
+							Iniciar Sesión
+						</button>
 					</section>
 				</form>
 			</div>
