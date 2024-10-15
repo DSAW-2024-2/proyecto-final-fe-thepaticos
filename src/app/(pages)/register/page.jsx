@@ -18,6 +18,16 @@ export default function Page() {
 	} = useForm({
 		resolver: zodResolver(userRegSchema),
 	});
+	const errorsMes = (err) => {
+		let errorMessage;
+		for (const field in err) {
+			if (err[field]._errors) {
+				const fieldErrors = err[field]._errors.join(', ');
+				errorMessage += `\n${field}: ${fieldErrors}`;
+			}
+		}
+		return errorMessage;
+	};
 
 	const onSubmit = async (data) => {
 		try {
@@ -29,10 +39,15 @@ export default function Page() {
 			});
 			router.push('/');
 		} catch (error) {
+			let validateErros = '';
+			if (error.response.data.errors) {
+				validateErros = errorsMes(error.response.data.errors);
+			}
+
 			if (isAxiosError(error)) {
 				Swal.fire({
 					title: 'Error!',
-					text: error.response.data.message,
+					text: `${error.response.data.message} ${validateErros}`,
 					icon: 'error',
 				});
 			} else {
@@ -54,14 +69,26 @@ export default function Page() {
 			<a className='text-gray-400 hover:text-gray-800 flex mb-5' href='/'>
 				<ChevronLeft /> Volver
 			</a>
-			{['nombre', 'apellido', 'email', 'id', 'contacto', 'contraseña'].map(
+			{['name', 'lastname', 'email', 'id', 'contact', 'password'].map(
 				(field) => (
 					<div key={field} className='mb-4'>
 						<label
 							htmlFor={field}
 							className='block text-gray-700 mb-2 capitalize'
 						>
-							{field.charAt(0).toUpperCase() + field.slice(1)}
+							{field === 'email'
+								? 'Email'
+								: field === 'contact'
+									? 'Contact'
+									: field === 'name'
+										? 'Nombre'
+										: field === 'lastname'
+											? 'Apellido'
+											: field === 'id'
+												? 'Id'
+												: field === 'password'
+													? 'Contraseña'
+													: ''}
 						</label>
 						<input
 							type='text'
@@ -70,15 +97,15 @@ export default function Page() {
 							placeholder={`e.j: ${
 								field === 'email'
 									? 'ejemplo@unisabana.edu.co'
-									: field === 'contacto'
+									: field === 'contact'
 										? '312 456 7890'
-										: field === 'nombre'
+										: field === 'name'
 											? 'Pepito'
-											: field === 'apellido'
+											: field === 'lastname'
 												? 'Pérez'
 												: field === 'id'
 													? '123456'
-													: field === 'contraseña'
+													: field === 'password'
 														? 'P@ssWord_123'
 														: ''
 							}`}
