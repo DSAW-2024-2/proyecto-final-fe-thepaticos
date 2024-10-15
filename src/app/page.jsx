@@ -66,14 +66,14 @@ export default function Home() {
 			<div className='p-4 flex gap-2 justify-end items-start'>
 				<div className='flex flex-col p-1 w-1/2 justify-end items-center'>
 					<button
-						className='bg-[#028747] p-3 w-full max-w-[360px] text-white rounded-md font-semibold mb-3 text-base sm:text-2xl hover:bg-[#025C31]'
+						className='bg-[#028747] p-3 w-full max-w-[360px] text-white rounded-md font-semibold mb-3 text-base sm:text-3xl hover:bg-[#025C31]'
 						onClick={() => {
 							setShowModal(true);
 						}}
 					>
-						Iniciar sesión
+						Iniciar Sesión
 					</button>
-					<p className='w-full min-w-40 text-xs sm:text-lg flex justify-center gap-2'>
+					<p className='w-full min-w-40 text-xs sm:text-xl flex justify-center gap-2'>
 						No tienes cuenta?
 						<Link
 							href='/register'
