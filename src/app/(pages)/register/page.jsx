@@ -3,6 +3,7 @@ import { useAuth } from '@/app/contexts/sessionContext';
 import { userRegSchema } from '@/app/helpers/validators';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { isAxiosError } from 'axios';
+import { ChevronLeft, Link } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import Swal from 'sweetalert2';
 import { useRouter } from 'next/navigation';
@@ -47,17 +48,20 @@ export default function Page() {
 	return (
 		<form
 			onSubmit={handleSubmit(onSubmit)}
-			className='max-w-lg mx-auto mt-6 p-4 border rounded-lg'
+			className='w-full max-w-[600px] p-4 m-10 border rounded-lg shadow-lg'
 			encType='multipart/form-data'
 		>
-			{['name', 'lastname', 'email', 'id', 'contact', 'password'].map(
+			<a className='text-gray-400 hover:text-gray-800 flex mb-5' href='/'>
+				<ChevronLeft /> Volver
+			</a>
+			{['nombre', 'apellido', 'email', 'id', 'contacto', 'contraseña'].map(
 				(field) => (
 					<div key={field} className='mb-4'>
 						<label
 							htmlFor={field}
 							className='block text-gray-700 mb-2 capitalize'
 						>
-							{field.toUpperCase()}
+							{field.charAt(0).toUpperCase() + field.slice(1)}
 						</label>
 						<input
 							type='text'
@@ -66,9 +70,17 @@ export default function Page() {
 							placeholder={`e.j: ${
 								field === 'email'
 									? 'ejemplo@unisabana.edu.co'
-									: field === 'contact'
+									: field === 'contacto'
 										? '312 456 7890'
-										: ''
+										: field === 'nombre'
+											? 'Pepito'
+											: field === 'apellido'
+												? 'Pérez'
+												: field === 'id'
+													? '123456'
+													: field === 'contraseña'
+														? 'P@ssWord_123'
+														: ''
 							}`}
 							className='w-full px-3 py-2 border rounded-lg'
 						/>
@@ -84,7 +96,8 @@ export default function Page() {
 				<input
 					type='file'
 					{...register('photo')}
-					accept='image/jpeg, image/png, image/gif' //
+					accept='image/jpeg, image/png, image/gif'
+					className='text-xs sm:text-base'
 				/>
 			</div>
 			{errors.photo && (
@@ -93,7 +106,7 @@ export default function Page() {
 
 			<button
 				type='submit'
-				className='w-full bg-green-600 text-white py-2 rounded-md font-semibold'
+				className='w-full bg-green-600 text-white py-2 rounded-md font-semibold uppercase'
 			>
 				Registrarse
 			</button>
