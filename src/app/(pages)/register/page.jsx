@@ -37,7 +37,7 @@ export default function Page() {
 				text: 'Usuario Registrado Correctamente',
 				icon: 'success',
 			});
-			router.push('/');
+			router.push('/dashboard');
 		} catch (error) {
 			let validateErros = '';
 			if (error.response.data.errors) {
