@@ -1,3 +1,4 @@
+import RouteStop from './routeStop';
 export default function AvailableTripCard({ route }) {
 	return (
 		<div className='flex'>
@@ -26,17 +27,7 @@ export default function AvailableTripCard({ route }) {
 								d='M13.9 12.7c0-.6-.2-1.2-.6-1.6c-.8-.8-2.4-.8-3.2 0l-.3.3c-.1.1-.1.3-.2.4s-.1.3-.1.4v.8c0 .1.1.3.1.4s.1.3.2.4l.3.3c.4.4 1 .7 1.6.7s1.2-.2 1.6-.7c.3-.2.6-.8.6-1.4M54 45.9c.4-.4.7-1 .7-1.6s-.2-1.2-.7-1.6l-.3-.3c-.1-.1-.3-.1-.4-.2c-.1 0-.3-.1-.4-.1H52c-.1 0-.3.1-.4.1c-.1.1-.3.1-.4.2l-.3.3c-.4.4-.7 1-.7 1.6s.2 1.2.7 1.6l.3.3c.1.1.3.1.4.2c.1 0 .3.1.4.1h.4c.6 0 1.2-.2 1.6-.6'
 							/>
 						</svg>
-						<div className='flex flex-wrap gap-1'>
-							<button className='bg-white rounded-full px-1 text-[8px] sm:text-lg font-semibold'>
-								U. sabana
-							</button>
-							<button className='bg-white rounded-full px-1 text-[8px] sm:text-lg font-semibold'>
-								Av. 127
-							</button>
-							<button className='bg-white rounded-full px-1 text-[8px] sm:text-lg font-semibold'>
-								Av.170
-							</button>
-						</div>
+						<RouteStop />
 					</div>
 					<div className='flex gap-[3px] sm:gap-3 items-center w-full'>
 						<svg
@@ -69,7 +60,7 @@ export default function AvailableTripCard({ route }) {
 			<button className='bg-[#028747] rounded-r-lg border-2 border-l-0 border-[#025C31] hover:bg-[#025C31]'>
 				<svg
 					xmlns='http://www.w3.org/2000/svg'
-					className='h-[30px] w-[30px] sm:h-[33px] sm:w-[33px]'
+					className='h-[30px] w-[30px] sm:h-[50px] sm:w-[50px] sm:m-1'
 					viewBox='0 0 48 48'
 				>
 					<g fill='white'>
