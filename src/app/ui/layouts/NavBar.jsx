@@ -1,10 +1,9 @@
 import { useAuth } from '@/app/contexts/sessionContext';
-import { Link, Menu } from 'lucide-react';
+import { Menu } from 'lucide-react';
 import Image from 'next/image';
 import logo from '/public/images/logo.png';
 
 import ProfilePhoto from '../components/navbar/profilePhoto';
-import next from 'next';
 
 export default function NavBar() {
 	const { user, signout } = useAuth();
