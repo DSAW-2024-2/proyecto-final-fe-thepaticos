@@ -16,8 +16,11 @@ export class Auth {
 	}
 	static async signup(data) {
 		const formData = new FormData();
+		if (data.photo && data.photo instanceof File) {
+			formData.append('profilePhoto', data.photo); 
+		}
 		for (const key in data) {
-			if (key in data) {
+			if (key !== 'photo' && key in data) {
 				formData.append(key, data[key]);
 			}
 		}
