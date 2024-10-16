@@ -19,7 +19,6 @@ export class Auth {
 		if (data.photo instanceof FileList && data.photo.length > 0) {
 			formData.append('profilePhoto', data.photo[0]); // Enviamos solo el primer archivo como 'profilePhoto'
 		} else if (data.photo instanceof File) {
-			console.log('HOLA2');
 			formData.append('profilePhoto', data.photo); // Si es un archivo ya
 		}
 
@@ -36,5 +35,14 @@ export class Auth {
 		};
 		const res = await api.post('/auth/register', formData, config);
 		return res.data.accessToken;
+	}
+	static async getUserByToken(token) {
+		const config = {
+			headers: {
+				Authorization: `Bearer ${token}`, // Ensure correct Bearer prefix
+			},
+		};
+		const res = await api.get('/user/', config);
+		return res.data;
 	}
 }
