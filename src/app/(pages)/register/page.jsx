@@ -3,10 +3,10 @@ import { useAuth } from '@/app/contexts/sessionContext';
 import { userRegSchema } from '@/app/helpers/validators';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { isAxiosError } from 'axios';
-import { ChevronLeft, Link } from 'lucide-react';
+import { ChevronLeft } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import Swal from 'sweetalert2';
-import { useRouter } from 'next/navigation';
 
 export default function Page() {
 	const router = useRouter();
@@ -122,6 +122,7 @@ export default function Page() {
 			<div className='mb-4'>
 				<input
 					type='file'
+					id='photo'
 					{...register('photo')}
 					accept='image/jpeg, image/png, image/gif'
 					className='text-xs sm:text-base'

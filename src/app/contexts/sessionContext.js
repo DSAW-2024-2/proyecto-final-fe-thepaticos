@@ -12,8 +12,9 @@ export const AuthProvider = ({ children }) => {
 	useEffect(() => {
 		const token = Cookies.get('authToken');
 		if (token) {
-			// Aquí podrías hacer una llamada a tu API para obtener la información del usuario
-			setUser({ token }); // Ajusta según la estructura de tu usuario
+			Auth.getUserByToken(token).then((res) => {
+				setUser(res.user);
+			});
 		}
 	}, []);
 	const signup = async (data) => {
@@ -22,7 +23,8 @@ export const AuthProvider = ({ children }) => {
 			path: '/',
 			sameSite: 'Strict',
 		});
-		setUser({ token }); // Ajusta según la estructura de tu usuario
+		const res = await Auth.getUserByToken(token);
+		setUser(res.user);
 	};
 
 	const signin = async (email, password) => {
@@ -31,7 +33,8 @@ export const AuthProvider = ({ children }) => {
 			path: '/',
 			sameSite: 'Strict',
 		});
-		setUser({ token }); // Ajusta según la estructura de tu usuario
+		const res = await Auth.getUserByToken(token);
+		setUser(res.user);
 	};
 
 	const signout = () => {

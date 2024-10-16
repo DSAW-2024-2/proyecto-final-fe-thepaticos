@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import Image from 'next/image';
-export default function ProfilePhoto({ signout }) {
+export default function ProfilePhoto({ signout, user }) {
 	const [showMenu, setShowMenu] = useState(false);
 
 	const toggleMenu = () => {
@@ -10,11 +10,11 @@ export default function ProfilePhoto({ signout }) {
 	return (
 		<div className='relative inline-block'>
 			<Image
-				src='/images/anonym.png'
+				src={user.photo || '/images/anonym.png'}
 				alt='Picture of the author'
 				width='64'
 				height='64'
-				className='rounded-full w-10 h-10 cursor-pointer'
+				className='rounded-full w-10 h-10 cursor-pointer border-2'
 				onClick={toggleMenu}
 			/>
 			<div

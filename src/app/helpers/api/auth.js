@@ -16,8 +16,15 @@ export class Auth {
 	}
 	static async signup(data) {
 		const formData = new FormData();
+		if (data.photo instanceof FileList && data.photo.length > 0) {
+			formData.append('profilePhoto', data.photo[0]); // Enviamos solo el primer archivo como 'profilePhoto'
+		} else if (data.photo instanceof File) {
+			formData.append('profilePhoto', data.photo); // Si es un archivo ya
+		}
+
+		// Agregar el resto de los datos al FormData
 		for (const key in data) {
-			if (key in data) {
+			if (key !== 'photo' && key in data) {
 				formData.append(key, data[key]);
 			}
 		}
@@ -28,5 +35,14 @@ export class Auth {
 		};
 		const res = await api.post('/auth/register', formData, config);
 		return res.data.accessToken;
+	}
+	static async getUserByToken(token) {
+		const config = {
+			headers: {
+				Authorization: `Bearer ${token}`, // Ensure correct Bearer prefix
+			},
+		};
+		const res = await api.get('/user/', config);
+		return res.data;
 	}
 }

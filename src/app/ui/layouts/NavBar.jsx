@@ -1,15 +1,14 @@
 import { useAuth } from '@/app/contexts/sessionContext';
-import { Link, Menu } from 'lucide-react';
+import { Menu } from 'lucide-react';
 import Image from 'next/image';
 import logo from '/public/images/logo.png';
 
 import ProfilePhoto from '../components/navbar/profilePhoto';
-import next from 'next';
 
 export default function NavBar() {
 	const { user, signout } = useAuth();
 	return (
-		<div className='bg-[#028747] text-white p-4 flex justify-center items-center shadow-lime-950 shadow-md'>
+		<div className='bg-[#028747] text-white p-4 flex justify-between items-center shadow-lime-950 shadow-md'>
 			{user && <Menu />}
 			<div className='flex justify-center items-center gap-3 font-semibold text-4xl sm:text-6xl'>
 				<Image
@@ -19,7 +18,7 @@ export default function NavBar() {
 				/>
 				WHEEL US
 			</div>
-			{user && <ProfilePhoto signout={signout} />}
+			{user && <ProfilePhoto signout={signout} user={user} />}
 		</div>
 	);
 }
