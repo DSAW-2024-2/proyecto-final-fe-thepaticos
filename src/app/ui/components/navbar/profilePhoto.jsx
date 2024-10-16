@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import Image from 'next/image';
-export default function ProfilePhoto({ signout, user}) {
+export default function ProfilePhoto({ signout, user }) {
 	const [showMenu, setShowMenu] = useState(false);
 
 	const toggleMenu = () => {
