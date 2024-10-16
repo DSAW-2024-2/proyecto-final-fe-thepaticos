@@ -12,9 +12,9 @@ export default function ProfilePhoto({ signout, user }) {
 			<Image
 				src={user.photo || '/images/anonym.png'}
 				alt='Picture of the author'
-				width='64'
-				height='64'
-				className='rounded-full w-10 h-10 cursor-pointer border-2'
+				width={500}
+				height={500}
+				className='rounded-full object-cover max-w-[40px] max-h-[40px] min-w-[40px] min-h-[40px] border-2 sm:min-w-[70px] sm:max-w-[70px] sm:min-h-[70px] sm:max-h-[70px] cursor-pointer sm:border-4'
 				onClick={toggleMenu}
 			/>
 			<div

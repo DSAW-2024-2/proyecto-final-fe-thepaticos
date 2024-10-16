@@ -9,8 +9,10 @@ export default function NavBar() {
 	const { user, signout } = useAuth();
 	return (
 		<div className='bg-[#028747] text-white p-4 flex justify-between items-center shadow-lime-950 shadow-md'>
-			{user && <Menu />}
-			<div className='flex justify-center items-center gap-3 font-semibold text-4xl sm:text-6xl'>
+			{user && (
+				<Menu className='w-12 h-10 border-2 rounded-lg hover:bg-[#025C31]' />
+			)}
+			<div className='flex w-full justify-center items-center gap-3 font-semibold text-xl sm:text-5xl'>
 				<Image
 					src={logo}
 					alt='Logo Wheel US'

@@ -17,7 +17,7 @@ export default function ModalLogin({ onClose }) {
 			await signin(email, password);
 			Swal.fire({
 				title: 'Excelente!',
-				text: 'Usuario Logueado Correctamente',
+				text: 'Has iniciado sesión correctamente',
 				icon: 'success',
 			}).then(() => {
 				router.push('/dashboard');
