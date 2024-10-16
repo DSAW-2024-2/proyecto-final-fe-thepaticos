@@ -1,14 +1,34 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
+
 export default function ProfilePhoto({ signout, user }) {
 	const [showMenu, setShowMenu] = useState(false);
+	const dropdownRef = useRef(null);
 
 	const toggleMenu = () => {
 		setShowMenu(!showMenu);
 	};
 
+	useEffect(() => {
+		const handleClickOutside = (event) => {
+			if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+				setShowMenu(false);
+			}
+		};
+
+		if (showMenu) {
+			document.addEventListener('mousedown', handleClickOutside);
+		} else {
+			document.removeEventListener('mousedown', handleClickOutside);
+		}
+
+		return () => {
+			document.removeEventListener('mousedown', handleClickOutside);
+		};
+	}, [showMenu]);
+
 	return (
-		<div className='relative inline-block'>
+		<div className='relative inline-block' ref={dropdownRef}>
 			<Image
 				src={user.photo || '/images/anonym.png'}
 				alt='Picture of the author'
