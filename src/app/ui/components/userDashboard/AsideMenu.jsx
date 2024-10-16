@@ -26,8 +26,10 @@ export default function AsideMenu({ isMenuOpen, toggleMenu }) {
 	return (
 		<aside
 			ref={asideRef}
-			className={`fixed top-0 left-0 w-64 h-full bg-[#025C31] text-white p-4 z-50 shadow-2xl shadow-black transform ${
-				isMenuOpen ? 'translate-x-0' : '-translate-x-full'
+			className={`fixed top-0 left-0 w-64 h-full bg-[#025C31] text-white p-4 z-50 transform ${
+				isMenuOpen
+					? 'translate-x-0  shadow-black shadow-2xl'
+					: '-translate-x-full'
 			} transition-transform duration-300 ease-in-out`}
 		>
 			<section className='w-full flex justify-center items-center my-4'>
