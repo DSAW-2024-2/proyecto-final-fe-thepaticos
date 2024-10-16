@@ -122,6 +122,7 @@ export default function Page() {
 			<div className='mb-4'>
 				<input
 					type='file'
+					id='photo'
 					{...register('photo')}
 					accept='image/jpeg, image/png, image/gif'
 					className='text-xs sm:text-base'
