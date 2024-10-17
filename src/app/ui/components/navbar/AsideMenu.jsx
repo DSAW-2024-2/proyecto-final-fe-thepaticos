@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import LogoAndName from '/public/images/logo&name.png';
 
 export default function AsideMenu({ isMenuOpen, toggleMenu }) {
@@ -46,9 +47,12 @@ export default function AsideMenu({ isMenuOpen, toggleMenu }) {
 			</h2>
 			<div className='h-[2px] w-full bg-white rounded-full my-4'></div>
 			<ul className='space-y-4'>
-				<button className='bg-white text-black flex justify-center items-center font-semibold p-3 rounded-full w-full'>
+				<Link
+					href='/reservations'
+					className='bg-white text-black flex justify-center items-center font-semibold p-3 rounded-full w-full'
+				>
 					Mis Viajes
-				</button>
+				</Link>
 			</ul>
 			<button
 				className='absolute top-4 right-4 text-white'
