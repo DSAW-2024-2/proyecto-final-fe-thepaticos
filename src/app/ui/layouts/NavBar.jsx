@@ -38,7 +38,9 @@ export default function NavBar() {
 				</div>
 			)}
 			{user && <ToggleProfile />}
-			{user && <ProfilePhoto signout={signout} user={user} />}
+			{(user && pathname !== '/profile' && (
+				<ProfilePhoto signout={signout} user={user} />
+			)) || <div></div>}
 		</div>
 	);
 }
