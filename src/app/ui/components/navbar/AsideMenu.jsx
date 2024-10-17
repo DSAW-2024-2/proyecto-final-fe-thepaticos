@@ -47,12 +47,12 @@ export default function AsideMenu({ isMenuOpen, toggleMenu }) {
 			</h2>
 			<div className='h-[2px] w-full bg-white rounded-full my-4'></div>
 			<ul className='space-y-4'>
-				<Link
+				<a
 					href='/reservations'
 					className='bg-white text-black flex justify-center items-center font-semibold p-3 rounded-full w-full'
 				>
 					Mis Viajes
-				</Link>
+				</a>
 			</ul>
 			<button
 				className='absolute top-4 right-4 text-white'

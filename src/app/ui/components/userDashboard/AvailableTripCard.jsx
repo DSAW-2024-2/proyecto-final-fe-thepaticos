@@ -4,14 +4,14 @@ export default function AvailableTripCard({ route }) {
 		<div className='flex'>
 			<div className='bg-[#D9D9D9] p-[3px] rounded-l-lg gap-[3px] sm:gap-3 flex w-full items-center justify-start border-2 border-[#696C70] border-opacity-50 border-r-0'>
 				<img
-					className='h-[50px] w-[50px] object-fill sm:w-[120px] sm:h-[120px] rounded-[5px] border-[2px] border-[#696C70]'
+					className='h-[60px] w-[60px] object-fill sm:w-[120px] sm:h-[120px] rounded-[5px] border-[2px] border-[#696C70]'
 					src={
 						route ||
 						'https://aacarsdna.com/images/vehicles/56/medium/c2ce1ca280186ac402421c274c64a0f1.jpg'
 					}
 					alt='Imagen carro'
 				/>
-				<section className='flex flex-col gap-[2px] sm:gap-2 w-full'>
+				<section className='flex flex-col gap-[2px] sm:gap-2 w-full justify-center'>
 					<div className='flex gap-[3px] sm:gap-3 items-center w-full'>
 						<svg
 							xmlns='http://www.w3.org/2000/svg'
@@ -27,7 +27,7 @@ export default function AvailableTripCard({ route }) {
 								d='M13.9 12.7c0-.6-.2-1.2-.6-1.6c-.8-.8-2.4-.8-3.2 0l-.3.3c-.1.1-.1.3-.2.4s-.1.3-.1.4v.8c0 .1.1.3.1.4s.1.3.2.4l.3.3c.4.4 1 .7 1.6.7s1.2-.2 1.6-.7c.3-.2.6-.8.6-1.4M54 45.9c.4-.4.7-1 .7-1.6s-.2-1.2-.7-1.6l-.3-.3c-.1-.1-.3-.1-.4-.2c-.1 0-.3-.1-.4-.1H52c-.1 0-.3.1-.4.1c-.1.1-.3.1-.4.2l-.3.3c-.4.4-.7 1-.7 1.6s.2 1.2.7 1.6l.3.3c.1.1.3.1.4.2c.1 0 .3.1.4.1h.4c.6 0 1.2-.2 1.6-.6'
 							/>
 						</svg>
-						<RouteStop />
+						<RouteStop stops={['U. Sabana', 'Av. 170', 'Av. 127']} />
 					</div>
 					<div className='flex gap-[3px] sm:gap-3 items-center w-full'>
 						<svg
@@ -40,7 +40,7 @@ export default function AvailableTripCard({ route }) {
 								d='M12 20a8 8 0 0 0 8-8a8 8 0 0 0-8-8a8 8 0 0 0-8 8a8 8 0 0 0 8 8m0-18a10 10 0 0 1 10 10a10 10 0 0 1-10 10C6.47 22 2 17.5 2 12A10 10 0 0 1 12 2m.5 5v5.25l4.5 2.67l-.75 1.23L11 13V7z'
 							/>
 						</svg>
-						<div className='text-[10px] sm:text-lg font-semibold'>3:00 pm</div>
+						<div className='text-[12px] sm:text-lg font-semibold'>3:00 pm</div>
 					</div>
 					<div className='flex gap-[3px] sm:gap-3 items-center w-full'>
 						<svg
@@ -53,7 +53,7 @@ export default function AvailableTripCard({ route }) {
 								d='M10.561 8.073a6 6 0 0 1 3.432 5.142a.75.75 0 1 1-1.498.07a4.5 4.5 0 0 0-8.99 0a.75.75 0 0 1-1.498-.07a6 6 0 0 1 3.431-5.142a3.999 3.999 0 1 1 5.123 0M10.5 5a2.5 2.5 0 1 0-5 0a2.5 2.5 0 0 0 5 0'
 							/>
 						</svg>
-						<div className='text-[10px] sm:text-lg font-semibold'>3</div>
+						<div className='text-[12px] sm:text-lg font-semibold'>3</div>
 					</div>
 				</section>
 			</div>

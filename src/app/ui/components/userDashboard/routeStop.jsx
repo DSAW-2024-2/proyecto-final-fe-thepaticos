@@ -1,15 +1,14 @@
-export default function routeStop() {
-	return (
-		<div className='flex flex-wrap gap-1'>
-			<button className='bg-white rounded-full px-1 text-[8px] sm:text-lg font-semibold'>
-				U. sabana
+export default function routeStop({ stops }) {
+	const routeStops = [];
+	for (let i = 0; i < stops.length; i++) {
+		routeStops.push(
+			<button
+				key={i}
+				className='bg-white rounded-full px-1 text-[12px] sm:text-lg font-semibold'
+			>
+				{stops[i]}
 			</button>
-			<button className='bg-white rounded-full px-1 text-[8px] sm:text-lg font-semibold'>
-				Av. 127
-			</button>
-			<button className='bg-white rounded-full px-1 text-[8px] sm:text-lg font-semibold'>
-				Av.170
-			</button>
-		</div>
-	);
+		);
+	}
+	return <div className='flex flex-wrap gap-1'>{routeStops}</div>;
 }
