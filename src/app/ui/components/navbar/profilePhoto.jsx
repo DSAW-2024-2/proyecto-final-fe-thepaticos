@@ -1,9 +1,11 @@
 import { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 export default function ProfilePhoto({ signout, user }) {
 	const [showMenu, setShowMenu] = useState(false);
 	const dropdownRef = useRef(null);
+	const router = useRouter();
 
 	const toggleMenu = () => {
 		setShowMenu(!showMenu);
@@ -27,6 +29,10 @@ export default function ProfilePhoto({ signout, user }) {
 		};
 	}, [showMenu]);
 
+	const goToProfile = () => {
+		router.push('/profile');
+	};
+
 	return (
 		<div className='relative inline-block' ref={dropdownRef}>
 			<Image
@@ -34,7 +40,7 @@ export default function ProfilePhoto({ signout, user }) {
 				alt='Picture of the author'
 				width={500}
 				height={500}
-				className='rounded-full object-cover max-w-[40px] max-h-[40px] min-w-[40px] min-h-[40px] border-2 sm:min-w-[70px] sm:max-w-[70px] sm:min-h-[70px] sm:max-h-[70px] cursor-pointer sm:border-4 border-[sm:border-2 sm:border-[#025C31]'
+				className='rounded-full object-cover max-w-[40px] max-h-[40px] min-w-[40px] min-h-[40px] border-2 sm:min-w-[70px] sm:max-w-[70px] sm:min-h-[70px] sm:max-h-[70px] cursor-pointer sm:border-4 border-[sm:border-2 sm:border-[#025C31]]'
 				onClick={toggleMenu}
 			/>
 			<div
@@ -43,12 +49,15 @@ export default function ProfilePhoto({ signout, user }) {
 				}`}
 			>
 				<button
-					className='py-2 w-full text-black font-semibold hover:bg-[#D9D9D9] transition duration-200 ease-in-out'
+					className='py-2 w-full text-black flex justify-start px-4 font-semibold hover:bg-[#D9D9D9] transition duration-200 ease-in-out'
 					onClick={signout}
 				>
 					Cerrar Sesión
 				</button>
-				<button className='py-2 w-full text-black font-semibold hover:bg-[#D9D9D9] transition duration-200 ease-in-out'>
+				<button
+					className='py-2 w-full text-black flex justify-start px-4 font-semibold hover:bg-[#D9D9D9] transition duration-200 ease-in-out'
+					onClick={goToProfile}
+				>
 					Mi Perfil
 				</button>
 			</div>

@@ -1,10 +1,11 @@
 import { useEffect, useRef } from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import LogoAndName from '/public/images/logo&name.png';
 
 export default function AsideMenu({ isMenuOpen, toggleMenu }) {
 	const asideRef = useRef(null);
+	const pathname = usePathname();
 
 	useEffect(() => {
 		const handleClickOutside = (event) => {
@@ -47,12 +48,22 @@ export default function AsideMenu({ isMenuOpen, toggleMenu }) {
 			</h2>
 			<div className='h-[2px] w-full bg-white rounded-full my-4'></div>
 			<ul className='space-y-4'>
-				<a
-					href='/reservations'
-					className='bg-white text-black flex justify-center items-center font-semibold p-3 rounded-full w-full'
-				>
-					Mis Viajes
-				</a>
+				{pathname !== '/reservations' && (
+					<a
+						href='/reservations'
+						className='bg-white text-black flex justify-center items-center font-semibold p-3 rounded-full w-full'
+					>
+						Mis Viajes
+					</a>
+				)}
+				{pathname !== '/dashboard' && (
+					<a
+						href='/dashboard'
+						className='bg-white text-black flex justify-center items-center font-semibold p-3 rounded-full w-full'
+					>
+						Viajes Disponibles
+					</a>
+				)}
 			</ul>
 			<button
 				className='absolute top-4 right-4 text-white'
