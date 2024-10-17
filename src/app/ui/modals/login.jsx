@@ -1,3 +1,4 @@
+import { useLoading } from '@/app/contexts/loadingContext';
 import { useAuth } from '@/app/contexts/sessionContext';
 import { isAxiosError } from 'axios';
 import { ChevronLeft } from 'lucide-react';
@@ -6,9 +7,11 @@ import Swal from 'sweetalert2';
 
 export default function ModalLogin({ onClose }) {
 	const { signin } = useAuth();
+	const { setLoading } = useLoading();
 	const router = useRouter();
 
 	const onSubmit = async (event) => {
+		setLoading(true);
 		event.preventDefault();
 		const formData = new FormData(event.target);
 		const email = formData.get('email');
@@ -36,6 +39,8 @@ export default function ModalLogin({ onClose }) {
 					icon: 'error',
 				});
 			}
+		} finally {
+			setLoading(false);
 		}
 	};
 	return (

@@ -1,4 +1,5 @@
 'use client';
+import { useLoading } from '@/app/contexts/loadingContext';
 import { useAuth } from '@/app/contexts/sessionContext';
 import { userRegSchema } from '@/app/helpers/validators';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -11,6 +12,8 @@ import Swal from 'sweetalert2';
 export default function Page() {
 	const router = useRouter();
 	const { signup } = useAuth();
+	const { setLoading } = useLoading();
+
 	const {
 		register,
 		handleSubmit,
@@ -30,6 +33,7 @@ export default function Page() {
 	};
 
 	const onSubmit = async (data) => {
+		setLoading(true);
 		try {
 			await signup(data);
 			Swal.fire({
@@ -57,6 +61,8 @@ export default function Page() {
 					icon: 'error',
 				});
 			}
+		} finally {
+			setLoading(false);
 		}
 	};
 
