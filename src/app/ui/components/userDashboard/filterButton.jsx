@@ -1,7 +1,67 @@
-export default function filterButton() {
+import React, { useState, useEffect, useRef } from 'react';
+import FilterSubMenu from './filterSubMenu';
+
+export default function FilterButton() {
+	const [isOriginMenuVisible, setOriginMenuVisible] = useState(false);
+	const [isDestinationMenuVisible, setDestinationMenuVisible] = useState(false);
+	const [isCapacityMenuVisible, setCapacityMenuVisible] = useState(false);
+	const originButtonRef = useRef(null);
+	const destinationButtonRef = useRef(null);
+	const capacityButtonRef = useRef(null);
+
+	const toggleOriginMenu = () => {
+		setOriginMenuVisible(!isOriginMenuVisible);
+		setDestinationMenuVisible(false);
+		setCapacityMenuVisible(false);
+	};
+
+	const toggleDestinationMenu = () => {
+		setDestinationMenuVisible(!isDestinationMenuVisible);
+		setOriginMenuVisible(false);
+		setCapacityMenuVisible(false);
+	};
+
+	const toggleCapacityMenu = () => {
+		setCapacityMenuVisible(!isCapacityMenuVisible);
+		setOriginMenuVisible(false);
+		setDestinationMenuVisible(false);
+	};
+
+	const closeAllMenus = () => {
+		setOriginMenuVisible(false);
+		setDestinationMenuVisible(false);
+		setCapacityMenuVisible(false);
+	};
+
+	useEffect(() => {
+		const handleClickOutside = (event) => {
+			if (
+				originButtonRef.current &&
+				!originButtonRef.current.contains(event.target) &&
+				destinationButtonRef.current &&
+				!destinationButtonRef.current.contains(event.target) &&
+				capacityButtonRef.current &&
+				!capacityButtonRef.current.contains(event.target)
+			) {
+				closeAllMenus();
+			}
+		};
+
+		document.addEventListener('click', handleClickOutside);
+
+		return () => {
+			document.removeEventListener('click', handleClickOutside);
+		};
+	}, []);
+
 	return (
-		<div className='w-fit py-5 flex justify-around items-center gap-2 sm:gap-5'>
-			<button className='bg-[#028747] hover:bg-[#025C31] text-white text-xs sm:text-lg font-semibold rounded-full px-3 py-1 flex items-center justify-center gap-2'>
+		<div className='relative w-fit py-5 flex justify-around items-center gap-2 sm:gap-5'>
+			{/* Origin Button */}
+			<button
+				ref={originButtonRef}
+				onClick={toggleOriginMenu}
+				className='bg-[#028747] hover:bg-[#025C31] text-white text-xs sm:text-lg font-semibold rounded-full px-3 py-1 flex items-center justify-center gap-2'
+			>
 				<svg
 					xmlns='http://www.w3.org/2000/svg'
 					className='h-[20px] w-[20px] sm:h-[33px] sm:w-[33px]'
@@ -18,7 +78,19 @@ export default function filterButton() {
 				</svg>
 				Origen
 			</button>
-			<button className='bg-[#028747] hover:bg-[#025C31] text-white text-xs sm:text-lg font-semibold rounded-full px-3 py-1 flex items-center justify-center gap-2'>
+
+			<FilterSubMenu
+				optionsMenu={['U. Sabana', 'Av. 127']}
+				Visible={isOriginMenuVisible}
+				horizontalMove={'left-0'}
+			/>
+
+			{/* Destination Button */}
+			<button
+				ref={destinationButtonRef}
+				onClick={toggleDestinationMenu}
+				className='bg-[#028747] hover:bg-[#025C31] text-white text-xs sm:text-lg font-semibold rounded-full px-3 py-1 flex items-center justify-center gap-2'
+			>
 				<svg
 					xmlns='http://www.w3.org/2000/svg'
 					className='h-[20px] w-[20px] sm:h-[30px] sm:w-[30px] p-[2px]'
@@ -26,12 +98,24 @@ export default function filterButton() {
 				>
 					<path
 						fill='white'
-						d='M10 0a7.65 7.65 0 0 0-8 8c0 2.52 2 5 3 6s5 6 5 6s4-5 5-6s3-3.48 3-6a7.65 7.65 0 0 0-8-8m0 11.25A3.25 3.25 0 1 1 13.25 8A3.25 3.25 0 0 1 10 11.25'
+						d='M10 0a7.65 7.65 0 0 0-8 8c0 2.52 2 5 3 6s5 6 5 6s4-5 5-6s3-3.48 3-6a7.65 7.65 0 0 0-8-8zm0 11a3 3 0 1 1 0-6a3 3 0 0 1 0 6z'
 					/>
 				</svg>
 				Destino
 			</button>
-			<button className='bg-[#028747] hover:bg-[#025C31] text-white text-xs sm:text-lg font-semibold rounded-full px-3 py-1 flex items-center justify-center gap-2'>
+
+			<FilterSubMenu
+				optionsMenu={['Bogotá', 'Cota', 'Chía', 'Funza']}
+				Visible={isDestinationMenuVisible}
+				horizontalMove={'left-[33%]'}
+			/>
+
+			{/* Capacity Button */}
+			<button
+				ref={capacityButtonRef}
+				onClick={toggleCapacityMenu}
+				className='bg-[#028747] hover:bg-[#025C31] text-white text-xs sm:text-lg font-semibold rounded-full px-3 py-1 flex items-center justify-center gap-2'
+			>
 				<svg
 					xmlns='http://www.w3.org/2000/svg'
 					className='h-[20px] w-[20px] sm:h-[33px] sm:w-[33px]'
@@ -42,8 +126,14 @@ export default function filterButton() {
 						d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4s-4 1.79-4 4s1.79 4 4 4m0 2c-2.67 0-8 1.34-8 4v1c0 .55.45 1 1 1h14c.55 0 1-.45 1-1v-1c0-2.66-5.33-4-8-4'
 					/>
 				</svg>
-				Cupos
+				Capacidad
 			</button>
+
+			<FilterSubMenu
+				optionsMenu={['2', '3', '4']}
+				Visible={isCapacityMenuVisible}
+				horizontalMove={'left-[66%]'}
+			/>
 		</div>
 	);
 }

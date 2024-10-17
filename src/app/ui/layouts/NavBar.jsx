@@ -5,7 +5,7 @@ import Image from 'next/image';
 import logo from '/public/images/logo.png';
 import ProfilePhoto from '../components/navbar/profilePhoto';
 import ToggleProfile from '../components/userDashboard/toggleProfile';
-import AsideMenu from '../components/userDashboard/AsideMenu';
+import AsideMenu from '../components/navbar/AsideMenu';
 
 export default function NavBar() {
 	const { user, signout } = useAuth();
@@ -16,6 +16,7 @@ export default function NavBar() {
 
 	return (
 		<div className='bg-[#028747] text-white p-4 flex justify-between items-center shadow-lime-950 shadow-md'>
+			<AsideMenu isMenuOpen={isMenuOpen} toggleMenu={toggleMenu} />
 			{user && (
 				<Menu
 					className='w-9 h-9 sm:w-12 sm:h-12 border-2 rounded-lg hover:bg-[#025C31] cursor-pointer'
@@ -35,7 +36,6 @@ export default function NavBar() {
 			)}
 			{user && <ToggleProfile />}
 			{user && <ProfilePhoto signout={signout} user={user} />}
-			<AsideMenu isMenuOpen={isMenuOpen} toggleMenu={toggleMenu} />
 		</div>
 	);
 }
