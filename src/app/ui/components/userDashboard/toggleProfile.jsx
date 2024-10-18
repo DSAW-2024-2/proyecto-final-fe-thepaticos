@@ -1,7 +1,22 @@
+import { useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
+
 export default function toggleProfile() {
+	const router = useRouter();
+	const pathname = usePathname();
+	const toggle = () => {
+		if (pathname === '/dashboard') {
+			router.push('/carRegister');
+		} else if (pathname === '/driverDashboard') {
+			router.push('/dashboard');
+		}
+	};
 	return (
 		<div className='bg-white flex rounded-full p-[2px] w-fit'>
-			<button className='w-fit flex items-center justify-center p-2 bg-[#025C31] rounded-full gap-1 sm:gap-2'>
+			<button
+				onClick={toggle}
+				className='w-fit flex items-center justify-center p-2 bg-[#025C31] rounded-full gap-1 sm:gap-2'
+			>
 				<svg
 					xmlns='http://www.w3.org/2000/svg'
 					className='w-5 h-5 sm:w-10 sm:h-10'

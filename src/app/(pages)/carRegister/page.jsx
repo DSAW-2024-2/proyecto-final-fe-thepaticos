@@ -1,7 +1,7 @@
 'use client';
 import { useLoading } from '@/app/contexts/loadingContext';
 import { useAuth } from '@/app/contexts/sessionContext';
-import { userRegSchema } from '@/app/helpers/validators';
+import { userRegSchema } from '@/app/helpers/carValidator';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { isAxiosError } from 'axios';
 import { ChevronLeft } from 'lucide-react';
@@ -12,7 +12,6 @@ import Link from 'next/link';
 
 export default function Page() {
 	const router = useRouter();
-	const { signup } = useAuth();
 	const { setLoading } = useLoading();
 
 	const {
@@ -36,13 +35,12 @@ export default function Page() {
 	const onSubmit = async (data) => {
 		setLoading(true);
 		try {
-			await signup(data);
 			Swal.fire({
 				title: 'Excelente!',
-				text: 'Usuario Registrado Correctamente',
+				text: 'Vehiculo Registrado Correctamente',
 				icon: 'success',
 			});
-			router.push('/dashboard');
+			router.push('/driverDashboard');
 		} catch (error) {
 			let validateErros = '';
 			if (error.response.data.errors) {
@@ -73,59 +71,71 @@ export default function Page() {
 			className='w-full max-w-[600px] p-4 m-10 border rounded-lg shadow-lg'
 			encType='multipart/form-data'
 		>
-			<Link className='text-gray-400 hover:text-gray-800 flex mb-5' href='/'>
+			<Link
+				className='text-gray-400 hover:text-gray-800 flex mb-5'
+				href='/dashboard'
+			>
 				<ChevronLeft /> Volver
 			</Link>
-			{['name', 'lastname', 'email', 'id', 'contact', 'password'].map(
-				(field) => (
-					<div key={field} className='mb-4'>
-						<label
-							htmlFor={field}
-							className='block text-gray-700 mb-2 capitalize'
-						>
-							{field === 'email'
-								? 'Email'
-								: field === 'contact'
-									? 'Contacto'
-									: field === 'name'
-										? 'Nombre'
-										: field === 'lastname'
-											? 'Apellido'
-											: field === 'id'
-												? 'Id'
-												: field === 'password'
-													? 'Contraseña'
-													: ''}
-						</label>
-						<input
-							type='text'
-							id={field}
-							{...register(field)}
-							placeholder={`e.j: ${
-								field === 'email'
-									? 'ejemplo@unisabana.edu.co'
-									: field === 'contact'
-										? '312 456 7890'
-										: field === 'name'
-											? 'Pepito'
-											: field === 'lastname'
-												? 'Pérez'
-												: field === 'id'
-													? '123456'
-													: field === 'password'
-														? 'P@ssWord_123'
-														: ''
-							}`}
-							className='w-full px-3 py-2 border rounded-lg'
-						/>
-						{errors[field] && (
-							<p className='text-red-500 text-sm mt-1'>
-								*{errors[field]?.message}
-							</p>
-						)}
-					</div>
-				)
+			{['plate', 'brand', 'model', 'seats'].map((field) => (
+				<div key={field} className='mb-4'>
+					<label
+						htmlFor={field}
+						className='block text-gray-700 mb-2 capitalize'
+					>
+						{field === 'plate'
+							? 'Placa'
+							: field === 'brand'
+								? 'Marca'
+								: field === 'model'
+									? 'Modelo'
+									: field === 'seats'
+										? 'Capacidad'
+										: ''}
+					</label>
+					<input
+						type={'text'}
+						id={field}
+						{...register(field)}
+						placeholder={`e.j: ${
+							field === 'plate'
+								? 'ABC123'
+								: field === 'brand'
+									? 'Chevrolez'
+									: field === 'model'
+										? 'Cruz'
+										: field === 'seats'
+											? '5 (incluyendo conductor)'
+											: ''
+						}`}
+						className='w-full px-3 py-2 border rounded-lg'
+					/>
+					{errors[field] && (
+						<p className='text-red-500 text-sm mt-1'>
+							*{errors[field]?.message}
+						</p>
+					)}
+				</div>
+			))}
+			<label htmlFor={'SOAT'} className='block text-gray-700 mb-2 capitalize'>
+				SOAT
+			</label>
+			<div className='mb-4'>
+				<input
+					type='file'
+					id='SOAT'
+					{...register('SOAT')}
+					accept='image/jpeg, image/png, image/gif'
+					className='text-xs sm:text-base'
+				/>
+			</div>
+			{errors.SOAT && (
+				<p className='text-red-500 text-sm mt-1'>{errors.SOAT.message}</p>
 			)}
+
+			<label htmlFor={'photo'} className='block text-gray-700 mb-2 capitalize'>
+				Foto Vehículo
+			</label>
 			<div className='mb-4'>
 				<input
 					type='file'
@@ -143,7 +153,7 @@ export default function Page() {
 				type='submit'
 				className='w-full bg-green-600 text-white py-2 rounded-md font-semibold uppercase'
 			>
-				Registrarse
+				Registrar Vehículo
 			</button>
 		</form>
 	);

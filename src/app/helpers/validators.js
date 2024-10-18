@@ -4,11 +4,13 @@ export const userRegSchema = z.object({
 	name: z
 		.string()
 		.min(1, 'Espacio requerido')
+		.max(50, 'No debe contener más de 50 caracteres')
 		.regex(/^[a-zA-Z]+$/, 'Debe contener solo letras')
 		.trim(),
 	lastname: z
 		.string()
 		.min(1, 'Espacio requerido')
+		.max(50, 'No debe contener más de 50 caracteres')
 		.regex(/^[a-zA-Z]+$/, 'Debe contener solo letras')
 		.trim(),
 	id: z
@@ -22,16 +24,22 @@ export const userRegSchema = z.object({
 			/@unisabana\.edu\.co$/,
 			'Debe ser un correo institucional de la Universidad de la Sabana'
 		),
-	password: z.string().min(6, 'Debe contener por lo menos 6 caracteres'),
-	contact: z.string().regex(/^\d/, 'Debe contener solo numeros').min(10),
+	password: z
+		.string()
+		.min(6, 'Debe contener por lo menos 6 caracteres')
+		.max(50, 'No debe contener más de 50 caracteres'),
+	contact: z
+		.string()
+		.regex(/^\d/, 'Debe contener solo numeros')
+		.length(10, 'Debe tener 10 dígitos'),
 	photo: z
 		.any()
 		.optional()
 		.refine(
 			(fileList) =>
-				!fileList || fileList.length === 0 || fileList[0].size <= 1048576,
+				!fileList || fileList.length === 0 || fileList[0].size <= 2097152,
 			{
-				message: 'El archivo no debe pesar más de 1MB',
+				message: 'La foto no debe pesar más de 2MB',
 			}
 		)
 		.refine(
@@ -40,7 +48,7 @@ export const userRegSchema = z.object({
 				fileList.length === 0 ||
 				ACCEPTED_IMAGE_TYPES.includes(fileList[0].type),
 			{
-				message: 'El archivo debe ser una imagen (JPEG, PNG o GIF)',
+				message: 'La foto debe ser una imagen en formato (JPEG, PNG o GIF)',
 			}
 		),
 });
