@@ -2,7 +2,7 @@ import RouteStop from '../userDashboard/routeStop';
 export default function reservationCard() {
 	return (
 		<div className='flex flex-col h-fit'>
-			<div className='bg-[#D9D9D9] p-6 rounded-lg gap-[5px] sm:gap-3 flex flex-col w-[300px] h-fit items-center justify-start border-2 border-[#696C70] border-opacity-50'>
+			<div className='bg-[#D9D9D9] px-4 py-3 rounded-lg gap-[5px] sm:gap-3 flex flex-col w-[280px] h-fit items-center justify-start border-2 border-[#696C70] border-opacity-50'>
 				<img
 					className='h-[150px] w-[150px] object-fill sm:w-[180px] sm:h-[180px] rounded-[5px] border-[2px] border-[#696C70]'
 					src={
@@ -150,10 +150,10 @@ export default function reservationCard() {
 				</section>
 
 				<section className='flex gap-3'>
-					<button className='bg-[#028747] rounded-lg border-2 border-[#025C31] hover:bg-[#025C31] flex text-white font-semibold items-center justify-center px-1 text-md sm:text-lg gap-1'>
+					<button className='bg-[#028747] rounded-lg border-2 border-[#025C31] hover:bg-[#025C31] flex text-white font-semibold items-center justify-center px-1 text-lg sm:text-lg gap-1'>
 						<svg
 							xmlns='http://www.w3.org/2000/svg'
-							className='h-[20px] w-[20px] sm:h-[40px] sm:w-[40px]'
+							className='h-[40px] w-[40px] sm:h-[40px] sm:w-[40px]'
 							viewBox='0 0 24 24'
 						>
 							<path
@@ -163,10 +163,10 @@ export default function reservationCard() {
 						</svg>
 						Pagar
 					</button>
-					<button className='bg-[#c92323] rounded-lg border-2 border-[#9C0000] hover:bg-[#9C0000] flex text-white font-semibold items-center justify-center px-1 text-md sm:text-lg gap-1'>
+					<button className='bg-[#c92323] rounded-lg border-2 border-[#9C0000] hover:bg-[#9C0000] flex text-white font-semibold items-center justify-center px-1 text-lg sm:text-lg gap-1'>
 						<svg
 							xmlns='http://www.w3.org/2000/svg'
-							className='h-[18px] w-[18px] sm:h-[30px] sm:w-[30px]'
+							className='h-[25px] w-[25px] sm:h-[30px] sm:w-[30px]'
 							viewBox='0 0 16 16'
 						>
 							<path

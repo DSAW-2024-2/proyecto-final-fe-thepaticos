@@ -8,6 +8,7 @@ import { ChevronLeft } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import Swal from 'sweetalert2';
+import Link from 'next/link';
 
 export default function Page() {
 	const router = useRouter();
@@ -72,9 +73,9 @@ export default function Page() {
 			className='w-full max-w-[600px] p-4 m-10 border rounded-lg shadow-lg'
 			encType='multipart/form-data'
 		>
-			<a className='text-gray-400 hover:text-gray-800 flex mb-5' href='/'>
+			<Link className='text-gray-400 hover:text-gray-800 flex mb-5' href='/'>
 				<ChevronLeft /> Volver
-			</a>
+			</Link>
 			{['name', 'lastname', 'email', 'id', 'contact', 'password'].map(
 				(field) => (
 					<div key={field} className='mb-4'>
@@ -85,7 +86,7 @@ export default function Page() {
 							{field === 'email'
 								? 'Email'
 								: field === 'contact'
-									? 'Contact'
+									? 'Contacto'
 									: field === 'name'
 										? 'Nombre'
 										: field === 'lastname'

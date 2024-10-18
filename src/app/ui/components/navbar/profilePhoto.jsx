@@ -40,7 +40,7 @@ export default function ProfilePhoto({ signout, user }) {
 				alt='Picture of the author'
 				width={500}
 				height={500}
-				className='rounded-full object-cover max-w-[40px] max-h-[40px] min-w-[40px] min-h-[40px] border-2 sm:min-w-[70px] sm:max-w-[70px] sm:min-h-[70px] sm:max-h-[70px] cursor-pointer sm:border-4 border-[sm:border-2 sm:border-[#025C31]]'
+				className='rounded-full object-cover max-w-[40px] max-h-[40px] min-w-[40px] min-h-[40px] border-2 sm:min-w-[70px] sm:max-w-[70px] sm:min-h-[70px] sm:max-h-[70px] cursor-pointer sm:border-2'
 				onClick={toggleMenu}
 			/>
 			<div

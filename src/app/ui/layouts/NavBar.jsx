@@ -27,7 +27,7 @@ export default function NavBar() {
 				/>
 			)}
 
-			{!user && pathname === '/' && (
+			{!user && (pathname === '/' || pathname === '/register') && (
 				<div className='flex w-full justify-center items-center gap-3 font-semibold text-xl sm:text-5xl'>
 					<Image
 						src={logo}
