@@ -44,6 +44,7 @@ export default function Home() {
 					src={carousel[currentIndex]}
 					alt='Modern university building'
 					className='w-full h-[300px] object-cover'
+					priority
 				/>
 				<button className='absolute left-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 hover:bg-opacity-70 text-white rounded-full p-1'>
 					<ChevronLeft

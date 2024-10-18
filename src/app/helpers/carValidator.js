@@ -4,7 +4,10 @@ export const userRegSchema = z.object({
 	plate: z
 		.string()
 		.length(6, 'Debe contener 6 caracteres')
-		.regex(/^[A-Z]{3}\d{3}$/, 'Debe tener 3 letras seguidas de 3 números')
+		.regex(
+			/^[A-Z]{3}\d{3}$/,
+			'Debe tener 3 letras Mayúsculas seguidas de 3 números'
+		)
 		.trim(),
 	brand: z
 		.string()
