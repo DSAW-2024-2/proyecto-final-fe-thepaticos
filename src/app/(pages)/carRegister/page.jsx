@@ -1,6 +1,5 @@
 'use client';
 import { useLoading } from '@/app/contexts/loadingContext';
-import { useAuth } from '@/app/contexts/sessionContext';
 import { userRegSchema } from '@/app/helpers/carValidator';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { isAxiosError } from 'axios';

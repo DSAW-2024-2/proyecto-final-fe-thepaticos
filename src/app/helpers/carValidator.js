@@ -11,7 +11,7 @@ export const userRegSchema = z.object({
 		.min(1, 'Espacio requerido')
 		.max(50, 'La marca no debe contener más de 50 caracteres')
 		.regex(
-			/^[a-zA-Z0-9\s\-]+$/,
+			/^[a-zA-Z0-9\s-]+$/,
 			'La marca solo debe contener letras, números, espacios o guiones'
 		)
 		.trim(),
@@ -20,7 +20,7 @@ export const userRegSchema = z.object({
 		.min(1, 'Espacio requerido')
 		.max(50, 'El modelo no debe contener más de 50 caracteres')
 		.regex(
-			/^[a-zA-Z0-9\s\-]+$/,
+			/^[a-zA-Z0-9\s-]+$/,
 			'El modelo solo debe contener letras, números, espacios o guiones'
 		)
 		.trim(),

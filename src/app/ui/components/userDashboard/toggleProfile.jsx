@@ -1,7 +1,7 @@
 import { useRouter } from 'next/navigation';
 import { usePathname } from 'next/navigation';
 
-export default function toggleProfile() {
+export default function ToggleProfile() {
 	const router = useRouter();
 	const pathname = usePathname();
 	const toggle = () => {
