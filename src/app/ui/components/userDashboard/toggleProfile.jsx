@@ -4,9 +4,14 @@ import { usePathname } from 'next/navigation';
 export default function ToggleProfile() {
 	const router = useRouter();
 	const pathname = usePathname();
+	const car = null;
 	const toggle = () => {
 		if (pathname === '/dashboard') {
-			router.push('/carRegister');
+			if (car) {
+				router.push('/driverDashboard');
+			} else {
+				router.push('/carRegister');
+			}
 		} else if (pathname === '/driverDashboard') {
 			router.push('/dashboard');
 		}
