@@ -48,20 +48,20 @@ export default function AsideMenu({ isMenuOpen, toggleMenu }) {
 			</h2>
 			<div className='h-[2px] w-full bg-white rounded-full my-4'></div>
 			<ul className='space-y-4'>
-				{pathname !== '/reservations' && (
-					<a
-						href='/reservations'
-						className='bg-white text-black flex justify-center items-center font-semibold p-3 rounded-full w-full'
-					>
-						Mis Viajes
-					</a>
-				)}
-				{pathname !== '/dashboard' && (
+				{(pathname === '/reservations' || pathname === '/profile') && (
 					<a
 						href='/dashboard'
 						className='bg-white text-black flex justify-center items-center font-semibold p-3 rounded-full w-full'
 					>
 						Viajes Disponibles
+					</a>
+				)}
+				{(pathname === '/dashboard' || pathname === '/profile') && (
+					<a
+						href='/reservations'
+						className='bg-white text-black flex justify-center items-center font-semibold p-3 rounded-full w-full'
+					>
+						Mis Viajes
 					</a>
 				)}
 			</ul>

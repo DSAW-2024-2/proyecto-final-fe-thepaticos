@@ -8,11 +8,14 @@ import logo from '/public/images/logo.png';
 import ProfilePhoto from '../components/navbar/profilePhoto';
 import ToggleProfile from '../components/userDashboard/toggleProfile';
 import AsideMenu from '../components/navbar/AsideMenu';
+import CarPhoto from '../components/navbar/CarProfile';
 
 export default function NavBar() {
 	const { user, signout } = useAuth();
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
 	const pathname = usePathname();
+	const car = null; //debe hacer un fetch del carro
+
 	const toggleMenu = () => {
 		setIsMenuOpen((prevState) => !prevState);
 	};
@@ -20,14 +23,21 @@ export default function NavBar() {
 	return (
 		<div className='bg-[#028747] text-white p-4 flex justify-between items-center shadow-lime-950 shadow-md'>
 			<AsideMenu isMenuOpen={isMenuOpen} toggleMenu={toggleMenu} />
-			{user && (
-				<Menu
-					className='w-9 h-9 sm:w-12 sm:h-12 border-2 rounded-lg hover:bg-[#025C31] cursor-pointer'
-					onClick={toggleMenu}
-				/>
-			)}
+			{(user &&
+				(pathname === '/dashboard' ||
+					pathname === '/profile' ||
+					pathname === '/reservations') && (
+					<Menu
+						className='w-9 h-9 sm:w-12 sm:h-12 border-2 rounded-lg hover:bg-[#025C31] cursor-pointer'
+						onClick={toggleMenu}
+					/>
+				)) || <div></div>}
 
-			{!user && (pathname === '/' || pathname === '/register') && (
+			{(pathname === '/' ||
+				pathname === '/register' ||
+				pathname === '/carRegister' ||
+				pathname === '/carProfile' ||
+				pathname === '/routeRegister') && (
 				<div className='flex w-full justify-center items-center gap-3 font-semibold text-xl sm:text-5xl'>
 					<Image
 						src={logo}
@@ -37,10 +47,15 @@ export default function NavBar() {
 					WHEEL US
 				</div>
 			)}
-			{user && <ToggleProfile />}
-			{(user && pathname !== '/profile' && (
+			{user &&
+				(pathname === '/dashboard' ||
+					pathname === '/reservations' ||
+					pathname === '/driverDashboard' ||
+					pathname === '/routesDriver') && <ToggleProfile vehicle={car} />}
+			{(user && (pathname === '/dashboard' || pathname === '/reservations') && (
 				<ProfilePhoto signout={signout} user={user} />
-			)) || <div></div>}
+			)) ||
+				(pathname === '/driverDashboard' && <CarPhoto />) || <div></div>}
 		</div>
 	);
 }
