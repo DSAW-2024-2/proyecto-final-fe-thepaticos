@@ -1,20 +1,56 @@
 'use client';
+import { useEffect, useState } from 'react';
 import AvailableTripCard from '@/app/ui/components/userDashboard/AvailableTripCard';
 import FilterButton from '@/app/ui/components/userDashboard/filterButton';
 
 export default function DashboardPage() {
-	const tripCards = [];
+	const [tripCards, setTripCards] = useState([]);
 
-	for (let i = 0; i < 10; i++) {
-		tripCards.push(<AvailableTripCard key={i} />);
-	}
+	const getRides = async (authToken) => {
+		try {
+			if (!authToken) {
+				console.error('Authorization token is missing');
+				return;
+			}
+
+			const response = await fetch(
+				'https://proyecto-final-be-thepaticos.vercel.app/ride/',
+				{
+					method: 'GET',
+					headers: {
+						Authorization: `Bearer ${authToken}`,
+					},
+				}
+			);
+
+			if (!response.ok) {
+				throw new Error('Failed to fetch rides');
+			}
+
+			const data = await response.json();
+			const rides = data.rides || [];
+
+			const tripCardsArray = rides.map((ride, index) => (
+				<AvailableTripCard key={index} ride={ride} />
+			));
+
+			setTripCards(tripCardsArray);
+		} catch (error) {
+			console.error('Error fetching rides:', error);
+		}
+	};
+
+	useEffect(() => {
+		const token = Cookies.get('authToken');
+		getRides(token);
+	}, []);
 
 	return (
 		<section className='flex flex-col justify-center w-full items-center bg-white'>
 			<FilterButton />
 			<section className='w-full h-screen p-5 pt-0 flex justify-center'>
 				<div className='bg-[#D9D9D9] shadow-gray-600 shadow-md bg-opacity-50 w-[98%] h-[70%] overflow-auto p-3 border-solid border-[1px] border-[#696C70] border-opacity-50 rounded-lg grid grid-cols-1 lg:grid-cols-2 gap-2'>
-					{tripCards}
+					{tripCards.length > 0 ? tripCards : <p>No available trips</p>}
 				</div>
 			</section>
 		</section>
