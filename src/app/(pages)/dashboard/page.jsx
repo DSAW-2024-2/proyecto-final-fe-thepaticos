@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react';
 import AvailableTripCard from '@/app/ui/components/userDashboard/AvailableTripCard';
 import FilterButton from '@/app/ui/components/userDashboard/filterButton';
+import Cookies from 'js-cookie';
 
 export default function DashboardPage() {
 	const [tripCards, setTripCards] = useState([]);
