@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-	baseURL: 'https://proyecto-final-be-thepaticos.vercel.app',
+	baseURL: `${process.env.BACKEND_URL}`,
 });
 export class Auth {
 	static async signin({ email, password }) {
