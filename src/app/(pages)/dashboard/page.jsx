@@ -50,8 +50,8 @@ export default function DashboardPage() {
 		<section className='flex flex-col justify-center w-full items-center bg-white'>
 			<FilterButton />
 			<section className='w-full h-screen p-5 pt-0 flex justify-center'>
-				<div className='bg-[#D9D9D9] shadow-gray-600 shadow-md bg-opacity-50 w-[98%] h-[70%] overflow-auto p-3 border-solid border-[1px] border-[#696C70] border-opacity-50 rounded-lg grid grid-cols-1 lg:grid-cols-2 gap-2'>
-					{tripCards.length > 0 ? tripCards : <p>No available trips</p>}
+				<div className='bg-[#D9D9D9] justify-center items-center shadow-gray-600 shadow-md bg-opacity-50 w-[98%] h-[70%] overflow-auto p-3 border-solid border-[1px] border-[#696C70] border-opacity-50 rounded-lg flex flex-col lg:grid lg:grid-cols-2 gap-2'>
+					{tripCards.length > 0 ? tripCards : 'No available trips'}
 				</div>
 			</section>
 		</section>

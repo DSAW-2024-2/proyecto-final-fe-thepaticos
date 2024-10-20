@@ -1,8 +1,8 @@
 import RouteStop from './routeStop';
 export default function AvailableTripCard({ route }) {
 	return (
-		<div className='flex'>
-			<div className='bg-[#D9D9D9] p-[3px] rounded-l-lg gap-[3px] sm:gap-3 flex w-full items-center justify-start border-2 border-[#696C70] border-opacity-50 border-r-0'>
+		<div className='flex h-fit'>
+			<div className='bg-[#D9D9D9] p-[10px] rounded-l-lg gap-[3px] sm:gap-3 flex w-full items-center justify-start border-2 border-[#696C70] border-opacity-50 border-r-0'>
 				<img
 					className='h-[60px] w-[60px] object-fill sm:w-[120px] sm:h-[120px] rounded-[5px] border-[2px] border-[#696C70]'
 					src={
