@@ -1,13 +1,28 @@
 import RouteStop from './routeStop';
-export default function AvailableTripCard({ route }) {
+export default function AvailableTripCard({
+	car,
+	route,
+	departure,
+	availableSeats,
+}) {
+	const dateString = departure;
+	const date = new Date(dateString);
+	const dateFormat = {
+		hour: 'numeric',
+		minute: 'numeric',
+		hour12: true,
+	};
+	const formattedTime = date.toLocaleTimeString('en-US', dateFormat);
+	console.log(formattedTime);
+
 	return (
 		<div className='flex h-fit'>
 			<div className='bg-[#D9D9D9] p-[10px] rounded-l-lg gap-[3px] sm:gap-3 flex w-full items-center justify-start border-2 border-[#696C70] border-opacity-50 border-r-0'>
 				<img
 					className='h-[60px] w-[60px] object-fill sm:w-[120px] sm:h-[120px] rounded-[5px] border-[2px] border-[#696C70]'
 					src={
-						route ||
-						'https://aacarsdna.com/images/vehicles/56/medium/c2ce1ca280186ac402421c274c64a0f1.jpg'
+						car ||
+						'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTwfoGbdjDFT0TjduR_2NklrEg6URCrDFb-cQ&s'
 					}
 					alt='Imagen carro'
 				/>
@@ -27,7 +42,7 @@ export default function AvailableTripCard({ route }) {
 								d='M13.9 12.7c0-.6-.2-1.2-.6-1.6c-.8-.8-2.4-.8-3.2 0l-.3.3c-.1.1-.1.3-.2.4s-.1.3-.1.4v.8c0 .1.1.3.1.4s.1.3.2.4l.3.3c.4.4 1 .7 1.6.7s1.2-.2 1.6-.7c.3-.2.6-.8.6-1.4M54 45.9c.4-.4.7-1 .7-1.6s-.2-1.2-.7-1.6l-.3-.3c-.1-.1-.3-.1-.4-.2c-.1 0-.3-.1-.4-.1H52c-.1 0-.3.1-.4.1c-.1.1-.3.1-.4.2l-.3.3c-.4.4-.7 1-.7 1.6s.2 1.2.7 1.6l.3.3c.1.1.3.1.4.2c.1 0 .3.1.4.1h.4c.6 0 1.2-.2 1.6-.6'
 							/>
 						</svg>
-						<RouteStop stops={['U. Sabana', 'Av. 170', 'Av. 127']} />
+						<RouteStop stops={route} />
 					</div>
 					<div className='flex gap-[3px] sm:gap-3 items-center w-full'>
 						<svg

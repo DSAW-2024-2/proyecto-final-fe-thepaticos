@@ -32,7 +32,7 @@ export default function DashboardPage() {
 			const rides = data.rides || [];
 
 			const tripCardsArray = rides.map((ride, index) => (
-				<AvailableTripCard key={index} ride={ride} />
+				<AvailableTripCard key={index} route={ride.route} />
 			));
 
 			setTripCards(tripCardsArray);
