@@ -14,7 +14,7 @@ export async function createVehicle(newData, userId) {
 		},
 	};
 	const formData = new FormData();
-	// Añadir datos simples
+
 	formData.append('brand', newData.brand);
 	formData.append('model', newData.model);
 	formData.append('plate', newData.plate);

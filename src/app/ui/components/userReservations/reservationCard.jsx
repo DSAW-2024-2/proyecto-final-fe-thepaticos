@@ -1,9 +1,12 @@
+import Image from 'next/image';
 import RouteStop from '../userDashboard/routeStop';
 export default function reservationCard() {
 	return (
 		<div className='flex flex-col h-fit'>
 			<div className='bg-[#D9D9D9] px-4 py-3 rounded-lg gap-[5px] sm:gap-3 flex flex-col w-[280px] h-fit items-center justify-start border-2 border-[#696C70] border-opacity-50'>
-				<img
+				<Image
+					width={400}
+					height={400}
 					className='h-[150px] w-[150px] object-fill sm:w-[180px] sm:h-[180px] rounded-[5px] border-[2px] border-[#696C70]'
 					src={
 						'https://aacarsdna.com/images/vehicles/56/medium/c2ce1ca280186ac402421c274c64a0f1.jpg'

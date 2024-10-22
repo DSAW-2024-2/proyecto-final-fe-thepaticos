@@ -17,9 +17,8 @@
 	"rules": {
 		"prettier/prettier": ["error"], // Prettier como regla de ESLint
 		"semi": ["error", "always"],
-		"quotes": ["error", "single"],
+		// "quotes": ["error", "single"],
 		"no-unused-vars": ["warn"],
-		"no-console": ["warn"],
 		"react/react-in-jsx-scope": "off",
 		"react/prop-types": "off",
 		"prefer-arrow-callback": ["warn"],

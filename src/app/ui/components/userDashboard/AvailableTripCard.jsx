@@ -2,6 +2,7 @@
 import { getVehicleByPlate } from '@/app/helpers/api/vehicles';
 import RouteStop from './routeStop';
 import { useState, useEffect } from 'react';
+import Image from 'next/image';
 export default function AvailableTripCard(ride) {
 	const [vehicle, setvehicle] = useState([]);
 
@@ -15,7 +16,7 @@ export default function AvailableTripCard(ride) {
 			}
 		};
 		getVehicle();
-	}, []);
+	}, [ride.ride.vehicle_plate]);
 	const dateString = ride.ride.departure;
 	const date = new Date(dateString);
 	const dateFormat = {
@@ -28,7 +29,9 @@ export default function AvailableTripCard(ride) {
 	return (
 		<div className='flex h-fit'>
 			<div className='bg-[#D9D9D9] p-[10px] rounded-l-lg gap-[3px] sm:gap-3 flex w-full items-center justify-start border-2 border-[#696C70] border-opacity-50 border-r-0'>
-				<img
+				<Image
+					width={400}
+					height={400}
 					className='h-[60px] w-[60px] object-fill sm:w-[120px] sm:h-[120px] rounded-[5px] border-[2px] border-[#696C70]'
 					src={
 						vehicle?.photo ||
