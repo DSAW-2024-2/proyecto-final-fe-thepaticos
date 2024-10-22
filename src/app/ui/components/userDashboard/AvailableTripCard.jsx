@@ -4,7 +4,7 @@ import RouteStop from './routeStop';
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 export default function AvailableTripCard(ride) {
-	const [vehicle, setvehicle] = useState([]);
+	const [vehicle, setvehicle] = useState({});
 
 	useEffect(() => {
 		const getVehicle = async () => {

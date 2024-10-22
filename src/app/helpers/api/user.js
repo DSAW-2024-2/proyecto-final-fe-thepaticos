@@ -22,10 +22,22 @@ export async function modifyUser(newData, userId) {
 	if (photo && photo.length > 0) {
 		formData.append('profilePhoto', photo[0]); //
 	}
-	const res = await api.patch(`/user/${userId}`, formData, config);
+	const res = await api.patch(`/${userId}`, formData, config);
 	if (res.status === 200) {
 		const newDataUser = await getUserByToken(Cookies.get('authToken'));
 
 		return newDataUser;
 	}
 }
+export async function getUserReservations(userId) {
+    const res = await api.get(`/user/${userId}/rides`)
+    return res.data.userRides
+}
+
+export async function getUserById(userId) {
+
+    
+    const res = await api.get(`/user/${userId}`)
+    return res.data.user
+}
+

@@ -3,8 +3,25 @@ import React, { useState, useEffect, useRef } from 'react';
 import FilterSubMenu from './filterSubMenu';
 import { usePathname } from 'next/navigation';
 import { useRouter } from 'next/navigation';
+import { getDestinations, getOrigins } from '@/app/helpers/api/ride';
 
 export default function FilterButton() {
+	const [origins, setOrigins] = useState([]);
+	const [destinations, setDestinations] = useState([]);
+
+	useEffect(() => {
+		const getPoints = async () => {
+			try {
+				const resOrigins = await getOrigins();
+				const resDestinations = await getDestinations();
+				setOrigins(resOrigins);
+				setDestinations(resDestinations);
+			} catch (error) {
+				console.error('Error fetching rides:', error);
+			}
+		};
+		getPoints();
+	}, []);
 	const [isOriginMenuVisible, setOriginMenuVisible] = useState(false);
 	const [isDestinationMenuVisible, setDestinationMenuVisible] = useState(false);
 	const [isCapacityMenuVisible, setCapacityMenuVisible] = useState(false);
@@ -90,7 +107,7 @@ export default function FilterButton() {
 			)}
 
 			<FilterSubMenu
-				optionsMenu={['U. Sabana', 'Av. 127']}
+				optionsMenu={origins}
 				Visible={isOriginMenuVisible}
 				horizontalMove={'left-0'}
 			/>
@@ -116,7 +133,7 @@ export default function FilterButton() {
 			)}
 
 			<FilterSubMenu
-				optionsMenu={['Bogotá', 'Cota', 'Chía', 'Funza']}
+				optionsMenu={destinations}
 				Visible={isDestinationMenuVisible}
 				horizontalMove={'left-[33%]'}
 			/>
@@ -142,7 +159,7 @@ export default function FilterButton() {
 			)}
 
 			<FilterSubMenu
-				optionsMenu={['2', '3', '4']}
+				optionsMenu={['1', '2', '3', '4', '5']}
 				Visible={isCapacityMenuVisible}
 				horizontalMove={'left-[66%]'}
 			/>

@@ -8,7 +8,17 @@ const api = axios.create({
 	},
 });
 export async function getAvaliableRides() {
-	const res = await api.get(`/ride/`);
+	const res = await api.get('/ride/');
 
 	return res.data.rides;
+}
+export async function getOrigins() {
+	const res = await api.get('/ride/start-routes');
+
+	return res.data.origins;
+}
+export async function getDestinations() {
+	const res = await api.get('/ride/end-routes');
+
+	return res.data.destinations;
 }

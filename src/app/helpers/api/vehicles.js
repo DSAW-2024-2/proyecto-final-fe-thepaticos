@@ -29,9 +29,10 @@ export async function createVehicle(newData, userId) {
 		formData.append('soat', newData.soat[0]); // Asocia la imagen del SOAT
 	}
 
-	await api.post(`/vehicle/`, formData, config);
+	await api.post('/vehicle/', formData, config);
 }
 export async function getVehicleByPlate(plate) {
 	const res = await api.get(`/vehicle/${plate}`);
+    
 	return res.data.vehicle;
 }

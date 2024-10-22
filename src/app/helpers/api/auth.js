@@ -16,10 +16,9 @@ export async function authSignin({ email, password }) {
 export async function authSignup(data) {
 	const formData = new FormData();
 	if (data.photo && data.photo.length > 0) {
-		formData.append('profilePhoto', data.photo[0]); // Enviamos solo el primer archivo como 'profilePhoto'
+		formData.append('profilePhoto', data.photo[0]); 
 	}
 
-	// Agregar el resto de los datos al FormData
 	for (const key in data) {
 		if (key !== 'photo' && key in data) {
 			formData.append(key, data[key]);
@@ -36,7 +35,7 @@ export async function authSignup(data) {
 export async function getUserByToken(token) {
 	const config = {
 		headers: {
-			Authorization: `Bearer ${token}`, // Ensure correct Bearer prefix
+			Authorization: `Bearer ${token}`,
 		},
 	};
 	const res = await api.get('/user/', config);
