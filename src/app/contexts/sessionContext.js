@@ -1,13 +1,7 @@
-import React, {
-	createContext,
-	useContext,
-	useState,
-	useEffect,
-	useMemo,
-} from 'react';
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
-import { Auth } from '../helpers/api/auth';
+import { createContext, useContext, useEffect, useMemo, useState } from 'react';
+import { authSignin, authSignup, getUserByToken } from '../helpers/api/auth';
 
 const AuthContext = createContext();
 
@@ -15,15 +9,14 @@ export const AuthProvider = ({ children }) => {
 	const router = useRouter();
 	const [user, setUser] = useState(null);
 	const [loading, setLoading] = useState(true);
-	const userMemo = useMemo(() => user, [user]);
 
 	useEffect(() => {
 		const token = Cookies.get('authToken');
 		if (token && !user) {
 			setLoading(true);
-			Auth.getUserByToken(token)
+			getUserByToken(token)
 				.then((res) => {
-					setUser(res.user);
+					setUser(res);
 					setLoading(false);
 				})
 				.catch(() => setLoading(false));
@@ -33,23 +26,23 @@ export const AuthProvider = ({ children }) => {
 	}, [user]);
 
 	const signup = async (data) => {
-		const token = await Auth.signup(data);
+		const token = await authSignup(data);
 		Cookies.set('authToken', token, {
 			path: '/',
 			sameSite: 'Strict',
 		});
-		const res = await Auth.getUserByToken(token);
-		setUser(res.user);
+		const res = await getUserByToken(token);
+		setUser(res);
 	};
 
 	const signin = async (email, password) => {
-		const token = await Auth.signin({ email, password });
+		const token = await authSignin({ email, password });
 		Cookies.set('authToken', token, {
 			path: '/',
 			sameSite: 'Strict',
 		});
-		const res = await Auth.getUserByToken(token);
-		setUser(res.user);
+		const res = await getUserByToken(token);
+		setUser(res);
 	};
 
 	const signout = () => {
@@ -70,7 +63,9 @@ export const AuthProvider = ({ children }) => {
 	}
 
 	return (
-		<AuthContext.Provider value={{ user: userMemo, signin, signout, signup }}>
+		<AuthContext.Provider
+			value={{ user: user, signin, signout, signup, setUser }}
+		>
 			{children}
 		</AuthContext.Provider>
 	);

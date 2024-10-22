@@ -1,16 +1,19 @@
 'use client';
 import { useLoading } from '@/app/contexts/loadingContext';
-import { userRegSchema } from '@/app/helpers/carValidator';
+import { useAuth } from '@/app/contexts/sessionContext';
+import { createVehicle } from '@/app/helpers/api/vehicles';
+import { vehicleSchema } from '@/app/helpers/validators';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { isAxiosError } from 'axios';
 import { ChevronLeft } from 'lucide-react';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import Swal from 'sweetalert2';
-import Link from 'next/link';
 
 export default function Page() {
 	const router = useRouter();
+	const {user} = useAuth()
 	const { setLoading } = useLoading();
 	let car = null;
 
@@ -19,7 +22,7 @@ export default function Page() {
 		handleSubmit,
 		formState: { errors },
 	} = useForm({
-		resolver: zodResolver(userRegSchema),
+		resolver: zodResolver(vehicleSchema),
 	});
 	const errorsMes = (err) => {
 		let errorMessage;
@@ -35,6 +38,7 @@ export default function Page() {
 	const onSubmit = async (data) => {
 		setLoading(true);
 		try {
+			await createVehicle(data, user.id)
 			Swal.fire({
 				title: 'Excelente!',
 				text: 'Vehiculo Registrado Correctamente',
@@ -117,36 +121,43 @@ export default function Page() {
 					)}
 				</div>
 			))}
-			<label htmlFor={'SOAT'} className='block text-gray-700 mb-2 capitalize'>
+			<label htmlFor={'soat'} className='block text-gray-700 mb-2 capitalize'>
 				SOAT
 			</label>
 			<div className='mb-4'>
 				<input
 					type='file'
-					id='SOAT'
-					{...register('SOAT')}
+					id='soat'
+					{...register('soat')}
 					accept='image/jpeg, image/png, image/gif'
 					className='text-xs sm:text-base'
+					required
 				/>
 			</div>
-			{errors.SOAT && (
-				<p className='text-red-500 text-sm mt-1'>{errors.SOAT.message}</p>
+			{errors.soat && (
+				<p className='text-red-500 text-sm mt-1'>{errors.soat.message}</p>
 			)}
 
-			<label htmlFor={'photo'} className='block text-gray-700 mb-2 capitalize'>
+			<label
+				htmlFor={'vehiclePhoto'}
+				className='block text-gray-700 mb-2 capitalize'
+			>
 				Foto Vehículo
 			</label>
 			<div className='mb-4'>
 				<input
 					type='file'
-					id='photo'
-					{...register('photo')}
+					id='vehiclePhoto'
+					{...register('vehiclePhoto')}
 					accept='image/jpeg, image/png, image/gif'
 					className='text-xs sm:text-base'
+					required
 				/>
 			</div>
-			{errors.photo && (
-				<p className='text-red-500 text-sm mt-1'>{errors.photo.message}</p>
+			{errors.vehiclePhoto && (
+				<p className='text-red-500 text-sm mt-1'>
+					{errors.vehiclePhoto.message}
+				</p>
 			)}
 
 			<button

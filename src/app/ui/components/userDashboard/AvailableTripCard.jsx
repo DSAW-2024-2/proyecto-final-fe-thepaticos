@@ -1,11 +1,22 @@
+'use client';
+import { getVehicleByPlate } from '@/app/helpers/api/vehicles';
 import RouteStop from './routeStop';
-export default function AvailableTripCard({
-	car,
-	route,
-	departure,
-	availableSeats,
-}) {
-	const dateString = departure;
+import { useState, useEffect } from 'react';
+export default function AvailableTripCard(ride) {
+	const [vehicle, setvehicle] = useState([]);
+
+	useEffect(() => {
+		const getVehicle = async () => {
+			try {
+				const vehicle = await getVehicleByPlate(ride.ride.vehicle_plate);
+				setvehicle(vehicle);
+			} catch (error) {
+				console.error('Error fetching rides:', error);
+			}
+		};
+		getVehicle();
+	}, []);
+	const dateString = ride.ride.departure;
 	const date = new Date(dateString);
 	const dateFormat = {
 		hour: 'numeric',
@@ -13,7 +24,6 @@ export default function AvailableTripCard({
 		hour12: true,
 	};
 	const formattedTime = date.toLocaleTimeString('en-US', dateFormat);
-	console.log(formattedTime);
 
 	return (
 		<div className='flex h-fit'>
@@ -21,7 +31,7 @@ export default function AvailableTripCard({
 				<img
 					className='h-[60px] w-[60px] object-fill sm:w-[120px] sm:h-[120px] rounded-[5px] border-[2px] border-[#696C70]'
 					src={
-						car ||
+						vehicle?.photo ||
 						'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTwfoGbdjDFT0TjduR_2NklrEg6URCrDFb-cQ&s'
 					}
 					alt='Imagen carro'
@@ -42,7 +52,7 @@ export default function AvailableTripCard({
 								d='M13.9 12.7c0-.6-.2-1.2-.6-1.6c-.8-.8-2.4-.8-3.2 0l-.3.3c-.1.1-.1.3-.2.4s-.1.3-.1.4v.8c0 .1.1.3.1.4s.1.3.2.4l.3.3c.4.4 1 .7 1.6.7s1.2-.2 1.6-.7c.3-.2.6-.8.6-1.4M54 45.9c.4-.4.7-1 .7-1.6s-.2-1.2-.7-1.6l-.3-.3c-.1-.1-.3-.1-.4-.2c-.1 0-.3-.1-.4-.1H52c-.1 0-.3.1-.4.1c-.1.1-.3.1-.4.2l-.3.3c-.4.4-.7 1-.7 1.6s.2 1.2.7 1.6l.3.3c.1.1.3.1.4.2c.1 0 .3.1.4.1h.4c.6 0 1.2-.2 1.6-.6'
 							/>
 						</svg>
-						<RouteStop stops={route} />
+						<RouteStop stops={ride.ride.route} />
 					</div>
 					<div className='flex gap-[3px] sm:gap-3 items-center w-full'>
 						<svg
@@ -55,7 +65,9 @@ export default function AvailableTripCard({
 								d='M12 20a8 8 0 0 0 8-8a8 8 0 0 0-8-8a8 8 0 0 0-8 8a8 8 0 0 0 8 8m0-18a10 10 0 0 1 10 10a10 10 0 0 1-10 10C6.47 22 2 17.5 2 12A10 10 0 0 1 12 2m.5 5v5.25l4.5 2.67l-.75 1.23L11 13V7z'
 							/>
 						</svg>
-						<div className='text-[12px] sm:text-lg font-semibold'>3:00 pm</div>
+						<div className='text-[12px] sm:text-lg font-semibold'>
+							{formattedTime}
+						</div>
 					</div>
 					<div className='flex gap-[3px] sm:gap-3 items-center w-full'>
 						<svg
@@ -68,7 +80,9 @@ export default function AvailableTripCard({
 								d='M10.561 8.073a6 6 0 0 1 3.432 5.142a.75.75 0 1 1-1.498.07a4.5 4.5 0 0 0-8.99 0a.75.75 0 0 1-1.498-.07a6 6 0 0 1 3.431-5.142a3.999 3.999 0 1 1 5.123 0M10.5 5a2.5 2.5 0 1 0-5 0a2.5 2.5 0 0 0 5 0'
 							/>
 						</svg>
-						<div className='text-[12px] sm:text-lg font-semibold'>3</div>
+						<div className='text-[12px] sm:text-lg font-semibold'>
+							{ride.ride.available_seats}
+						</div>
 					</div>
 				</section>
 			</div>

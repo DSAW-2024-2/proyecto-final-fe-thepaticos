@@ -1,3 +1,4 @@
+'use client';
 import React, { useState, useEffect, useRef } from 'react';
 import FilterSubMenu from './filterSubMenu';
 import { usePathname } from 'next/navigation';

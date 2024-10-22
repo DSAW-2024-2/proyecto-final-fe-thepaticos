@@ -1,20 +1,20 @@
 'use client';
-import Image from 'next/image';
-import Link from 'next/link';
 import { useLoading } from '@/app/contexts/loadingContext';
 import { useAuth } from '@/app/contexts/sessionContext';
-import { userRegSchema } from '@/app/helpers/validators';
+import { modifyUser } from '@/app/helpers/api/user';
+import { userModifySchema } from '@/app/helpers/validators';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { isAxiosError } from 'axios';
 import { ChevronLeft } from 'lucide-react';
+import Image from 'next/image';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import Swal from 'sweetalert2';
 
 export default function Page() {
-	const { user, signout } = useAuth();
+	const { user, setUser } = useAuth();
 	const router = useRouter();
-	const { signup } = useAuth();
 	const { setLoading } = useLoading();
 
 	const {
@@ -22,7 +22,7 @@ export default function Page() {
 		handleSubmit,
 		formState: { errors },
 	} = useForm({
-		resolver: zodResolver(userRegSchema),
+		resolver: zodResolver(userModifySchema),
 	});
 	const errorsMes = (err) => {
 		let errorMessage;
@@ -38,7 +38,8 @@ export default function Page() {
 	const onSubmit = async (data) => {
 		setLoading(true);
 		try {
-			await signup(data);
+			const patchUser = await modifyUser(data, user.id);
+			setUser(patchUser);
 			Swal.fire({
 				title: 'Excelente!',
 				text: 'Cambios Realizados Correctamente',
@@ -46,6 +47,8 @@ export default function Page() {
 			});
 			router.push('/dashboard');
 		} catch (error) {
+			console.log(error);
+
 			let validateErrors = '';
 			if (error.response.data.errors) {
 				validateErrors = errorsMes(error.response.data.errors);
@@ -80,7 +83,7 @@ export default function Page() {
 				</Link>
 				<div className='flex flex-col justify-center items-center gap-4'>
 					<Image
-						src={user.photo || 'public/images/anonym.png'}
+						src={user.photo || '/images/anonym.png'}
 						alt='Picture of the author'
 						width={500}
 						height={500}
@@ -111,14 +114,14 @@ export default function Page() {
 								type='text'
 								id={field}
 								{...register(field)}
-								value={`${
+								defaultValue={`${
 									field === 'contact'
-										? user.contact
+										? user?.contact
 										: field === 'name'
-											? user.name
+											? user?.name
 											: field === 'lastname'
-												? 'Pérez'
-												: user.lastname
+												? user?.lastname
+												: ''
 								}`}
 								className='w-full px-3 py-2 border rounded-lg'
 							/>

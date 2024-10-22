@@ -29,7 +29,7 @@ export default function ModalLogin({ onClose }) {
 			if (isAxiosError(error)) {
 				Swal.fire({
 					title: 'Error!',
-					text: error.response.data.message_error,
+					text: error.response.data.message,
 					icon: 'error',
 				});
 			} else {
