@@ -27,7 +27,7 @@ export default function AvailableTripCard(ride) {
 	const formattedTime = date.toLocaleTimeString('en-US', dateFormat);
 
 	return (
-		<div className='flex h-fit'>
+		<div className='flex h-fit w-full'>
 			<div className='bg-[#D9D9D9] p-[10px] rounded-l-lg gap-[3px] sm:gap-3 flex w-full items-center justify-start border-2 border-[#696C70] border-opacity-50 border-r-0'>
 				<Image
 					width={400}
