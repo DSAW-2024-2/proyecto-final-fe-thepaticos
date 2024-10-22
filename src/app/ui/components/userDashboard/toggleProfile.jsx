@@ -1,31 +1,29 @@
-import { useRouter } from 'next/navigation';
-import { usePathname } from 'next/navigation';
-import { useState } from 'react';
+import { useRol } from '@/app/contexts/rolContext';
+import { usePathname, useRouter } from 'next/navigation';
 
 export default function ToggleProfile({ vehicle }) {
 	const router = useRouter();
 	const pathname = usePathname();
-	const car = vehicle;
-	const [currentRole, setCurrentRole] = useState(null);
+	const { currentRole, setCurrentRole } = useRol();
 
 	const toggle = () => {
 		if (pathname === '/dashboard') {
-			if (car) {
+			if (vehicle) {
 				setCurrentRole('driver');
 				router.push('/driverDashboard');
 			} else {
 				router.push('/carRegister');
-				setCurrentRole('driver');
+				setCurrentRole('passenger');
 			}
 		} else if (pathname === '/driverDashboard') {
-			setCurrentRole('user');
+			setCurrentRole('passenger');
 			router.push('/dashboard');
 		}
 	};
 
 	return (
 		<div
-			className={`bg-white flex rounded-full p-[2px] ${car ? (currentRole === 'user' ? 'w-[140px] justify-start' : 'w-[140px] justify-end') : 'w-fit'}`}
+			className={`bg-white flex rounded-full p-[2px] ${vehicle ? (currentRole === 'passenger' ? 'w-[140px] justify-start' : 'w-[140px] justify-end') : 'w-fit'}`}
 		>
 			<button
 				onClick={toggle}
@@ -33,7 +31,7 @@ export default function ToggleProfile({ vehicle }) {
 			>
 				<svg
 					xmlns='http://www.w3.org/2000/svg'
-					className={`w-5 h-5 sm:w-10 sm:h-10 ${car ? 'hidden' : ''}`}
+					className={`w-5 h-5 sm:w-10 sm:h-10 ${vehicle ? 'hidden' : ''}`}
 					viewBox='0 0 24 24'
 				>
 					<path
@@ -42,8 +40,8 @@ export default function ToggleProfile({ vehicle }) {
 					/>
 				</svg>
 				<p className='text-sm sm:text-lg'>
-					{car
-						? currentRole === 'user'
+					{vehicle
+						? currentRole === 'passenger'
 							? 'Pasajero'
 							: 'Conductor'
 						: 'Añadir vehículo'}

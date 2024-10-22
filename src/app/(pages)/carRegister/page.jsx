@@ -13,7 +13,7 @@ import Swal from 'sweetalert2';
 
 export default function Page() {
 	const router = useRouter();
-	const { user } = useAuth();
+	const { user, setUser } = useAuth();
 	const { setLoading } = useLoading();
 	const {
 		register,
@@ -37,6 +37,7 @@ export default function Page() {
 		setLoading(true);
 		try {
 			await createVehicle(data, user.id);
+			setUser({ ...user, vehicle_plate: data.plate });
 			Swal.fire({
 				title: 'Excelente!',
 				text: 'Vehiculo Registrado Correctamente',

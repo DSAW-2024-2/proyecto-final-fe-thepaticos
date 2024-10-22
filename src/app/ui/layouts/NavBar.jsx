@@ -14,7 +14,10 @@ export default function NavBar() {
 	const { user, signout } = useAuth();
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
 	const pathname = usePathname();
-	const car = null; //debe hacer un fetch del carro
+	let car = null;
+	if (user?.vehicle_plate && user.vehicle_plate !== null) {
+		car = user.vehicle_plate;
+	}
 
 	const toggleMenu = () => {
 		setIsMenuOpen((prevState) => !prevState);
