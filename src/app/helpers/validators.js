@@ -1,5 +1,5 @@
 import { z } from 'zod';
-const ACCEPTED_IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/gif'];
+const ACCEPTED_IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/jpg'];
 export const userRegSchema = z.object({
 	name: z
 		.string()
@@ -39,6 +39,46 @@ export const userRegSchema = z.object({
 			(fileList) =>
 				!fileList || fileList.length === 0 || fileList[0].size <= 2097152,
 			{
+				message: 'La foto no debe pesar más de 1MB',
+			}
+		)
+		.refine(
+			(fileList) =>
+				!fileList ||
+				fileList.length === 0 ||
+				ACCEPTED_IMAGE_TYPES.includes(fileList[0].type),
+			{
+				message: 'La foto debe ser una imagen en formato (JPEG, PNG o JPG)',
+			}
+		),
+});
+export const userModifySchema = z.object({
+	name: z
+		.string()
+		.min(1, 'Espacio requerido')
+		.max(50, 'No debe contener más de 50 caracteres')
+		.regex(/^[a-zA-Z]+$/, 'Debe contener solo letras')
+		.trim()
+		.optional(),
+	lastname: z
+		.string()
+		.min(1, 'Espacio requerido')
+		.max(50, 'No debe contener más de 50 caracteres')
+		.regex(/^[a-zA-Z]+$/, 'Debe contener solo letras')
+		.trim()
+		.optional(),
+	contact: z
+		.string()
+		.regex(/^\d/, 'Debe contener solo numeros')
+		.length(10, 'Debe tener 10 dígitos')
+		.optional(),
+	photo: z
+		.any()
+		.optional()
+		.refine(
+			(fileList) =>
+				!fileList || fileList.length === 0 || fileList[0].size <= 2097152,
+			{
 				message: 'La foto no debe pesar más de 2MB',
 			}
 		)
@@ -49,6 +89,55 @@ export const userRegSchema = z.object({
 				ACCEPTED_IMAGE_TYPES.includes(fileList[0].type),
 			{
 				message: 'La foto debe ser una imagen en formato (JPEG, PNG o GIF)',
+			}
+		),
+});
+export const vehicleSchema = z.object({
+	plate: z
+		.string()
+		.regex(/^([A-Z]{3})(\d{3})$/, 'Debe contener 3 letras y 3 Numeros')
+		.min(1, 'Espacio requerido'),
+	brand: z.string().min(1, 'Espacio requerido'),
+	model: z.string().min(1, 'Espacio requerido'),
+	seats: z
+		.string()
+		.min(1, 'Espacio requerido')
+		.regex(/^[1-6]$/)
+		.transform((val) => Number(val)),
+	soat: z
+		.any()
+		.refine(
+			(fileList) =>
+				!fileList || fileList.length === 0 || fileList[0].size <= 1048576,
+			{
+				message: 'La foto no debe pesar más de 1MB',
+			}
+		)
+		.refine(
+			(fileList) =>
+				!fileList ||
+				fileList.length === 0 ||
+				ACCEPTED_IMAGE_TYPES.includes(fileList[0].type),
+			{
+				message: 'La foto debe ser una imagen en formato (JPEG, PNG o JPG)',
+			}
+		),
+	vehiclePhoto: z
+		.any()
+		.refine(
+			(fileList) =>
+				!fileList || fileList.length === 0 || fileList[0].size <= 1048576,
+			{
+				message: 'La foto no debe pesar más de 1MB',
+			}
+		)
+		.refine(
+			(fileList) =>
+				!fileList ||
+				fileList.length === 0 ||
+				ACCEPTED_IMAGE_TYPES.includes(fileList[0].type),
+			{
+				message: 'La foto debe ser una imagen en formato (JPEG, PNG o JPG)',
 			}
 		),
 });

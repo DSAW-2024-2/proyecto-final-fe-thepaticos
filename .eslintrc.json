@@ -19,7 +19,6 @@
 		"semi": ["error", "always"],
 		"quotes": ["error", "single"],
 		"no-unused-vars": ["warn"],
-		"no-console": ["warn"],
 		"react/react-in-jsx-scope": "off",
 		"react/prop-types": "off",
 		"prefer-arrow-callback": ["warn"],

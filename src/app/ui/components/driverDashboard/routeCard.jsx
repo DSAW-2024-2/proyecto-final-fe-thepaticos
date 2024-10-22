@@ -1,5 +1,5 @@
 import RouteStop from '../userDashboard/routeStop';
-export default function AvailableTripCard({ route }) {
+export default function AvailableTripCard() {
 	return (
 		<div className='flex h-fit'>
 			<div className='bg-[#D9D9D9] p-[3px] rounded-l-lg gap-[3px] sm:gap-3 flex w-full h-fit items-center justify-start border-2 border-[#696C70] border-opacity-50 border-r-0'>

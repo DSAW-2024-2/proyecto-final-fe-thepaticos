@@ -12,7 +12,7 @@ import { useForm } from 'react-hook-form';
 import Swal from 'sweetalert2';
 
 export default function Page() {
-	const { user, signout } = useAuth();
+	const { user } = useAuth();
 	const router = useRouter();
 	const { signup } = useAuth();
 	const { setLoading } = useLoading();

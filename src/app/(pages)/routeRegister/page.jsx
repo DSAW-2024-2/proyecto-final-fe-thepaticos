@@ -1,18 +1,16 @@
 'use client';
 import { useLoading } from '@/app/contexts/loadingContext';
-import { useAuth } from '@/app/contexts/sessionContext';
 import { userRegSchema } from '@/app/helpers/validators';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { isAxiosError } from 'axios';
 import { ChevronLeft } from 'lucide-react';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import Swal from 'sweetalert2';
-import Link from 'next/link';
 
 export default function Page() {
 	const router = useRouter();
-	const { signup } = useAuth();
 	const { setLoading } = useLoading();
 
 	const {
@@ -33,7 +31,7 @@ export default function Page() {
 		return errorMessage;
 	};
 
-	const onSubmit = async (data) => {
+	const onSubmit = async () => {
 		setLoading(true);
 		try {
 			Swal.fire({

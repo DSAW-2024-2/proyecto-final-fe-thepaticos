@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
-export default function ProfilePhoto({ signout, user }) {
+export default function ProfilePhoto({ signout }) {
 	const [showMenu, setShowMenu] = useState(false);
 	const dropdownRef = useRef(null);
 	const router = useRouter();

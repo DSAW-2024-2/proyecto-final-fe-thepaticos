@@ -1,12 +1,43 @@
+import { getUserById } from '@/app/helpers/api/user';
+import { getVehicleByPlate } from '@/app/helpers/api/vehicles';
+import Image from 'next/image';
+import { useEffect, useState } from 'react';
 import RouteStop from '../userDashboard/routeStop';
-export default function reservationCard() {
+export default function ReservationCard({ item }) {
+	const [vehicle, setvehicle] = useState({});
+	const [driver, setDriver] = useState({});
+
+	useEffect(() => {
+		const getVehicle = async () => {
+			try {
+				const resVehicle = await getVehicleByPlate(item.vehicle_plate);
+				const resDriver = await getUserById(resVehicle.id_driver);
+				setvehicle(resVehicle);
+				setDriver(resDriver);
+			} catch (error) {
+				console.error('Error fetching rides:', error);
+			}
+		};
+		getVehicle();
+	}, [item.vehicle_plate]);
+	const dateString = item.departure;
+	const date = new Date(dateString);
+	const dateFormat = {
+		hour: 'numeric',
+		minute: 'numeric',
+		hour12: true,
+	};
+	const formattedTime = date.toLocaleTimeString('en-US', dateFormat);
 	return (
 		<div className='flex flex-col h-fit'>
 			<div className='bg-[#D9D9D9] px-4 py-3 rounded-lg gap-[5px] sm:gap-3 flex flex-col w-[280px] h-fit items-center justify-start border-2 border-[#696C70] border-opacity-50'>
-				<img
+				<Image
+					width={400}
+					height={400}
 					className='h-[150px] w-[150px] object-fill sm:w-[180px] sm:h-[180px] rounded-[5px] border-[2px] border-[#696C70]'
 					src={
-						'https://aacarsdna.com/images/vehicles/56/medium/c2ce1ca280186ac402421c274c64a0f1.jpg'
+						vehicle?.photo ||
+						'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTwfoGbdjDFT0TjduR_2NklrEg6URCrDFb-cQ&s'
 					}
 					alt='Imagen carro'
 				/>
@@ -26,18 +57,7 @@ export default function reservationCard() {
 								d='M13.9 12.7c0-.6-.2-1.2-.6-1.6c-.8-.8-2.4-.8-3.2 0l-.3.3c-.1.1-.1.3-.2.4s-.1.3-.1.4v.8c0 .1.1.3.1.4s.1.3.2.4l.3.3c.4.4 1 .7 1.6.7s1.2-.2 1.6-.7c.3-.2.6-.8.6-1.4M54 45.9c.4-.4.7-1 .7-1.6s-.2-1.2-.7-1.6l-.3-.3c-.1-.1-.3-.1-.4-.2c-.1 0-.3-.1-.4-.1H52c-.1 0-.3.1-.4.1c-.1.1-.3.1-.4.2l-.3.3c-.4.4-.7 1-.7 1.6s.2 1.2.7 1.6l.3.3c.1.1.3.1.4.2c.1 0 .3.1.4.1h.4c.6 0 1.2-.2 1.6-.6'
 							/>
 						</svg>
-						<RouteStop
-							stops={[
-								'U. Sabana',
-								'Av. 170',
-								'Av. 127',
-								'Av. 9',
-								'U. Sabana',
-								'Av. 170',
-								'Av. 127',
-								'Av. 9',
-							]}
-						/>
+						<RouteStop stops={item.route} />
 					</div>
 
 					<div className='flex gap-[5px] sm:gap-3 items-center w-full'>
@@ -51,7 +71,9 @@ export default function reservationCard() {
 								d='M12 20a8 8 0 0 0 8-8a8 8 0 0 0-8-8a8 8 0 0 0-8 8a8 8 0 0 0 8 8m0-18a10 10 0 0 1 10 10a10 10 0 0 1-10 10C6.47 22 2 17.5 2 12A10 10 0 0 1 12 2m.5 5v5.25l4.5 2.67l-.75 1.23L11 13V7z'
 							/>
 						</svg>
-						<div className='text-base sm:text-lg font-semibold'>3:00 pm</div>
+						<div className='text-base sm:text-lg font-semibold'>
+							{formattedTime}
+						</div>
 					</div>
 
 					<div className='flex gap-[5px] sm:gap-3 items-center w-full'>
@@ -65,7 +87,9 @@ export default function reservationCard() {
 								d='M8.5 6q-.825 0-1.412-.587T6.5 4t.588-1.412T8.5 2t1.413.588T10.5 4t-.587 1.413T8.5 6M13 20H7.55q-.825 0-1.512-.587T5.175 18l-1.95-9.8q-.1-.475.2-.837t.8-.363q.35 0 .625.225t.35.575L7.25 18H13q.425 0 .713.288T14 19t-.288.713T13 20m6 1.125L16.6 17H9.65q-.725 0-1.263-.437T7.7 15.4l-1.1-5.35q-.275-1.2.563-2.125T9.2 7q.875 0 1.588.525T11.7 8.95L12.8 14h3.25q.525 0 .975.275t.725.725l3 5.125q.2.35.088.763t-.463.612t-.763.088t-.612-.463'
 							/>
 						</svg>
-						<div className='text-base sm:text-lg font-semibold'>1</div>
+						<div className='text-base sm:text-lg font-semibold'>
+							{item.available_seats}
+						</div>
 					</div>
 
 					<div className='flex gap-[5px] sm:gap-3 items-center w-full'>
@@ -83,7 +107,9 @@ export default function reservationCard() {
 								d='M17.526 5.116L14.347.659L2.658 9.997L2.01 9.99V10H1.5v12h21V10h-.962l-1.914-5.599zM19.425 10H9.397l7.469-2.546l1.522-.487zM15.55 5.79L7.84 8.418l6.106-4.878zM3.5 18.169v-4.34A3 3 0 0 0 5.33 12h13.34a3 3 0 0 0 1.83 1.83v4.34A3 3 0 0 0 18.67 20H5.332A3.01 3.01 0 0 0 3.5 18.169'
 							/>
 						</svg>
-						<div className='text-base sm:text-lg font-semibold'>$ 4.000</div>
+						<div className='text-base sm:text-lg font-semibold'>
+							$ {item.fee}
+						</div>
 					</div>
 
 					<div className='flex gap-[5px] sm:gap-3 items-center w-full'>
@@ -98,7 +124,7 @@ export default function reservationCard() {
 							/>
 						</svg>
 						<div className='text-base sm:text-lg font-semibold'>
-							Pepito Peréz
+							{`${driver.name} ${driver.lastname}`}
 						</div>
 					</div>
 
@@ -114,7 +140,7 @@ export default function reservationCard() {
 							/>
 						</svg>
 						<div className='text-base sm:text-lg font-semibold'>
-							Chevrolet Cruz 2020
+							{vehicle.model}
 						</div>
 					</div>
 
@@ -129,7 +155,9 @@ export default function reservationCard() {
 								d='M896 1084q0-54-7.5-100.5t-24.5-90t-51-68.5t-81-25q-64 64-156 64t-156-64q-47 0-81 25t-51 68.5t-24.5 90T256 1084q0 55 31.5 93.5T363 1216h426q44 0 75.5-38.5T896 1084M768 640q0-80-56-136t-136-56t-136 56t-56 136t56 136t136 56t136-56t56-136m1024 480v-64q0-14-9-23t-23-9h-704q-14 0-23 9t-9 23v64q0 14 9 23t23 9h704q14 0 23-9t9-23m-384-256v-64q0-14-9-23t-23-9h-320q-14 0-23 9t-9 23v64q0 14 9 23t23 9h320q14 0 23-9t9-23m384 0v-64q0-14-9-23t-23-9h-192q-14 0-23 9t-9 23v64q0 14 9 23t23 9h192q14 0 23-9t9-23m0-256v-64q0-14-9-23t-23-9h-704q-14 0-23 9t-9 23v64q0 14 9 23t23 9h704q14 0 23-9t9-23M128 256h1792v-96q0-14-9-23t-23-9H160q-14 0-23 9t-9 23zm1920-96v1216q0 66-47 113t-113 47H160q-66 0-113-47T0 1376V160Q0 94 47 47T160 0h1728q66 0 113 47t47 113'
 							/>
 						</svg>
-						<div className='text-base sm:text-lg font-semibold'>ABC 123</div>
+						<div className='text-base sm:text-lg font-semibold'>
+							{item.vehicle_plate}
+						</div>
 					</div>
 
 					<div className='flex gap-[5px] sm:gap-3 items-center w-full'>
@@ -144,7 +172,7 @@ export default function reservationCard() {
 							/>
 						</svg>
 						<div className='text-base sm:text-lg font-semibold'>
-							312 456 7890
+							{driver.contact}
 						</div>
 					</div>
 				</section>
