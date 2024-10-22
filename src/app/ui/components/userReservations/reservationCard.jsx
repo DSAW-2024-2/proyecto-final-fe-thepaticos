@@ -1,10 +1,9 @@
-import Image from 'next/image';
-import RouteStop from '../userDashboard/routeStop';
-import { useEffect, useState } from 'react';
-import { getVehicleByPlate } from '@/app/helpers/api/vehicles';
-import { useAuth } from '@/app/contexts/sessionContext';
 import { getUserById } from '@/app/helpers/api/user';
-export default function reservationCard({ item }) {
+import { getVehicleByPlate } from '@/app/helpers/api/vehicles';
+import Image from 'next/image';
+import { useEffect, useState } from 'react';
+import RouteStop from '../userDashboard/routeStop';
+export default function ReservationCard({ item }) {
 	const [vehicle, setvehicle] = useState({});
 	const [driver, setDriver] = useState({});
 

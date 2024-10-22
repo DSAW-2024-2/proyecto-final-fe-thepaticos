@@ -30,14 +30,11 @@ export async function modifyUser(newData, userId) {
 	}
 }
 export async function getUserReservations(userId) {
-    const res = await api.get(`/user/${userId}/rides`)
-    return res.data.userRides
+	const res = await api.get(`/user/${userId}/rides`);
+	return res.data.userRides;
 }
 
 export async function getUserById(userId) {
-
-    
-    const res = await api.get(`/user/${userId}`)
-    return res.data.user
+	const res = await api.get(`/user/${userId}`);
+	return res.data.user;
 }
-

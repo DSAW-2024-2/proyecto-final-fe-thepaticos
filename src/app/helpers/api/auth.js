@@ -16,7 +16,7 @@ export async function authSignin({ email, password }) {
 export async function authSignup(data) {
 	const formData = new FormData();
 	if (data.photo && data.photo.length > 0) {
-		formData.append('profilePhoto', data.photo[0]); 
+		formData.append('profilePhoto', data.photo[0]);
 	}
 
 	for (const key in data) {

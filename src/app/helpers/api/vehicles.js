@@ -33,6 +33,6 @@ export async function createVehicle(newData, userId) {
 }
 export async function getVehicleByPlate(plate) {
 	const res = await api.get(`/vehicle/${plate}`);
-    
+
 	return res.data.vehicle;
 }
