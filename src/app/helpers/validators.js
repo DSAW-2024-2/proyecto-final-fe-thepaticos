@@ -141,3 +141,11 @@ export const vehicleSchema = z.object({
 			}
 		),
 });
+export const rideSchema = z.object({
+	origin: z.string(),
+	destination: z.string(),
+	route: z.array(z.string()),
+	departure: z.string().datetime(),
+	available_seats: z.coerce.number().min(1).max(6),
+	fee: z.coerce.number().positive(),
+});

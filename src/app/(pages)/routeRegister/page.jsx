@@ -1,6 +1,6 @@
 'use client';
 import { useLoading } from '@/app/contexts/loadingContext';
-import { userRegSchema } from '@/app/helpers/validators';
+import { rideSchema } from '@/app/helpers/validators';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { isAxiosError } from 'axios';
 import { ChevronLeft } from 'lucide-react';
@@ -18,7 +18,7 @@ export default function Page() {
 		handleSubmit,
 		formState: { errors },
 	} = useForm({
-		resolver: zodResolver(userRegSchema),
+		resolver: zodResolver(rideSchema),
 	});
 	const errorsMes = (err) => {
 		let errorMessage;
@@ -76,67 +76,57 @@ export default function Page() {
 			>
 				<ChevronLeft /> Volver
 			</Link>
-			{['name', 'lastname', 'email', 'id', 'contact', 'password'].map(
-				(field) => (
-					<div key={field} className='mb-4'>
-						<label
-							htmlFor={field}
-							className='block text-gray-700 mb-2 capitalize'
-						>
-							{field === 'email'
-								? 'Email'
-								: field === 'contact'
-									? 'Contacto'
-									: field === 'name'
-										? 'Nombre'
-										: field === 'lastname'
-											? 'Apellido'
-											: field === 'id'
-												? 'Id'
-												: field === 'password'
-													? 'Contraseña'
-													: ''}
-						</label>
-						<input
-							type='text'
-							id={field}
-							{...register(field)}
-							placeholder={`e.j: ${
-								field === 'email'
-									? 'ejemplo@unisabana.edu.co'
-									: field === 'contact'
-										? '312 456 7890'
-										: field === 'name'
-											? 'Pepito'
-											: field === 'lastname'
-												? 'Pérez'
-												: field === 'id'
-													? '123456'
-													: field === 'password'
-														? 'P@ssWord_123'
-														: ''
-							}`}
-							className='w-full px-3 py-2 border rounded-lg'
-						/>
-						{errors[field] && (
-							<p className='text-red-500 text-sm mt-1'>
-								*{errors[field]?.message}
-							</p>
-						)}
-					</div>
-				)
-			)}
+			{['origin', 'destination', 'fee', 'available_seats'].map((field) => (
+				<div key={field} className='mb-4'>
+					<label
+						htmlFor={field}
+						className='block text-gray-700 mb-2 capitalize'
+					>
+						{field === 'origin'
+							? 'Punto de recogida'
+							: field === 'destination'
+								? 'Punto destino'
+								: field === 'available_seats'
+									? 'Cupos disponibles'
+									: field === 'fee'
+										? 'Valor unico del wheels'
+										: ''}
+					</label>
+					<input
+						type='text'
+						id={field}
+						{...register(field)}
+						placeholder={`e.j: ${
+							field === 'origin'
+								? 'Universidad de la sabana'
+								: field === 'destination'
+									? 'Portal Norte'
+									: field === 'available_seats'
+										? '4'
+										: field === 'fee'
+											? '40000'
+											: ''
+						}`}
+						className='w-full px-3 py-2 border rounded-lg'
+					/>
+					{errors[field] && (
+						<p className='text-red-500 text-sm mt-1'>
+							*{errors[field]?.message}
+						</p>
+					)}
+				</div>
+			))}
 			<div className='mb-4'>
 				<input
-					type='file'
-					id='photo'
-					{...register('photo')}
+					type='datetime-local'
+					id='departure'
+					{...register('departure')}
 					accept='image/jpeg, image/png, image/gif'
 					className='text-xs sm:text-base'
 				/>
 			</div>
-			{errors.photo && (
-				<p className='text-red-500 text-sm mt-1'>{errors.photo.message}</p>
+			{errors.departure && (
+				<p className='text-red-500 text-sm mt-1'>{errors.departure.message}</p>
 			)}
 
 			<button

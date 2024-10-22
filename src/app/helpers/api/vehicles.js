@@ -36,3 +36,8 @@ export async function getVehicleByPlate(plate) {
 
 	return res.data.vehicle;
 }
+export async function getVehicleRides(plate) {
+	const res = await api.get(`/vehicle/${plate}/rides`);
+
+	return res.data.vehicleRides;
+}

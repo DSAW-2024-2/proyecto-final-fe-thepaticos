@@ -1,5 +1,13 @@
 import RouteStop from '../userDashboard/routeStop';
-export default function AvailableTripCard() {
+export default function AvailableTripCard({ ride }) {
+	const dateString = ride.departure;
+	const date = new Date(dateString);
+	const dateFormat = {
+		hour: 'numeric',
+		minute: 'numeric',
+		hour12: true,
+	};
+	const formattedTime = date.toLocaleTimeString('en-US', dateFormat);
 	return (
 		<div className='flex h-fit'>
 			<div className='bg-[#D9D9D9] p-[3px] rounded-l-lg gap-[3px] sm:gap-3 flex w-full h-fit items-center justify-start border-2 border-[#696C70] border-opacity-50 border-r-0'>
@@ -19,7 +27,7 @@ export default function AvailableTripCard() {
 								d='M13.9 12.7c0-.6-.2-1.2-.6-1.6c-.8-.8-2.4-.8-3.2 0l-.3.3c-.1.1-.1.3-.2.4s-.1.3-.1.4v.8c0 .1.1.3.1.4s.1.3.2.4l.3.3c.4.4 1 .7 1.6.7s1.2-.2 1.6-.7c.3-.2.6-.8.6-1.4M54 45.9c.4-.4.7-1 .7-1.6s-.2-1.2-.7-1.6l-.3-.3c-.1-.1-.3-.1-.4-.2c-.1 0-.3-.1-.4-.1H52c-.1 0-.3.1-.4.1c-.1.1-.3.1-.4.2l-.3.3c-.4.4-.7 1-.7 1.6s.2 1.2.7 1.6l.3.3c.1.1.3.1.4.2c.1 0 .3.1.4.1h.4c.6 0 1.2-.2 1.6-.6'
 							/>
 						</svg>
-						<RouteStop stops={['U. Sabana', 'Av. 170', 'Av. 127']} />
+						<RouteStop stops={ride.route} />
 					</div>
 					<div className='flex gap-[3px] sm:gap-3 items-center w-full'>
 						<svg
@@ -32,7 +40,9 @@ export default function AvailableTripCard() {
 								d='M12 20a8 8 0 0 0 8-8a8 8 0 0 0-8-8a8 8 0 0 0-8 8a8 8 0 0 0 8 8m0-18a10 10 0 0 1 10 10a10 10 0 0 1-10 10C6.47 22 2 17.5 2 12A10 10 0 0 1 12 2m.5 5v5.25l4.5 2.67l-.75 1.23L11 13V7z'
 							/>
 						</svg>
-						<div className='text-[12px] sm:text-lg font-semibold'>3:00 pm</div>
+						<div className='text-[12px] sm:text-lg font-semibold'>
+							{formattedTime}
+						</div>
 					</div>
 					<div className='flex gap-[3px] sm:gap-3 items-center w-full'>
 						<svg
@@ -45,7 +55,9 @@ export default function AvailableTripCard() {
 								d='M16 5a2 2 0 1 0 0 4a2 2 0 0 0 0-4m-4 2a4 4 0 1 1 8 0a4 4 0 0 1-8 0m13.5-1a1.5 1.5 0 1 0 0 3a1.5 1.5 0 0 0 0-3M22 7.5a3.5 3.5 0 1 1 7 0a3.5 3.5 0 0 1-7 0m-17 0a1.5 1.5 0 1 1 3 0a1.5 1.5 0 0 1-3 0M6.5 4a3.5 3.5 0 1 0 0 7a3.5 3.5 0 0 0 0-7m2.151 20.505A3 3 0 0 1 4 22v-6.5a.5.5 0 0 1 .5-.5h4.031a4 4 0 0 1 .846-2H4.5A2.5 2.5 0 0 0 2 15.5V22a5 5 0 0 0 7.327 4.427a7.5 7.5 0 0 1-.676-1.922m14.022 1.922A5 5 0 0 0 30 22v-6.5a2.5 2.5 0 0 0-2.5-2.5h-4.877a4 4 0 0 1 .846 2H27.5a.5.5 0 0 1 .5.5V22a3 3 0 0 1-4.651 2.505a7.5 7.5 0 0 1-.676 1.922M12.5 13a2.5 2.5 0 0 0-2.5 2.5V23a6 6 0 0 0 12 0v-7.5a2.5 2.5 0 0 0-2.5-2.5zm-.5 2.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 .5.5V23a4 4 0 0 1-8 0z'
 							/>
 						</svg>
-						<div className='text-[12px] sm:text-lg font-semibold'>3</div>
+						<div className='text-[12px] sm:text-lg font-semibold'>
+							{ride.available_seats}
+						</div>
 					</div>
 				</section>
 			</div>
