@@ -5,15 +5,11 @@ export default function AvailableTripCard({
 	departure,
 	availableSeats,
 }) {
-	const dateString = departure;
-	const date = new Date(dateString);
-	const dateFormat = {
-		hour: 'numeric',
-		minute: 'numeric',
-		hour12: true,
-	};
-	const formattedTime = date.toLocaleTimeString('en-US', dateFormat);
-	console.log(formattedTime);
+	function convertTo12HourFormat(isoString) {
+		const date = new Date(isoString);
+		const options = { hour: 'numeric', minute: 'numeric', hour12: true };
+		return date.toLocaleTimeString('en-US', options);
+	}
 
 	return (
 		<div className='flex h-fit'>
@@ -55,7 +51,9 @@ export default function AvailableTripCard({
 								d='M12 20a8 8 0 0 0 8-8a8 8 0 0 0-8-8a8 8 0 0 0-8 8a8 8 0 0 0 8 8m0-18a10 10 0 0 1 10 10a10 10 0 0 1-10 10C6.47 22 2 17.5 2 12A10 10 0 0 1 12 2m.5 5v5.25l4.5 2.67l-.75 1.23L11 13V7z'
 							/>
 						</svg>
-						<div className='text-[12px] sm:text-lg font-semibold'>3:00 pm</div>
+						<div className='text-[12px] sm:text-lg font-semibold'>
+							{convertTo12HourFormat(departure)}
+						</div>
 					</div>
 					<div className='flex gap-[3px] sm:gap-3 items-center w-full'>
 						<svg
@@ -68,7 +66,9 @@ export default function AvailableTripCard({
 								d='M10.561 8.073a6 6 0 0 1 3.432 5.142a.75.75 0 1 1-1.498.07a4.5 4.5 0 0 0-8.99 0a.75.75 0 0 1-1.498-.07a6 6 0 0 1 3.431-5.142a3.999 3.999 0 1 1 5.123 0M10.5 5a2.5 2.5 0 1 0-5 0a2.5 2.5 0 0 0 5 0'
 							/>
 						</svg>
-						<div className='text-[12px] sm:text-lg font-semibold'>3</div>
+						<div className='text-[12px] sm:text-lg font-semibold'>
+							{availableSeats}
+						</div>
 					</div>
 				</section>
 			</div>

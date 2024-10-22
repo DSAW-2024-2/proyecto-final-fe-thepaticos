@@ -15,7 +15,17 @@ export default function DashboardPage() {
 			}
 
 			const response = await fetch(
-				'https://proyecto-final-be-thepaticos.vercel.app/ride/',
+				`${process.env.NEXT_PUBLIC_BACKEND_URL}/ride/`,
+				{
+					method: 'GET',
+					headers: {
+						Authorization: `Bearer ${authToken}`,
+					},
+				}
+			);
+
+			const carPhoto = await fetch(
+				`${process.env.NEXT_PUBLIC_BACKEND_URL}/vehicle/`,
 				{
 					method: 'GET',
 					headers: {
@@ -26,13 +36,22 @@ export default function DashboardPage() {
 
 			if (!response.ok) {
 				throw new Error('Failed to fetch rides');
+			} else if (!carPhoto.ok) {
+				throw new Error('Failed to fetch rides');
 			}
 
 			const data = await response.json();
+			const photos = await carPhoto.json();
 			const rides = data.rides || [];
 
 			const tripCardsArray = rides.map((ride, index) => (
-				<AvailableTripCard key={index} route={ride.route} />
+				<AvailableTripCard
+					key={index}
+					route={ride.route}
+					car={photos.vehicles.find((car) => car.plate === ride.vehicle_plate)}
+					departure={ride.departure}
+					availableSeats={ride.available_seats}
+				/>
 			));
 
 			setTripCards(tripCardsArray);
