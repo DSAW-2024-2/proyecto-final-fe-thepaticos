@@ -1,9 +1,8 @@
 'use client';
-import { useEffect, useState } from 'react';
+import { getAvaliableRides } from '@/app/helpers/api/ride';
 import AvailableTripCard from '@/app/ui/components/userDashboard/AvailableTripCard';
 import FilterButton from '@/app/ui/components/userDashboard/filterButton';
-import Cookies from 'js-cookie';
-import { getAvaliableRides } from '@/app/helpers/api/ride';
+import { useEffect, useState } from 'react';
 
 export default function DashboardPage() {
 	const [rides, setRides] = useState([]);

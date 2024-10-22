@@ -44,7 +44,6 @@ export default function Page() {
 			});
 			router.push('/dashboard');
 		} catch (error) {
-			
 			let validateErros = '';
 			if (error.response.data.errors) {
 				validateErros = errorsMes(error.response.data.errors);

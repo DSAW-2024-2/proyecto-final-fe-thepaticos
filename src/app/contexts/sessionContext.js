@@ -1,6 +1,6 @@
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
-import { createContext, useContext, useEffect, useMemo, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 import { authSignin, authSignup, getUserByToken } from '../helpers/api/auth';
 
 const AuthContext = createContext();

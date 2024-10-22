@@ -17,7 +17,7 @@ export async function authSignup(data) {
 	const formData = new FormData();
 	if (data.photo && data.photo.length > 0) {
 		formData.append('profilePhoto', data.photo[0]); // Enviamos solo el primer archivo como 'profilePhoto'
-	} 
+	}
 
 	// Agregar el resto de los datos al FormData
 	for (const key in data) {

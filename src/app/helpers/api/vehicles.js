@@ -31,7 +31,7 @@ export async function createVehicle(newData, userId) {
 
 	await api.post(`/vehicle/`, formData, config);
 }
-export async function getVehicleByPlate(plate){
-    const res = await api.get(`/vehicle/${plate}`)
-    return res.data.vehicle
+export async function getVehicleByPlate(plate) {
+	const res = await api.get(`/vehicle/${plate}`);
+	return res.data.vehicle;
 }

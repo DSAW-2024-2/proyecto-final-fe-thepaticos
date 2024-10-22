@@ -13,10 +13,8 @@ import Swal from 'sweetalert2';
 
 export default function Page() {
 	const router = useRouter();
-	const {user} = useAuth()
+	const { user } = useAuth();
 	const { setLoading } = useLoading();
-	let car = null;
-
 	const {
 		register,
 		handleSubmit,
@@ -38,7 +36,7 @@ export default function Page() {
 	const onSubmit = async (data) => {
 		setLoading(true);
 		try {
-			await createVehicle(data, user.id)
+			await createVehicle(data, user.id);
 			Swal.fire({
 				title: 'Excelente!',
 				text: 'Vehiculo Registrado Correctamente',
