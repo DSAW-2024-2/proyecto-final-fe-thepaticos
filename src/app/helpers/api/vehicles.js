@@ -31,6 +31,26 @@ export async function createVehicle(newData, userId) {
 
 	await api.post('/vehicle/', formData, config);
 }
+
+export async function modifyVehicle(updateData, plate) {
+	const config = {
+		headers: {
+			'Content-Type': 'multipart/form-data',
+		},
+	};
+	const formData = new FormData();
+
+	formData.append('brand', updateData.brand);
+	formData.append('model', updateData.model);
+	if (updateData.vehiclePhoto && updateData.vehiclePhoto.length > 0) {
+		formData.append('vehiclePhoto', updateData.vehiclePhoto[0]); // Asocia la imagen del vehículo
+	}
+	if (updateData.soat && updateData.soat.length > 0) {
+		formData.append('soat', updateData.soat[0]); // Asocia la imagen del SOAT
+	}
+	await api.patch(`/vehicle/${plate}`, formData, config);
+}
+
 export async function getVehicleByPlate(plate) {
 	const res = await api.get(`/vehicle/${plate}`);
 
