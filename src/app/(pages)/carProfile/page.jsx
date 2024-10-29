@@ -9,13 +9,16 @@ import { isAxiosError } from 'axios';
 import { ChevronLeft } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
+import { getVehicleByPlate } from '@/app/helpers/api/vehicles';
 import Swal from 'sweetalert2';
+import { useEffect, useState } from 'react';
+import { modifyVehicle } from '@/app/helpers/api/vehicles';
 
 export default function Page() {
 	const { user } = useAuth();
 	const router = useRouter();
-	const { signup } = useAuth();
 	const { setLoading } = useLoading();
+	const [car, setCar] = useState({ plate: user.vehicle_plate });
 
 	const {
 		register,
@@ -38,7 +41,7 @@ export default function Page() {
 	const onSubmit = async (data) => {
 		setLoading(true);
 		try {
-			await signup(data);
+			await modifyVehicle(data, car.plate);
 			Swal.fire({
 				title: 'Excelente!',
 				text: 'Cambios Realizados Correctamente',
@@ -69,6 +72,16 @@ export default function Page() {
 		}
 	};
 
+	useEffect(() => {
+		const fetchCar = async () => {
+			const car = await getVehicleByPlate(user.vehicle_plate);
+			if (car) {
+				setCar(car);
+			}
+		};
+		fetchCar();
+	}, [user.vehicle_plate]);
+
 	return (
 		<section className=' w-full h-fit flex gap-4 justify-center items-center sm:items-start p-10 flex-col sm:flex-row'>
 			<section className='flex flex-col justify-start items-start gap-4'>
@@ -80,8 +93,8 @@ export default function Page() {
 				</Link>
 				<div className='flex flex-col justify-center items-center gap-4'>
 					<Image
-						src={'/images/anonym.png'}
-						alt='Picture of the author'
+						src={car.photo || '/images/anonym.png'}
+						alt='Foto del vehiculo'
 						width={500}
 						height={500}
 						priority
@@ -96,31 +109,27 @@ export default function Page() {
 					className='w-full p-4 rounded-lg'
 					encType='multipart/form-data'
 				>
-					{['name', 'lastname', 'contact'].map((field) => (
+					{['brand', 'model'].map((field) => (
 						<div key={field} className='mb-2'>
 							<label htmlFor={field} className='text-gray-700 my-5 capitalize'>
-								{field === 'contact'
-									? 'Contacto'
-									: field === 'name'
-										? 'Nombre'
-										: field === 'lastname'
-											? 'Apellido'
-											: ''}
+								{field === 'brand'
+									? 'Marca'
+									: field === 'model'
+										? 'Modelo'
+										: ''}
 							</label>
 							<input
 								type='text'
 								id={field}
 								{...register(field)}
 								value={`${
-									field === 'contact'
-										? user.contact
-										: field === 'name'
-											? user.name
-											: field === 'lastname'
-												? 'Pérez'
-												: user.lastname
+									field === 'brand'
+										? car.brand
+										: field === 'model'
+											? car.model
+											: ''
 								}`}
-								className='w-full px-3 py-2 border rounded-lg'
+								className='w-full px-3 py-2 border rounded-lg capitalize'
 							/>
 							{errors[field] && (
 								<p className='text-red-500 text-sm mt-1'>
@@ -135,6 +144,20 @@ export default function Page() {
 							type='file'
 							id='photo'
 							{...register('photo')}
+							accept='image/jpeg, image/png, image/gif'
+							className='text-xs sm:text-base w-full'
+						/>
+					</div>
+					{errors.photo && (
+						<p className='text-red-500 text-sm mt-1'>{errors.photo.message}</p>
+					)}
+
+					<div className='mb-4'>
+						<p className='text-gray-700 my-2 capitalize'>SOAT</p>
+						<input
+							type='file'
+							id='SOAT'
+							{...register('SOAT')}
 							accept='image/jpeg, image/png, image/gif'
 							className='text-xs sm:text-base w-full'
 						/>

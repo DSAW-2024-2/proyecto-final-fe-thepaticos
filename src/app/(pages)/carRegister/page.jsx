@@ -104,7 +104,7 @@ export default function Page() {
 							field === 'plate'
 								? 'ABC123'
 								: field === 'brand'
-									? 'Chevrolez'
+									? 'Chevrolet'
 									: field === 'model'
 										? 'Cruz'
 										: field === 'seats'

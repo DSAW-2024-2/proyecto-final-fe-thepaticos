@@ -27,7 +27,7 @@ export default function AvailableTripCard(ride) {
 	const formattedTime = date.toLocaleTimeString('en-US', dateFormat);
 
 	return (
-		<div className='flex h-fit w-full'>
+		<div className='flex sm:h-[190px] w-full'>
 			<div className='bg-[#D9D9D9] p-[10px] rounded-l-lg gap-[3px] sm:gap-3 flex w-full items-center justify-start border-2 border-[#696C70] border-opacity-50 border-r-0'>
 				<Image
 					width={400}
@@ -43,7 +43,7 @@ export default function AvailableTripCard(ride) {
 					<div className='flex gap-[3px] sm:gap-3 items-center w-full'>
 						<svg
 							xmlns='http://www.w3.org/2000/svg'
-							className='h-[14px] w-[14px] sm:w-[30px] sm:h-[30px]'
+							className='h-[14px] w-[14px] min-h-[14px] min-w-[14px] sm:w-[30px] sm:h-[30px] sm:min-w-[30px] sm:min-h-[30px]'
 							viewBox='0 0 64 64'
 						>
 							<path
