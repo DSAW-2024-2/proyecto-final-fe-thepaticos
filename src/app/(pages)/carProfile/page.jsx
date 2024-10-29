@@ -9,13 +9,16 @@ import { isAxiosError } from 'axios';
 import { ChevronLeft } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
+import { getVehicleByPlate } from '@/app/helpers/api/vehicles';
 import Swal from 'sweetalert2';
+import { useEffect, useState } from 'react';
 
 export default function Page() {
 	const { user } = useAuth();
 	const router = useRouter();
 	const { signup } = useAuth();
 	const { setLoading } = useLoading();
+	const [carPhoto, setCarPhoto] = useState('/images/anonym.png');
 
 	const {
 		register,
@@ -69,6 +72,17 @@ export default function Page() {
 		}
 	};
 
+	useEffect(() => {
+		const fetchCarPhoto = async () => {
+			const car = await getVehicleByPlate(user.vehicle_plate);
+			if (car.photo) {
+				setCarPhoto(car.photo);
+			}
+		};
+
+		fetchCarPhoto();
+	}, [user.vehicle_plate]);
+
 	return (
 		<section className=' w-full h-fit flex gap-4 justify-center items-center sm:items-start p-10 flex-col sm:flex-row'>
 			<section className='flex flex-col justify-start items-start gap-4'>
@@ -80,8 +94,8 @@ export default function Page() {
 				</Link>
 				<div className='flex flex-col justify-center items-center gap-4'>
 					<Image
-						src={'/images/anonym.png'}
-						alt='Picture of the author'
+						src={carPhoto}
+						alt='Foto del vehiculo'
 						width={500}
 						height={500}
 						priority

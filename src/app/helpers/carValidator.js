@@ -29,6 +29,7 @@ export const userRegSchema = z.object({
 		.trim(),
 	seats: z
 		.string()
+		.regex(/^[2-9]+$/, 'Debes ingresar un número entre 2 y 9')
 		.min(2, 'Debe tener al menos 2 asientos')
 		.max(15, 'La capacidad máxima permitida es 15'),
 

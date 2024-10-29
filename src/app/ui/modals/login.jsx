@@ -86,7 +86,7 @@ export default function ModalLogin({ onClose }) {
 								Password
 							</label>
 							<input
-								type='text'
+								type='password'
 								name='password'
 								id='password'
 								placeholder='ej: P@assWord_123'
