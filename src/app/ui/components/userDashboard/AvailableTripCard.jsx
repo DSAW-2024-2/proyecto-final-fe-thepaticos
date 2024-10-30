@@ -38,6 +38,7 @@ export default function AvailableTripCard(ride) {
 						'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTwfoGbdjDFT0TjduR_2NklrEg6URCrDFb-cQ&s'
 					}
 					alt='Imagen carro'
+					priority
 				/>
 				<section className='flex flex-col gap-[2px] sm:gap-2 w-full justify-center'>
 					<div className='flex gap-[3px] sm:gap-3 items-center w-full'>
