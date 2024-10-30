@@ -1,6 +1,6 @@
 import { z } from 'zod';
 const ACCEPTED_IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/gif'];
-export const userRegSchema = z.object({
+export const carRegSchema = z.object({
 	plate: z
 		.string()
 		.length(6, 'Debe contener 6 caracteres')

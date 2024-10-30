@@ -43,6 +43,8 @@ export async function createVehicle(newData, userId) {
 }
 
 export async function modifyVehicle(updateData, plate) {
+	console.log('HOLA');
+
 	const config = {
 		headers: {
 			'Content-Type': 'multipart/form-data',
@@ -60,6 +62,7 @@ export async function modifyVehicle(updateData, plate) {
 	if (updateData.soat && updateData.soat.length > 0) {
 		formData.append('soat', updateData.soat[0]);
 	}
+	console.log(formData);
 
 	await api.patch(`/vehicle/${plate}`, formData, config);
 }

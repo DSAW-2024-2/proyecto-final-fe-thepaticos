@@ -3,7 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useLoading } from '@/app/contexts/loadingContext';
 import { useAuth } from '@/app/contexts/sessionContext';
-import { userRegSchema } from '@/app/helpers/validators';
+import { carRegSchema } from '@/app/helpers/validators';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { isAxiosError } from 'axios';
 import { ChevronLeft } from 'lucide-react';
@@ -25,7 +25,7 @@ export default function Page() {
 		handleSubmit,
 		formState: { errors },
 	} = useForm({
-		resolver: zodResolver(userRegSchema),
+		resolver: zodResolver(carRegSchema),
 	});
 	const errorsMes = (err) => {
 		let errorMessage;
