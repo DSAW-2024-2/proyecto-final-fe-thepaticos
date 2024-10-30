@@ -22,3 +22,7 @@ export async function getDestinations() {
 
 	return res.data.destinations;
 }
+export async function getRideById(rideId) {
+	const res = await api.get(`/ride/${rideId}`);
+	return res.data.ride;
+}
