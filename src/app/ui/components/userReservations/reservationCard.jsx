@@ -29,8 +29,8 @@ export default function ReservationCard({ item }) {
 	};
 	const formattedTime = date.toLocaleTimeString('en-US', dateFormat);
 	return (
-		<div className='flex flex-col h-fit'>
-			<div className='bg-[#D9D9D9] px-4 py-3 rounded-lg gap-[5px] sm:gap-3 flex flex-col w-[280px] h-fit items-center justify-start border-2 border-[#696C70] border-opacity-50'>
+		<div className='flex flex-col'>
+			<div className='bg-[#D9D9D9] h-full px-4 py-3 rounded-lg gap-[5px] sm:gap-3 flex flex-col w-[280px] items-center justify-between border-2 border-[#696C70] border-opacity-50'>
 				<Image
 					width={400}
 					height={400}
@@ -40,6 +40,7 @@ export default function ReservationCard({ item }) {
 						'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTwfoGbdjDFT0TjduR_2NklrEg6URCrDFb-cQ&s'
 					}
 					alt='Imagen carro'
+					priority
 				/>
 				<section className='flex flex-col gap-[2px] sm:gap-2 w-full py-4'>
 					<div className='flex gap-[5px] sm:gap-3 items-center w-full'>

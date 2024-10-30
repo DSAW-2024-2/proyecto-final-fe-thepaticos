@@ -3,8 +3,10 @@ import { getVehicleByPlate } from '@/app/helpers/api/vehicles';
 import RouteStop from './routeStop';
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
+import TripDetailsModal from '../../modals/TripDetails';
 export default function AvailableTripCard(ride) {
 	const [vehicle, setvehicle] = useState({});
+	const [isTripDetailsOpen, setTripDetailsVisible] = useState(false);
 
 	useEffect(() => {
 		const getVehicle = async () => {
@@ -25,6 +27,10 @@ export default function AvailableTripCard(ride) {
 		hour12: true,
 	};
 	const formattedTime = date.toLocaleTimeString('en-US', dateFormat);
+
+	const toggleModal = () => {
+		setTripDetailsVisible((prev) => !prev); // Toggle modal visibility
+	};
 
 	return (
 		<div className='flex sm:h-[190px] w-full'>
@@ -90,7 +96,10 @@ export default function AvailableTripCard(ride) {
 					</div>
 				</section>
 			</div>
-			<button className='bg-[#028747] rounded-r-lg border-2 border-l-0 border-[#025C31] hover:bg-[#025C31]'>
+			<button
+				className='bg-[#028747] rounded-r-lg border-2 border-l-0 border-[#025C31] hover:bg-[#025C31]'
+				onClick={toggleModal}
+			>
 				<svg
 					xmlns='http://www.w3.org/2000/svg'
 					className='h-[30px] w-[30px] sm:h-[50px] sm:w-[50px] sm:m-1'
@@ -103,6 +112,11 @@ export default function AvailableTripCard(ride) {
 					</g>
 				</svg>
 			</button>
+			<TripDetailsModal
+				rideId={ride.ride.id}
+				isTripDetailsOpen={isTripDetailsOpen}
+				onClose={toggleModal}
+			/>
 		</div>
 	);
 }

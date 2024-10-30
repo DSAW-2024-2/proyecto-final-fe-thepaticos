@@ -42,6 +42,7 @@ export default function ProfilePhoto({ signout, user }) {
 				height={500}
 				className='rounded-full object-cover max-w-[40px] max-h-[40px] min-w-[40px] min-h-[40px] border-2 sm:min-w-[70px] sm:max-w-[70px] sm:min-h-[70px] sm:max-h-[70px] cursor-pointer sm:border-2'
 				onClick={toggleMenu}
+				priority
 			/>
 			<div
 				className={`absolute right-0 mt-2 w-40 bg-white shadow-md rounded-md overflow-hidden shadow-black ${
