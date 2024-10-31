@@ -2,12 +2,15 @@ import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
 import { createContext, useContext, useEffect, useState } from 'react';
 import { authSignin, authSignup, getUserByToken } from '../helpers/api/auth';
+import { set } from 'zod';
+import Swal from 'sweetalert2';
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
 	const router = useRouter();
 	const [user, setUser] = useState(null);
+	const [vehicle, setVehicle] = useState(null);
 	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
@@ -46,9 +49,25 @@ export const AuthProvider = ({ children }) => {
 	};
 
 	const signout = () => {
-		Cookies.remove('authToken');
-		setUser(null);
-		router.push('/');
+		Swal.fire({
+			title: '¿Seguro deseas cerrar sesión?',
+			text: 'volverás al la página de inicio',
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#9C0000',
+			cancelButtonColor: '#028747',
+			confirmButtonText: 'Si, cerrar sesión!',
+			cancelButtonText: 'Cancelar',
+		}).then((result) => {
+			if (result.isConfirmed) {
+				setLoading(true);
+				Cookies.remove('authToken');
+				setUser(null);
+				setVehicle(null);
+				router.push('/');
+				setLoading(false);
+			}
+		});
 	};
 
 	if (loading) {

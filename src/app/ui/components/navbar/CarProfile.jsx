@@ -45,7 +45,7 @@ export default function ProfilePhoto({ signout }) {
 			}
 		};
 		fetchCar();
-	}, [user.vehicle_plate]);
+	}, []);
 
 	return (
 		<div className='relative inline-block' ref={dropdownRef}>

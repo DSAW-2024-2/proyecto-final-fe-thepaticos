@@ -3,23 +3,32 @@ import { getVehicleByPlate } from '@/app/helpers/api/vehicles';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import RouteStop from '../userDashboard/routeStop';
+
 export default function ReservationCard({ item }) {
-	const [vehicle, setvehicle] = useState({});
-	const [driver, setDriver] = useState({});
+	const [vehicle, setVehicle] = useState(null);
+	const [driver, setDriver] = useState(null);
+	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
 		const getVehicle = async () => {
+			setLoading(true);
 			try {
 				const resVehicle = await getVehicleByPlate(item.vehicle_plate);
 				const resDriver = await getUserById(resVehicle.id_driver);
-				setvehicle(resVehicle);
+				setVehicle(resVehicle);
 				setDriver(resDriver);
 			} catch (error) {
 				console.error('Error fetching rides:', error);
+			} finally {
+				setLoading(false);
 			}
 		};
-		getVehicle();
+
+		if (item.vehicle_plate) {
+			getVehicle();
+		}
 	}, [item.vehicle_plate]);
+
 	const dateString = item.departure;
 	const date = new Date(dateString);
 	const dateFormat = {
@@ -28,6 +37,24 @@ export default function ReservationCard({ item }) {
 		hour12: true,
 	};
 	const formattedTime = date.toLocaleTimeString('en-US', dateFormat);
+
+	if (loading) {
+		return (
+			<div className='fixed inset-0 flex items-center justify-center z-50'>
+				<div className='bg-white rounded-lg shadow-lg p-5 w-[300px] h-[350px]'>
+					<div className='flex flex-col justify-center items-center gap-10 text-[#028747] font-bold text-lg'>
+						Cargando Información ...
+						<div className='w-[150px] h-[150px] border-[10px] border-t-[10px] border-t-[#028747] border-gray-200 rounded-full animate-spin'></div>
+					</div>
+				</div>
+			</div>
+		);
+	}
+
+	if (!vehicle || !driver) {
+		return null; // Do not render anything if data is not available
+	}
+
 	return (
 		<div className='flex flex-col'>
 			<div className='bg-[#D9D9D9] h-full px-4 py-3 rounded-lg gap-[5px] sm:gap-3 flex flex-col w-[280px] items-center justify-between border-2 border-[#696C70] border-opacity-50'>
@@ -89,7 +116,11 @@ export default function ReservationCard({ item }) {
 							/>
 						</svg>
 						<div className='text-base sm:text-lg font-semibold'>
-							{item.available_seats}
+							{item.available_seats > 1
+								? `${item.available_seats} disponibles`
+								: item.available_seats === 1
+									? `${item.available_seats} disponible`
+									: 'No hay cupos disponibles'}
 						</div>
 					</div>
 
@@ -109,7 +140,7 @@ export default function ReservationCard({ item }) {
 							/>
 						</svg>
 						<div className='text-base sm:text-lg font-semibold'>
-							$ {item.fee}
+							$ {item.fee.toLocaleString()}
 						</div>
 					</div>
 
@@ -141,7 +172,7 @@ export default function ReservationCard({ item }) {
 							/>
 						</svg>
 						<div className='text-base sm:text-lg font-semibold'>
-							{vehicle.model}
+							{`${vehicle.brand} ${vehicle.model}`}
 						</div>
 					</div>
 
@@ -157,7 +188,7 @@ export default function ReservationCard({ item }) {
 							/>
 						</svg>
 						<div className='text-base sm:text-lg font-semibold'>
-							{item.vehicle_plate}
+							{`${item.vehicle_plate.slice(0, 3)} ${item.vehicle_plate.slice(3, 6)}`}
 						</div>
 					</div>
 
@@ -173,7 +204,7 @@ export default function ReservationCard({ item }) {
 							/>
 						</svg>
 						<div className='text-base sm:text-lg font-semibold'>
-							{driver.contact}
+							{`(+57) ${driver?.contact.slice(0, 3)} ${driver?.contact.slice(3, 6)} ${driver?.contact.slice(6, 10)}`}
 						</div>
 					</div>
 				</section>
