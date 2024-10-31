@@ -3,6 +3,7 @@ import { getVehicleByPlate } from '@/app/helpers/api/vehicles';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import RouteStop from '../userDashboard/routeStop';
+import Swal from 'sweetalert2';
 
 export default function ReservationCard({ item }) {
 	const [vehicle, setVehicle] = useState(null);
@@ -28,6 +29,58 @@ export default function ReservationCard({ item }) {
 			getVehicle();
 		}
 	}, [item.vehicle_plate]);
+
+	const handleCancel = async () => {
+		const result = await Swal.fire({
+			title: '¿Deseas cancelar la reserva?',
+			text: 'No podrás deshacer esta acción!',
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#9C0000',
+			cancelButtonColor: '#028747',
+			confirmButtonText: 'Sí, cancelar',
+			cancelButtonText: 'Regresar',
+		});
+
+		if (result.isConfirmed) {
+			// Aquí puedes agregar la lógica para cancelar la reserva
+			Swal.fire('Cancelado!', 'Tu reserva ha sido cancelada.', 'success');
+		}
+	};
+
+	const handlePaymentSelection = async () => {
+		const { value: paymentMethod } = await Swal.fire({
+			title: 'Selecciona un método de pago',
+			text: 'Escoge si pagas en efectivo o por transferencia',
+			icon: 'question',
+			showCancelButton: true,
+			confirmButtonText: 'Efectivo',
+			cancelButtonText: 'Transferencia',
+			confirmButtonColor: '#028747',
+			cancelButtonColor: '#43aaea',
+			inputOptions: {
+				cash: 'Cash',
+				credit: 'Credit Card',
+			},
+			inputValidator: (value) => {
+				if (!value) {
+					return 'You need to select a payment method!';
+				}
+			},
+		});
+
+		if (paymentMethod) {
+			console.log(
+				`Selected payment method: ${paymentMethod === true ? 'Cash' : ''}`
+			);
+			// Handle the selected payment method here
+		} else {
+			console.log(
+				`Selected payment method: ${paymentMethod === undefined ? 'Transfer' : ''}`
+			);
+			// Handle the selected payment method here
+		}
+	};
 
 	const dateString = item.departure;
 	const date = new Date(dateString);
@@ -210,7 +263,10 @@ export default function ReservationCard({ item }) {
 				</section>
 
 				<section className='flex gap-3'>
-					<button className='bg-[#028747] rounded-lg border-2 border-[#025C31] hover:bg-[#025C31] flex text-white font-semibold items-center justify-center px-1 text-lg sm:text-lg gap-1'>
+					<button
+						onClick={handlePaymentSelection}
+						className='bg-[#028747] rounded-lg border-2 border-[#025C31] hover:bg-[#025C31] flex text-white font-semibold items-center justify-center px-1 text-lg sm:text-lg gap-1'
+					>
 						<svg
 							xmlns='http://www.w3.org/2000/svg'
 							className='h-[40px] w-[40px] sm:h-[40px] sm:w-[40px]'
@@ -223,7 +279,10 @@ export default function ReservationCard({ item }) {
 						</svg>
 						Pagar
 					</button>
-					<button className='bg-[#c92323] rounded-lg border-2 border-[#9C0000] hover:bg-[#9C0000] flex text-white font-semibold items-center justify-center px-1 text-lg sm:text-lg gap-1'>
+					<button
+						onClick={handleCancel}
+						className='bg-[#c92323] rounded-lg border-2 border-[#9C0000] hover:bg-[#9C0000] flex text-white font-semibold items-center justify-center px-1 text-lg sm:text-lg gap-1'
+					>
 						<svg
 							xmlns='http://www.w3.org/2000/svg'
 							className='h-[25px] w-[25px] sm:h-[30px] sm:w-[30px]'

@@ -1,5 +1,8 @@
 import RouteStop from '../userDashboard/routeStop';
-export default function AvailableTripCard({ ride }) {
+import { useState } from 'react';
+import RouteInfo from '../../modals/routeInfo';
+
+export default function RouteCard({ ride }) {
 	const dateString = ride.departure;
 	const date = new Date(dateString);
 	const dateFormat = {
@@ -8,6 +11,11 @@ export default function AvailableTripCard({ ride }) {
 		hour12: true,
 	};
 	const formattedTime = date.toLocaleTimeString('en-US', dateFormat);
+	const [isRouteInfoOpen, setRouteInfo] = useState(false);
+	const toggleModal = () => {
+		setRouteInfo((prev) => !prev); // Toggle modal visibility
+	};
+
 	return (
 		<div className='flex h-fit'>
 			<div className='bg-[#D9D9D9] p-[3px] rounded-l-lg gap-[3px] sm:gap-3 flex w-full h-fit items-center justify-start border-2 border-[#696C70] border-opacity-50 border-r-0'>
@@ -61,7 +69,10 @@ export default function AvailableTripCard({ ride }) {
 					</div>
 				</section>
 			</div>
-			<button className='bg-[#028747] rounded-r-lg border-2 border-l-0 border-[#025C31] hover:bg-[#025C31]'>
+			<button
+				onClick={toggleModal}
+				className='bg-[#028747] rounded-r-lg border-2 border-l-0 border-[#025C31] hover:bg-[#025C31]'
+			>
 				<svg
 					xmlns='http://www.w3.org/2000/svg'
 					className='h-[25px] w-[25px] m-[5px] sm:h-[40px] sm:w-[40px] sm:m-2'
@@ -77,6 +88,11 @@ export default function AvailableTripCard({ ride }) {
 					/>
 				</svg>
 			</button>
+			<RouteInfo
+				isRouteInfoOpen={isRouteInfoOpen}
+				onClose={toggleModal}
+				ride={ride}
+			/>
 		</div>
 	);
 }
