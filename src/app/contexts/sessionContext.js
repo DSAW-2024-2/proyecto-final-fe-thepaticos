@@ -3,6 +3,7 @@ import { useRouter } from 'next/navigation';
 import { createContext, useContext, useEffect, useState } from 'react';
 import { authSignin, authSignup, getUserByToken } from '../helpers/api/auth';
 import { set } from 'zod';
+import { getVehicleByPlate } from '../helpers/api/vehicles';
 import Swal from 'sweetalert2';
 
 const AuthContext = createContext();
@@ -46,6 +47,12 @@ export const AuthProvider = ({ children }) => {
 		});
 		const res = await getUserByToken(token);
 		setUser(res);
+		if (res.vehicle_plate !== undefined) {
+			const carData = await getVehicleByPlate(res.vehicle_plate);
+			setVehicle(carData);
+		} else {
+			setVehicle(null);
+		}
 	};
 
 	const signout = () => {
@@ -83,7 +90,7 @@ export const AuthProvider = ({ children }) => {
 
 	return (
 		<AuthContext.Provider
-			value={{ user: user, signin, signout, signup, setUser }}
+			value={{ user: user, vehicle: vehicle, signin, signout, signup, setUser }}
 		>
 			{children}
 		</AuthContext.Provider>

@@ -45,7 +45,7 @@ export default function DashboardPage() {
 							<ReservationCard key={index} item={reservation} />
 						))
 					) : (
-						<div className='text-center text-gray-500 font-semibold'>
+						<div className='text-center text-gray-500 font-semibold text-lg'>
 							No tienes reservaciones guardadas
 						</div>
 					)}

@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useRol } from '@/app/contexts/rolContext';
 import { usePathname, useRouter } from 'next/navigation';
 
@@ -6,10 +7,17 @@ export default function ToggleProfile({ vehicle }) {
 	const pathname = usePathname();
 	const { currentRole, setCurrentRole } = useRol();
 
+	useEffect(() => {
+		if (pathname === '/dashboard') {
+			setCurrentRole('passenger');
+		} else if (pathname === '/driverDashboard') {
+			setCurrentRole('driver');
+		}
+	}, [pathname, setCurrentRole]);
+
 	const toggle = () => {
 		if (pathname === '/dashboard') {
 			if (vehicle) {
-				setCurrentRole('driver');
 				router.push('/driverDashboard');
 			} else {
 				router.push('/carRegister');
@@ -39,12 +47,12 @@ export default function ToggleProfile({ vehicle }) {
 						d='M12 4c4.411 0 8 3.589 8 8s-3.589 8-8 8s-8-3.589-8-8s3.589-8 8-8m0-2C6.477 2 2 6.477 2 12s4.477 10 10 10s10-4.477 10-10S17.523 2 12 2m5 9h-4V7h-2v4H7v2h4v4h2v-4h4z'
 					/>
 				</svg>
-				<p className='text-sm sm:text-lg'>
+				<p className='text-sm sm:text-xl font-semibold'>
 					{vehicle
 						? currentRole === 'passenger'
 							? 'Pasajero'
 							: 'Conductor'
-						: 'Añadir vehículo'}
+						: 'Registrar mi Vehiculo'}
 				</p>
 			</button>
 		</div>
