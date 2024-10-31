@@ -52,13 +52,14 @@ export default function NavBar() {
 			)}
 			{user &&
 				(pathname === '/dashboard' ||
-					pathname === '/reservations' ||
 					pathname === '/driverDashboard' ||
 					pathname === '/routesDriver') && <ToggleProfile vehicle={car} />}
 			{(user && (pathname === '/dashboard' || pathname === '/reservations') && (
 				<ProfilePhoto signout={signout} user={user} />
 			)) ||
-				(pathname === '/driverDashboard' && <CarPhoto />) || <div></div>}
+				(pathname === '/driverDashboard' && <CarPhoto signout={signout} />) || (
+					<div></div>
+				)}
 		</div>
 	);
 }

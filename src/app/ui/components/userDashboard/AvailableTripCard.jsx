@@ -7,6 +7,7 @@ import TripDetailsModal from '../../modals/TripDetails';
 export default function AvailableTripCard(ride) {
 	const [vehicle, setvehicle] = useState({});
 	const [isTripDetailsOpen, setTripDetailsVisible] = useState(false);
+	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
 		const getVehicle = async () => {
@@ -15,6 +16,8 @@ export default function AvailableTripCard(ride) {
 				setvehicle(vehicle);
 			} catch (error) {
 				console.error('Error fetching rides:', error);
+			} finally {
+				setLoading(false);
 			}
 		};
 		getVehicle();
@@ -31,6 +34,19 @@ export default function AvailableTripCard(ride) {
 	const toggleModal = () => {
 		setTripDetailsVisible((prev) => !prev); // Toggle modal visibility
 	};
+
+	if (loading) {
+		return (
+			<div className='fixed inset-0 flex items-center justify-center z-50'>
+				<div className='bg-white rounded-lg shadow-lg p-5 w-[300px] h-[350px]'>
+					<div className='flex flex-col justify-center items-center gap-10 text-[#028747] font-bold text-lg'>
+						Cargando Información ...
+						<div className='w-[150px] h-[150px] border-[10px] border-t-[10px] border-t-[#028747] border-gray-200 rounded-full animate-spin'></div>
+					</div>
+				</div>
+			</div>
+		);
+	}
 
 	return (
 		<div className='flex sm:h-[190px] w-full'>

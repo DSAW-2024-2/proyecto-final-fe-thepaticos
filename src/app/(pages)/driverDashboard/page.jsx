@@ -18,7 +18,7 @@ export default function DashboardPage() {
 			}
 		};
 		getRides();
-	}, [user.vehicle_plate]);
+	}, []);
 	return (
 		<section className='flex flex-col justify-center w-full items-center bg-white'>
 			<FilterButton />

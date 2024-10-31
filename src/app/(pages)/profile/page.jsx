@@ -16,7 +16,6 @@ export default function Page() {
 	const { user, setUser } = useAuth();
 	const router = useRouter();
 	const { setLoading } = useLoading();
-
 	const {
 		register,
 		handleSubmit,

@@ -3,6 +3,8 @@ import { getRideById } from '@/app/helpers/api/ride';
 import RouteStop from '../components/userDashboard/routeStop';
 import { getVehicleByPlate } from '@/app/helpers/api/vehicles';
 import { getUserById } from '@/app/helpers/api/user';
+import Swal from 'sweetalert2';
+import { useRouter } from 'next/navigation';
 
 export default function TripDetailsModal({
 	rideId,
@@ -19,6 +21,7 @@ export default function TripDetailsModal({
 	const [vehicle, setVehicle] = useState(null);
 	const [driver, setDriver] = useState(null);
 	const [loading, setLoading] = useState(true);
+	const router = useRouter();
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -51,10 +54,9 @@ export default function TripDetailsModal({
 	}, [rideId]);
 
 	if (!isTripDetailsOpen || loading) {
-		return null; // Optionally, show a loading indicator here
+		return null;
 	}
 
-	// Format departure time
 	const dateString = ride.departure;
 	const date = new Date(dateString);
 	const dateFormat = {
@@ -63,6 +65,48 @@ export default function TripDetailsModal({
 		hour12: true,
 	};
 	const formattedTime = date.toLocaleTimeString('en-US', dateFormat);
+
+	const bookTrip = () => {
+		try {
+			Swal.fire({
+				title: 'Excelente!',
+				text: 'Tu cupo ha sido reservado',
+				icon: 'success',
+			}).then(() => {
+				handleClose();
+				router.push('/reservations');
+			});
+		} catch (error) {
+			if (isAxiosError(error)) {
+				Swal.fire({
+					title: 'Error!',
+					text: error.response.data.message,
+					icon: 'error',
+				});
+			} else {
+				Swal.fire({
+					title: 'Error!',
+					text: 'Error del servidor',
+					icon: 'error',
+				});
+			}
+		} finally {
+			setLoading(false);
+		}
+	};
+
+	if (loading) {
+		return (
+			<div className='fixed inset-0 flex items-center justify-center z-50'>
+				<div className='bg-white rounded-lg shadow-lg p-5 w-[300px] h-[350px]'>
+					<div className='flex flex-col justify-center items-center gap-10 text-[#028747] font-bold text-lg'>
+						Cargando Información ...
+						<div className='w-[150px] h-[150px] border-[10px] border-t-[10px] border-t-[#028747] border-gray-200 rounded-full animate-spin'></div>
+					</div>
+				</div>
+			</div>
+		);
+	}
 
 	return (
 		<div
@@ -136,7 +180,11 @@ export default function TripDetailsModal({
 								/>
 							</svg>
 							<div className='text-base sm:text-lg font-semibold'>
-								{ride.available_seats}
+								{ride.available_seats > 1
+									? `${ride.available_seats} disponibles`
+									: ride.available_seats === 1
+										? `${ride.available_seats} disponible`
+										: 'No hay cupos disponibles'}
 							</div>
 						</div>
 
@@ -156,7 +204,7 @@ export default function TripDetailsModal({
 								/>
 							</svg>
 							<div className='text-base sm:text-lg font-semibold'>
-								$ {ride.fee.toLocaleString()}
+								{`$ ${ride.fee.toLocaleString()}`}
 							</div>
 						</div>
 
@@ -188,9 +236,7 @@ export default function TripDetailsModal({
 								/>
 							</svg>
 							<div className='text-base sm:text-lg font-semibold'>
-								{ride.vehicle_plate.slice(0, 3) +
-									' ' +
-									ride.vehicle_plate.slice(3, 6)}
+								{`${vehicle?.brand} ${vehicle?.model}`}
 							</div>
 						</div>
 
@@ -206,7 +252,7 @@ export default function TripDetailsModal({
 								/>
 							</svg>
 							<div className='text-base sm:text-lg font-semibold'>
-								{vehicle?.brand + ' ' + vehicle?.model}
+								{`${ride.vehicle_plate.slice(0, 3)} ${ride.vehicle_plate.slice(3, 6)}`}
 							</div>
 						</div>
 
@@ -222,19 +268,16 @@ export default function TripDetailsModal({
 								/>
 							</svg>
 							<div className='text-base sm:text-lg font-semibold'>
-								{'(+57)' +
-									' ' +
-									driver?.contact.slice(0, 3) +
-									' ' +
-									driver?.contact.slice(3, 6) +
-									' ' +
-									driver?.contact.slice(6, 10)}
+								{`(+57) ${driver?.contact.slice(0, 3)} ${driver?.contact.slice(3, 6)} ${driver?.contact.slice(6, 10)}`}
 							</div>
 						</div>
 					</section>
 
 					<section className='flex gap-3'>
-						<button className='bg-[#028747] rounded-lg border-2 border-[#025C31] hover:bg-[#025C31] flex text-white font-semibold items-center justify-center px-1 text-lg sm:text-lg gap-1'>
+						<button
+							onClick={bookTrip}
+							className='bg-[#028747] rounded-lg border-2 border-[#025C31] hover:bg-[#025C31] flex text-white font-semibold items-center justify-center px-1 text-lg sm:text-lg gap-1'
+						>
 							Reservar Viaje
 						</button>
 					</section>
