@@ -4,11 +4,13 @@ import { isAxiosError } from 'axios';
 import { ChevronLeft } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import Swal from 'sweetalert2';
+import { useEffect, useRef } from 'react';
 
 export default function ModalLogin({ onClose }) {
 	const { signin } = useAuth();
 	const { setLoading } = useLoading();
 	const router = useRouter();
+	const formRef = useRef(null); // Create a ref for the form
 
 	const onSubmit = async (event) => {
 		setLoading(true);
@@ -43,6 +45,25 @@ export default function ModalLogin({ onClose }) {
 			setLoading(false);
 		}
 	};
+
+	const handleKeyDown = (event) => {
+		if (event.key === 'Enter') {
+			event.preventDefault(); // Prevent the default action of Enter key
+			if (formRef.current) {
+				formRef.current.requestSubmit(); // Simulate a form submission
+			}
+		}
+	};
+
+	useEffect(() => {
+		// Adding event listener for keydown
+		window.addEventListener('keydown', handleKeyDown);
+		return () => {
+			// Cleanup the event listener
+			window.removeEventListener('keydown', handleKeyDown);
+		};
+	}, []);
+
 	return (
 		<div
 			className='absolute z-10 flex items-center justify-center h-screen w-screen inset-0 bg-gray-500 bg-opacity-80 transition-opacity'
@@ -52,6 +73,7 @@ export default function ModalLogin({ onClose }) {
 		>
 			<div className='w-auto flex justify-center items-center'>
 				<form
+					ref={formRef} // Attach the ref to the form
 					onSubmit={onSubmit}
 					className='flex flex-col bg-white w-auto rounded-lg'
 					encType='multipart/form-data'
