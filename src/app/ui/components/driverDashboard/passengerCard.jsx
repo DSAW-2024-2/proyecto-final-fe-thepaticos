@@ -10,16 +10,16 @@ export default function PassengersCard({ passengersList }) {
 		const fetchUsers = async () => {
 			setLoading(true); // Start loading
 
-			const users = await Promise.all(
-				passengersList.map(async (userId) => {
-					try {
-						return await getUserById(userId);
-					} catch (error) {
-						console.error('Error fetching user:', error);
-						return null;
-					}
-				})
-			);
+			const users = [];
+			for (const userId of passengersList) {
+				try {
+					const user = await getUserById(userId);
+					users.push(user);
+				} catch (error) {
+					console.error('Error fetching user:', error);
+					users.push(null); // or handle it as needed
+				}
+			}
 
 			setPassengerData(users);
 			setLoading(false);
