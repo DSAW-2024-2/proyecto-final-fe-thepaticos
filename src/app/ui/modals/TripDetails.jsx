@@ -5,6 +5,7 @@ import { getVehicleByPlate } from '@/app/helpers/api/vehicles';
 import { getUserById } from '@/app/helpers/api/user';
 import Swal from 'sweetalert2';
 import { useRouter } from 'next/navigation';
+import { isAxiosError } from 'axios';
 
 export default function TripDetailsModal({
 	rideId,
