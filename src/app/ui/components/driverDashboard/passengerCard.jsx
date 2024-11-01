@@ -1,6 +1,7 @@
 import { getUserById } from '@/app/helpers/api/user';
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
+import Loader from '../../modals/Loader';
 
 export default function PassengersCard({ passengersList }) {
 	const [passengerData, setPassengerData] = useState([]);
@@ -33,16 +34,7 @@ export default function PassengersCard({ passengersList }) {
 	}, [passengersList]);
 
 	if (loading) {
-		return (
-			<div className='fixed inset-0 flex items-center justify-center z-50'>
-				<div className='bg-white rounded-lg shadow-lg p-5 w-[300px] h-[350px]'>
-					<div className='flex flex-col justify-center items-center gap-10 text-[#028747] font-bold text-lg'>
-						Cargando Información ...
-						<div className='w-[150px] h-[150px] border-[10px] border-t-[10px] border-t-[#028747] border-gray-200 rounded-full animate-spin'></div>
-					</div>
-				</div>
-			</div>
-		);
+		return <Loader message={'Cargando información'} />;
 	}
 
 	return (
@@ -56,10 +48,10 @@ export default function PassengersCard({ passengersList }) {
 						<Image
 							src={user.photo || '/images/anonym.png'}
 							alt='Picture of the author'
-							width={40}
-							height={40}
+							width={500}
+							height={500}
 							priority
-							className='rounded-full border-2 border-gray-400'
+							className='rounded-full border-2 border-gray-400 object-cover max-w-[40px] max-h-[40px] min-w-[40px] min-h-[40px] sm:min-w-[50px] sm:max-w-[50px] sm:min-h-[50px] sm:max-h-[50px] cursor-pointer sm:border-2'
 						/>
 						<p className='w-auto m-1'>
 							{user ? `${user.name} ${user.lastname}` : 'Error loading user'}

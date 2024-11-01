@@ -125,8 +125,12 @@ export default function Page() {
 								value={`${
 									field === 'brand'
 										? car.brand
+											? car.brand
+											: ''
 										: field === 'model'
 											? car.model
+												? car.model
+												: ''
 											: ''
 								}`}
 								className='w-full px-3 py-2 border rounded-lg capitalize'

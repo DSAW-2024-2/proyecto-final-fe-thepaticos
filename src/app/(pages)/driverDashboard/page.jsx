@@ -4,6 +4,7 @@ import { getVehicleRides } from '@/app/helpers/api/vehicles';
 import RouteCard from '@/app/ui/components/driverDashboard/routeCard';
 import FilterButton from '@/app/ui/components/userDashboard/filterButton';
 import { useEffect, useState } from 'react';
+import Loader from '@/app/ui/modals/Loader';
 
 export default function DashboardPage() {
 	const [rides, setRides] = useState([]);
@@ -27,16 +28,7 @@ export default function DashboardPage() {
 	}, []);
 
 	if (loading) {
-		return (
-			<div className='fixed inset-0 flex items-center justify-center z-50'>
-				<div className='bg-white rounded-lg shadow-lg p-5 w-[300px] h-[350px]'>
-					<div className='flex flex-col justify-center items-center gap-10 text-[#028747] font-bold text-lg'>
-						Cargando Información ...
-						<div className='w-[150px] h-[150px] border-[10px] border-t-[10px] border-t-[#028747] border-gray-200 rounded-full animate-spin'></div>
-					</div>
-				</div>
-			</div>
-		);
+		return <Loader message={'Cargando información'} />;
 	}
 
 	return (

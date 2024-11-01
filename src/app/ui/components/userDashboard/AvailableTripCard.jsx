@@ -4,6 +4,8 @@ import RouteStop from './routeStop';
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import TripDetailsModal from '../../modals/TripDetails';
+import Loader from '../../modals/Loader';
+
 export default function AvailableTripCard(ride) {
 	const [vehicle, setvehicle] = useState({});
 	const [isTripDetailsOpen, setTripDetailsVisible] = useState(false);
@@ -36,16 +38,7 @@ export default function AvailableTripCard(ride) {
 	};
 
 	if (loading) {
-		return (
-			<div className='fixed inset-0 flex items-center justify-center z-50'>
-				<div className='bg-white rounded-lg shadow-lg p-5 w-[300px] h-[350px]'>
-					<div className='flex flex-col justify-center items-center gap-10 text-[#028747] font-bold text-lg'>
-						Cargando Información ...
-						<div className='w-[150px] h-[150px] border-[10px] border-t-[10px] border-t-[#028747] border-gray-200 rounded-full animate-spin'></div>
-					</div>
-				</div>
-			</div>
-		);
+		return <Loader message={'Cargando información'} />;
 	}
 
 	return (

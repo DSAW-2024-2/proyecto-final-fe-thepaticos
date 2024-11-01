@@ -22,7 +22,7 @@ export async function modifyUser(newData, userId) {
 	if (photo && photo.length > 0) {
 		formData.append('profilePhoto', photo[0]); //
 	}
-	const res = await api.patch(`/${userId}`, formData, config);
+	const res = await api.patch(`user/${userId}`, formData, config);
 	if (res.status === 200) {
 		const newDataUser = await getUserByToken(Cookies.get('authToken'));
 
