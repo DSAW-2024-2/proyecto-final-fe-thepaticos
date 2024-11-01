@@ -101,14 +101,18 @@ export const userModifySchema = z.object({
 export const vehicleSchema = z.object({
 	plate: z
 		.string()
-		.regex(/^([A-Z]{3})(\d{3})$/, 'Debe contener 3 letras y 3 Numeros')
-		.min(1, 'Este campo es obligatorio'),
+		.regex(
+			/^([A-Z]{3})(\d{3})$/,
+			'Debe contener 3 letras mayúsculas y 3 Numeros'
+		)
+		.min(1, 'Este campo es obligatorio')
+		.max(6, 'Solo debe tener 3 letras y 3 números'),
 	brand: z.string().min(1, 'Este campo es obligatorio'),
 	model: z.string().min(1, 'Este campo es obligatorio'),
 	seats: z
 		.string()
 		.min(1, 'Este campo es obligatorio')
-		.regex(/^[1-6]$/)
+		.regex(/^[2-6]$/, 'Debe transportar de 2 a 6 pasajeros')
 		.transform((val) => Number(val)),
 	soat: z
 		.any()

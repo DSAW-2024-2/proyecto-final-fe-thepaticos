@@ -13,12 +13,14 @@ import { getVehicleByPlate } from '@/app/helpers/api/vehicles';
 import Swal from 'sweetalert2';
 import { useEffect, useState } from 'react';
 import { modifyVehicle } from '@/app/helpers/api/vehicles';
+import SoatModal from '@/app/ui/modals/SOAT';
 
 export default function Page() {
 	const { user } = useAuth();
 	const router = useRouter();
 	const { setLoading } = useLoading();
 	const [car, setCar] = useState({ plate: user.vehicle_plate });
+	const [SoatVisible, setSoatModal] = useState(false);
 
 	const {
 		register,
@@ -36,6 +38,10 @@ export default function Page() {
 			}
 		}
 		return errorMessage;
+	};
+
+	const toggleModal = () => {
+		setSoatModal((prev) => !prev); // Toggle modal visibility
 	};
 
 	const onSubmit = async (data) => {
@@ -84,24 +90,35 @@ export default function Page() {
 
 	return (
 		<section className=' w-full h-fit flex gap-4 justify-center items-center sm:items-start p-10 flex-col sm:flex-row'>
-			<section className='flex flex-col justify-start items-start gap-4'>
+			<section className='relative flex flex-col justify-start items-center gap-4'>
 				<Link
-					className='text-gray-400 hover:text-gray-800 flex'
+					className='absolute top-4 left-4 text-gray-400 hover:text-gray-800 flex'
 					href='/driverDashboard'
 				>
 					<ChevronLeft /> Volver
 				</Link>
-				<div className='flex flex-col justify-center items-center gap-4'>
+				<div className='flex flex-col justify-center items-center gap-4 mt-12'>
 					<Image
 						src={car.photo || '/images/anonym.png'}
 						alt='Foto del vehiculo'
 						width={500}
 						height={500}
 						priority
-						className='rounded-full object-cover max-w-[220px] max-h-[220px] min-w-[220px] min-h-[220px] border-2 sm:min-w-[260px] sm:max-w-[260px] sm:min-h-[260px] sm:max-h-[260px] cursor-pointer sm:border-4 border-[#025C31] '
+						className='rounded-full object-cover max-w-[220px] max-h-[220px] min-w-[220px] min-h-[220px] border-2 sm:min-w-[260px] sm:max-w-[260px] sm:min-h-[260px] sm:max-h-[260px] cursor-pointer sm:border-4 border-[#025C31]'
 					/>
 				</div>
+				<button
+					onClick={toggleModal}
+					className='bg-[#D9D9D9] hover:bg-gray-400 p-2 rounded-lg border-[1px] border-black font-semibold'
+				>
+					SOAT actual
+				</button>
 			</section>
+			<SoatModal
+				isActualSoatOpen={SoatVisible}
+				onClose={toggleModal}
+				car={car}
+			/>
 
 			<section>
 				<form
