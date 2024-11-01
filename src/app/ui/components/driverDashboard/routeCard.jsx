@@ -17,8 +17,8 @@ export default function RouteCard({ ride }) {
 	};
 
 	return (
-		<div className='flex h-fit'>
-			<div className='bg-[#D9D9D9] p-[3px] rounded-l-lg gap-[3px] sm:gap-3 flex w-full h-fit items-center justify-start border-2 border-[#696C70] border-opacity-50 border-r-0'>
+		<div className='flex h-full'>
+			<div className='bg-[#D9D9D9] p-[3px] rounded-l-lg gap-[3px] sm:gap-3 flex w-full h-full items-center justify-start border-2 border-[#696C70] border-opacity-50 border-r-0'>
 				<section className='flex flex-col gap-[2px] sm:gap-2 w-full justify-center p-2'>
 					<div className='flex gap-[3px] sm:gap-3 items-center w-full'>
 						<svg

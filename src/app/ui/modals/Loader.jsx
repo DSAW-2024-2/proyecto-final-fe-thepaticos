@@ -1,6 +1,6 @@
 export default function Loader({ message }) {
 	return (
-		<div className='fixed inset-0 flex items-center justify-center z-50'>
+		<div className='absolute inset-0 flex items-center justify-center z-50'>
 			<div className='bg-white rounded-lg shadow-lg p-5 w-[300px] h-[350px]'>
 				<div className='flex flex-col justify-center items-center gap-10 text-[#028747] font-bold text-lg'>
 					{message ? message : 'Validando información'} ...

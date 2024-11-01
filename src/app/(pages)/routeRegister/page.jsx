@@ -8,10 +8,13 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import Swal from 'sweetalert2';
+import { useEffect, useState } from 'react';
 
 export default function Page() {
 	const router = useRouter();
 	const { setLoading } = useLoading();
+	const [stations, setStations] = useState([]);
+	const [selectedStops, setSelectedStops] = useState([]);
 
 	const {
 		register,
@@ -20,8 +23,9 @@ export default function Page() {
 	} = useForm({
 		resolver: zodResolver(rideSchema),
 	});
+
 	const errorsMes = (err) => {
-		let errorMessage;
+		let errorMessage = '';
 		for (const field in err) {
 			if (err[field]._errors) {
 				const fieldErrors = err[field]._errors.join(', ');
@@ -31,9 +35,10 @@ export default function Page() {
 		return errorMessage;
 	};
 
-	const onSubmit = async () => {
+	const onSubmit = async (data) => {
 		setLoading(true);
 		try {
+			const tripData = { ...data, stops: selectedStops }; // Include selected stops
 			Swal.fire({
 				title: 'Excelente!',
 				text: 'Ruta Registrada Correctamente',
@@ -64,6 +69,48 @@ export default function Page() {
 		}
 	};
 
+	const handleButtonClick = (stop) => {
+		setSelectedStops((prev) => {
+			if (prev.includes(stop)) {
+				return prev.filter((s) => s !== stop);
+			} else {
+				return [...prev, stop];
+			}
+		});
+	};
+
+	useEffect(() => {
+		async function fetchEstaciones() {
+			const url =
+				'https://gis.transmilenio.gov.co/arcgis/rest/services/Troncal/consulta_estaciones_troncales/FeatureServer/0/query?where=1%3D1&outFields=nombre_estacion&outSR=4326&f=json';
+			try {
+				const response = await fetch(url);
+				const data = await response.json();
+				if (data.features) {
+					const nombresEstacion = data.features
+						.map((feature) => feature.attributes.nombre_estacion)
+						.filter(
+							(name) =>
+								(name.includes('Calle') ||
+									name.includes('Norte') ||
+									name.includes('AV.')) &&
+								!name.includes('-')
+						); // Excluding names with '-'
+					setStations(
+						[['U. Sabana'], ['Centro Chía'], ...nombresEstacion].sort()
+					);
+				} else {
+					console.error('No features found in the response');
+				}
+			} catch (error) {
+				console.error('Error fetching data:', error);
+			}
+		}
+		fetchEstaciones();
+	}, []);
+
+	const stopsList = stations;
+
 	return (
 		<form
 			onSubmit={handleSubmit(onSubmit)}
@@ -76,6 +123,38 @@ export default function Page() {
 			>
 				<ChevronLeft /> Volver
 			</Link>
+			<div className='mb-4'>
+				<label className='block text-gray-700 mb-2'>
+					Selecciona tus paradas:
+				</label>
+				<div className='overflow-x-auto whitespace-nowrap flex gap-1'>
+					{stopsList.map((stop) => (
+						<button
+							key={stop}
+							type='button'
+							onClick={() => handleButtonClick(stop)}
+							className={`py-2 px-4 rounded-full ${
+								selectedStops.includes(stop)
+									? 'bg-[#028747] text-white'
+									: 'bg-gray-200 text-black'
+							}`}
+						>
+							{stop}
+						</button>
+					))}
+				</div>
+			</div>
+
+			<div className='mb-4'>
+				<label className='block text-gray-700 mb-2'>
+					{selectedStops.length > 0 ? 'Orden de esta ruta' : ''}
+				</label>
+				<ol className='list-disc pl-5'>
+					{selectedStops.map((stop, index) => (
+						<li key={index}>{stop}</li>
+					))}
+				</ol>
+			</div>
 			{['origin', 'destination', 'fee', 'available_seats'].map((field) => (
 				<div key={field} className='mb-4'>
 					<label
@@ -88,25 +167,13 @@ export default function Page() {
 								? 'Punto destino'
 								: field === 'available_seats'
 									? 'Cupos disponibles'
-									: field === 'fee'
-										? 'Valor unico del wheels'
-										: ''}
+									: 'Valor unico del wheels'}
 					</label>
 					<input
 						type='text'
 						id={field}
 						{...register(field)}
-						placeholder={`e.j: ${
-							field === 'origin'
-								? 'Universidad de la sabana'
-								: field === 'destination'
-									? 'Portal Norte'
-									: field === 'available_seats'
-										? '4'
-										: field === 'fee'
-											? '40000'
-											: ''
-						}`}
+						placeholder={`e.j: ${field === 'origin' ? 'Universidad de la sabana' : field === 'destination' ? 'Portal Norte' : field === 'available_seats' ? '4' : '40000'}`}
 						className='w-full px-3 py-2 border rounded-lg'
 					/>
 					{errors[field] && (
@@ -121,7 +188,6 @@ export default function Page() {
 					type='datetime-local'
 					id='departure'
 					{...register('departure')}
-					accept='image/jpeg, image/png, image/gif'
 					className='text-xs sm:text-base'
 				/>
 			</div>
