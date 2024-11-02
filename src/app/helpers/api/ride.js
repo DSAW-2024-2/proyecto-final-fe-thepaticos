@@ -27,6 +27,6 @@ export async function getRideById(rideId) {
 	return res.data.ride;
 }
 export async function createRide(data) {
-	const res = await api.post(`/ride/`, data);
+	const res = await api.post('/ride/', data);
 	return res;
 }
