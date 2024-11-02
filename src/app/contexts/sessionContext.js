@@ -2,7 +2,6 @@ import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
 import { createContext, useContext, useEffect, useState } from 'react';
 import { authSignin, authSignup, getUserByToken } from '../helpers/api/auth';
-import { set } from 'zod';
 import { getVehicleByPlate } from '../helpers/api/vehicles';
 import Swal from 'sweetalert2';
 

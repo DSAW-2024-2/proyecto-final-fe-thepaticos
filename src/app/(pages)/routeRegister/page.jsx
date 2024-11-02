@@ -10,7 +10,7 @@ import { useEffect, useState } from 'react';
 import { useAuth } from '@/app/contexts/sessionContext';
 import { createRide } from '@/app/helpers/api/ride';
 import { rideSchema } from '@/app/helpers/validators';
-import { zodResolver } from '@hookform/resolvers/zod';
+//import { zodResolver } from '@hookform/resolvers/zod';
 
 export default function Page() {
 	const router = useRouter();
@@ -60,7 +60,7 @@ export default function Page() {
 				router.push('/driverDashboard');
 			}
 		} catch (error) {
-			console.error(error.message);
+			const validateErros = ''
 			if (error.response.data.errors) {
 				validateErros = errorsMes(error.response.data.errors);
 			}
