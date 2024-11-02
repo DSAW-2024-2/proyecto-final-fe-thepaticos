@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import TripDetailsModal from '../../modals/TripDetails';
 import Loader from '../../modals/Loader';
+import formatTime from '@/app/helpers/timeformat';
 
 export default function AvailableTripCard(ride) {
 	const [vehicle, setvehicle] = useState({});
@@ -24,14 +25,8 @@ export default function AvailableTripCard(ride) {
 		};
 		getVehicle();
 	}, [ride.ride.vehicle_plate]);
-	const dateString = ride.ride.departure;
-	const date = new Date(dateString);
-	const dateFormat = {
-		hour: 'numeric',
-		minute: 'numeric',
-		hour12: true,
-	};
-	const formattedTime = date.toLocaleTimeString('en-US', dateFormat);
+
+	const formattedTime = formatTime(ride.ride.departure);
 
 	const toggleModal = () => {
 		setTripDetailsVisible((prev) => !prev); // Toggle modal visibility
@@ -100,7 +95,7 @@ export default function AvailableTripCard(ride) {
 							/>
 						</svg>
 						<div className='text-[12px] sm:text-lg font-semibold'>
-							{ride.ride.available_seats}
+							{`${ride.ride.available_seats === 1 ? ride.ride.available_seats + ' cupo' : ride.ride.available_seats + ' cupos'}`}
 						</div>
 					</div>
 				</section>

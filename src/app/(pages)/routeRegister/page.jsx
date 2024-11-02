@@ -1,7 +1,5 @@
 'use client';
 import { useLoading } from '@/app/contexts/loadingContext';
-import { rideSchema } from '@/app/helpers/validators';
-import { zodResolver } from '@hookform/resolvers/zod';
 import { isAxiosError } from 'axios';
 import { ChevronLeft } from 'lucide-react';
 import Link from 'next/link';
@@ -9,9 +7,14 @@ import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import Swal from 'sweetalert2';
 import { useEffect, useState } from 'react';
+import { useAuth } from '@/app/contexts/sessionContext';
+import { createRide } from '@/app/helpers/api/ride';
+import { rideSchema } from '@/app/helpers/validators';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 export default function Page() {
 	const router = useRouter();
+	const { user } = useAuth();
 	const { setLoading } = useLoading();
 	const [stations, setStations] = useState([]);
 	const [selectedStops, setSelectedStops] = useState([]);
@@ -20,9 +23,7 @@ export default function Page() {
 		register,
 		handleSubmit,
 		formState: { errors },
-	} = useForm({
-		resolver: zodResolver(rideSchema),
-	});
+	} = useForm();
 
 	const errorsMes = (err) => {
 		let errorMessage = '';
@@ -38,15 +39,28 @@ export default function Page() {
 	const onSubmit = async (data) => {
 		setLoading(true);
 		try {
-			const tripData = { ...data, stops: selectedStops }; // Include selected stops
-			Swal.fire({
-				title: 'Excelente!',
-				text: 'Ruta Registrada Correctamente',
-				icon: 'success',
-			});
-			router.push('/driverDashboard');
+			const tripData = {
+				...data,
+				vehicle_plate: user.vehicle_plate,
+				destination: selectedStops[selectedStops.length - 1].toString(),
+				origin: selectedStops[0].toString(),
+				departure: `${data?.departure}:00Z`,
+				route: selectedStops,
+			};
+			const validation = rideSchema.safeParse(tripData);
+			console.log(validation.error);
+			if (validation.success) {
+				console.log(validation.data);
+				await createRide(validation.data);
+				Swal.fire({
+					title: 'Excelente!',
+					text: 'Ruta Registrada Correctamente',
+					icon: 'success',
+				});
+				router.push('/driverDashboard');
+			}
 		} catch (error) {
-			let validateErros = '';
+			console.error(error.message);
 			if (error.response.data.errors) {
 				validateErros = errorsMes(error.response.data.errors);
 			}
@@ -88,17 +102,15 @@ export default function Page() {
 				const data = await response.json();
 				if (data.features) {
 					const nombresEstacion = data.features
-						.map((feature) => feature.attributes.nombre_estacion)
+						.map((feature) => feature.attributes.nombre_estacion.toString())
 						.filter(
 							(name) =>
 								(name.includes('Calle') ||
 									name.includes('Norte') ||
 									name.includes('AV.')) &&
 								!name.includes('-')
-						); // Excluding names with '-'
-					setStations(
-						[['U. Sabana'], ['Centro Chía'], ...nombresEstacion].sort()
-					);
+						);
+					setStations(['U. Sabana', 'Centro Chía', ...nombresEstacion].sort());
 				} else {
 					console.error('No features found in the response');
 				}
@@ -155,25 +167,21 @@ export default function Page() {
 					))}
 				</ol>
 			</div>
-			{['origin', 'destination', 'fee', 'available_seats'].map((field) => (
+			{['fee', 'available_seats'].map((field) => (
 				<div key={field} className='mb-4'>
 					<label
 						htmlFor={field}
 						className='block text-gray-700 mb-2 capitalize'
 					>
-						{field === 'origin'
-							? 'Punto de recogida'
-							: field === 'destination'
-								? 'Punto destino'
-								: field === 'available_seats'
-									? 'Cupos disponibles'
-									: 'Valor unico del wheels'}
+						{field === 'available_seats'
+							? 'Cupos disponibles'
+							: 'Valor unico del wheels'}
 					</label>
 					<input
 						type='text'
 						id={field}
 						{...register(field)}
-						placeholder={`e.j: ${field === 'origin' ? 'Universidad de la sabana' : field === 'destination' ? 'Portal Norte' : field === 'available_seats' ? '4' : '40000'}`}
+						placeholder={`e.j: ${field === 'available_seats' ? '4' : '4000'}`}
 						className='w-full px-3 py-2 border rounded-lg'
 					/>
 					{errors[field] && (
@@ -199,7 +207,7 @@ export default function Page() {
 				type='submit'
 				className='w-full bg-green-600 text-white py-2 rounded-md font-semibold uppercase'
 			>
-				Registrarse
+				Registrar Ruta
 			</button>
 		</form>
 	);

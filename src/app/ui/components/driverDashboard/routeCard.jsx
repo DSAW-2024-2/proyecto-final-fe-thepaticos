@@ -1,16 +1,13 @@
 import RouteStop from '../userDashboard/routeStop';
 import { useState } from 'react';
 import RouteInfo from '../../modals/routeInfo';
+import formatTime from '@/app/helpers/timeformat';
 
 export default function RouteCard({ ride }) {
 	const dateString = ride.departure;
-	const date = new Date(dateString);
-	const dateFormat = {
-		hour: 'numeric',
-		minute: 'numeric',
-		hour12: true,
-	};
-	const formattedTime = date.toLocaleTimeString('en-US', dateFormat);
+
+	const formattedTime = formatTime(dateString);
+
 	const [isRouteInfoOpen, setRouteInfo] = useState(false);
 	const toggleModal = () => {
 		setRouteInfo((prev) => !prev); // Toggle modal visibility

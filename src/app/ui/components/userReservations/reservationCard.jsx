@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import RouteStop from '../userDashboard/routeStop';
 import Swal from 'sweetalert2';
+import formatTime from '@/app/helpers/timeformat';
 
 export default function ReservationCard({ item }) {
 	const [vehicle, setVehicle] = useState(null);
@@ -82,14 +83,7 @@ export default function ReservationCard({ item }) {
 		}
 	};
 
-	const dateString = item.departure;
-	const date = new Date(dateString);
-	const dateFormat = {
-		hour: 'numeric',
-		minute: 'numeric',
-		hour12: true,
-	};
-	const formattedTime = date.toLocaleTimeString('en-US', dateFormat);
+	const formattedTime = formatTime(item.departure);
 
 	if (loading) {
 		return (

@@ -152,10 +152,20 @@ export const vehicleSchema = z.object({
 		),
 });
 export const rideSchema = z.object({
-	origin: z.string(),
-	destination: z.string(),
-	route: z.array(z.string()),
-	departure: z.string().datetime(),
+	vehicle_plate: z.string(),
 	available_seats: z.coerce.number().min(1).max(6),
+	departure: z.string().datetime(),
+	destination: z.string().min(1),
 	fee: z.coerce.number().positive(),
+	origin: z.string().min(1),
+	route: z.array(z.string()).min(2),
+});
+export const partialRideSchema = rideSchema.pick({
+	vehicle_plate: true,
+	available_seats: true,
+	departure: false,
+	destination: true,
+	fee: true,
+	origin: true,
+	route: true,
 });
