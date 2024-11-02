@@ -60,7 +60,7 @@ export default function Page() {
 				router.push('/driverDashboard');
 			}
 		} catch (error) {
-			const validateErros = ''
+			let validateErros = '';
 			if (error.response.data.errors) {
 				validateErros = errorsMes(error.response.data.errors);
 			}
