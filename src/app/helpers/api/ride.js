@@ -7,9 +7,14 @@ const api = axios.create({
 		Authorization: `Bearer ${Cookies.get('authToken')}`,
 	},
 });
-export async function getAvaliableRides() {
-	const res = await api.get('/ride/');
-
+export async function getAvaliableRides({
+	origin = '',
+	destination = '',
+	seats = 1,
+}) {
+	const res = await api.get(
+		`/ride?origin=${origin}&destination=${destination}&seats=${seats}`
+	);
 	return res.data.rides;
 }
 export async function getOrigins() {
@@ -28,5 +33,10 @@ export async function getRideById(rideId) {
 }
 export async function createRide(data) {
 	const res = await api.post('/ride/', data);
+	return res;
+}
+
+export async function deleteRide(rideId) {
+	const res = await api.delete(`/ride/${rideId}`);
 	return res;
 }
