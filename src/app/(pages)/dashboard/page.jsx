@@ -3,14 +3,26 @@ import { getAvaliableRides } from '@/app/helpers/api/ride';
 import AvailableTripCard from '@/app/ui/components/userDashboard/AvailableTripCard';
 import FilterButton from '@/app/ui/components/userDashboard/filterButton';
 import { useEffect, useState } from 'react';
+import { useSearchParams } from 'next/navigation';
 
 export default function DashboardPage() {
 	const [rides, setRides] = useState([]);
+	const searchParams = useSearchParams();
+	const seats = searchParams.get('seats');
+	const origin = searchParams.get('origin');
+	const destination = searchParams.get('destination');
 
 	useEffect(() => {
 		const getRides = async () => {
 			try {
-				const AvaliableRides = await getAvaliableRides();
+				const queryParams = {
+					origin: origin || '',
+					destination: destination || '',
+					seats: seats ? Number(seats) : 1,
+				};
+
+				const AvaliableRides = await getAvaliableRides(queryParams);
+
 				setRides(AvaliableRides);
 			} catch (error) {
 				console.error('Error fetching rides:', error);

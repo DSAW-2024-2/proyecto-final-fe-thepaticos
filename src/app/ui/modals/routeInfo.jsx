@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import PassengersCard from '../components/driverDashboard/passengerCard';
+import { deleteRide } from '@/app/helpers/api/ride';
 import Swal from 'sweetalert2';
 import Loader from './Loader';
 
@@ -42,7 +43,7 @@ export default function RouteInfo({ isRouteInfoOpen, onClose, ride }) {
 		});
 
 		if (result.isConfirmed) {
-			// Perform the cancellation logic here
+			const res = await deleteRide(ride.rideId);
 			Swal.fire('Cancelado!', 'El viaje ha sido cancelado.', 'success');
 			handleClose();
 		}
