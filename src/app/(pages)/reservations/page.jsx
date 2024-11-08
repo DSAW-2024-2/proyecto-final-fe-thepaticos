@@ -24,6 +24,21 @@ export default function DashboardPage() {
 		getReservations();
 	}, []);
 
+	const reloadReservations = async () => {
+		setLoading(true);
+		const getReservations = async () => {
+			try {
+				const resReservations = await getUserReservations(user.id);
+				setReservations(resReservations);
+			} catch (error) {
+				console.error('Error fetching rides:', error);
+			} finally {
+				setLoading(false);
+			}
+		};
+		getReservations();
+	};
+
 	if (loading) {
 		return <Loader message={'Cargando información'} />;
 	}
@@ -34,7 +49,11 @@ export default function DashboardPage() {
 				<div className='bg-[#D9D9D9] shadow-gray-600 shadow-md bg-opacity-50 w-fit max-w-[99%] h-full overflow-x-auto p-3 border-solid border-[1px] border-[#696C70] border-opacity-50 rounded-lg flex gap-3'>
 					{reservations.length > 0 ? (
 						reservations.map((reservation, index) => (
-							<ReservationCard key={index} item={reservation} />
+							<ReservationCard
+								key={index}
+								item={reservation}
+								reloadReservations={reloadReservations}
+							/>
 						))
 					) : (
 						<div className='text-center text-gray-500 font-semibold text-lg'>

@@ -5,17 +5,21 @@ import { useEffect, useState } from 'react';
 import RouteStop from '../userDashboard/routeStop';
 import Swal from 'sweetalert2';
 import formatTime from '@/app/helpers/timeformat';
+import { deleteBooking } from '@/app/helpers/api/user';
+import { useAuth } from '@/app/contexts/sessionContext';
 
-export default function ReservationCard({ item }) {
+export default function ReservationCard({ item, reloadReservations }) {
 	const [vehicle, setVehicle] = useState(null);
 	const [driver, setDriver] = useState(null);
 	const [loading, setLoading] = useState(true);
+	const { user } = useAuth();
+	const [ride, setRide] = useState(item);
 
 	useEffect(() => {
 		const getVehicle = async () => {
 			setLoading(true);
 			try {
-				const resVehicle = await getVehicleByPlate(item.vehicle_plate);
+				const resVehicle = await getVehicleByPlate(ride.vehicle_plate);
 				const resDriver = await getUserById(resVehicle.id_driver);
 				setVehicle(resVehicle);
 				setDriver(resDriver);
@@ -26,10 +30,10 @@ export default function ReservationCard({ item }) {
 			}
 		};
 
-		if (item.vehicle_plate) {
+		if (ride.vehicle_plate) {
 			getVehicle();
 		}
-	}, [item.vehicle_plate]);
+	}, [ride.vehicle_plate]);
 
 	const handleCancel = async () => {
 		const result = await Swal.fire({
@@ -44,8 +48,9 @@ export default function ReservationCard({ item }) {
 		});
 
 		if (result.isConfirmed) {
-			// Aquí puedes agregar la lógica para cancelar la reserva
 			Swal.fire('Cancelado!', 'Tu reserva ha sido cancelada.', 'success');
+			await deleteBooking(user.id, ride.rideId, ride.destination);
+			reloadReservations();
 		}
 	};
 
@@ -83,7 +88,7 @@ export default function ReservationCard({ item }) {
 		}
 	};
 
-	const formattedTime = formatTime(item.departure);
+	const formattedTime = formatTime(ride.departure);
 
 	if (loading) {
 		return (
@@ -132,7 +137,7 @@ export default function ReservationCard({ item }) {
 								d='M13.9 12.7c0-.6-.2-1.2-.6-1.6c-.8-.8-2.4-.8-3.2 0l-.3.3c-.1.1-.1.3-.2.4s-.1.3-.1.4v.8c0 .1.1.3.1.4s.1.3.2.4l.3.3c.4.4 1 .7 1.6.7s1.2-.2 1.6-.7c.3-.2.6-.8.6-1.4M54 45.9c.4-.4.7-1 .7-1.6s-.2-1.2-.7-1.6l-.3-.3c-.1-.1-.3-.1-.4-.2c-.1 0-.3-.1-.4-.1H52c-.1 0-.3.1-.4.1c-.1.1-.3.1-.4.2l-.3.3c-.4.4-.7 1-.7 1.6s.2 1.2.7 1.6l.3.3c.1.1.3.1.4.2c.1 0 .3.1.4.1h.4c.6 0 1.2-.2 1.6-.6'
 							/>
 						</svg>
-						<RouteStop stops={item.route} />
+						<RouteStop stops={ride.route} />
 					</div>
 
 					<div className='flex gap-[5px] sm:gap-3 items-center w-full'>
@@ -163,10 +168,10 @@ export default function ReservationCard({ item }) {
 							/>
 						</svg>
 						<div className='text-base sm:text-lg font-semibold'>
-							{item.available_seats > 1
-								? `${item.available_seats} disponibles`
-								: item.available_seats === 1
-									? `${item.available_seats} disponible`
+							{ride.available_seats > 1
+								? `${ride.available_seats} disponibles`
+								: ride.available_seats === 1
+									? `${ride.available_seats} disponible`
 									: 'Cupo lleno'}
 						</div>
 					</div>
@@ -187,7 +192,7 @@ export default function ReservationCard({ item }) {
 							/>
 						</svg>
 						<div className='text-base sm:text-lg font-semibold'>
-							$ {item.fee.toLocaleString()}
+							$ {ride.fee.toLocaleString()}
 						</div>
 					</div>
 
@@ -235,7 +240,7 @@ export default function ReservationCard({ item }) {
 							/>
 						</svg>
 						<div className='text-base sm:text-lg font-semibold'>
-							{`${item.vehicle_plate.slice(0, 3)} ${item.vehicle_plate.slice(3, 6)}`}
+							{`${ride.vehicle_plate.slice(0, 3)} ${ride.vehicle_plate.slice(3, 6)}`}
 						</div>
 					</div>
 

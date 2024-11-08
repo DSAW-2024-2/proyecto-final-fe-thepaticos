@@ -39,7 +39,7 @@ export default function DashboardPage() {
 
 	return (
 		<section className='flex flex-col justify-center w-full items-center bg-white'>
-			<div className='flex gap-4 justify-center items-center'>
+			<div className='flex flex-wrap gap-2 justify-center items-center'>
 				<FilterButton />
 				<button
 					onClick={handleResetFilters}
@@ -59,7 +59,7 @@ export default function DashboardPage() {
 							/>
 						</svg>
 					) : (
-						<div></div>
+						<></>
 					)}
 				</button>
 			</div>

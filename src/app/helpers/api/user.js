@@ -47,3 +47,10 @@ export async function bookRide(userId, rideId, arrivalPoints) {
 	const res = await api.patch(`/user/${userId}/rides`, data);
 	return res;
 }
+
+export async function deleteBooking(userId, rideId, point) {
+	const res = await api.delete(`/user/${userId}/rides`, {
+		params: { rideId, point },
+	});
+	return res;
+}

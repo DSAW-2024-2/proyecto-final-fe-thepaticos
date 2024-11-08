@@ -4,7 +4,7 @@ import RouteStop from '../components/userDashboard/routeStop';
 import { getVehicleByPlate } from '@/app/helpers/api/vehicles';
 import { getUserById } from '@/app/helpers/api/user';
 import Swal from 'sweetalert2';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { isAxiosError } from 'axios';
 import Loader from './Loader';
 import { bookRide } from '@/app/helpers/api/user';
@@ -28,6 +28,8 @@ export default function TripDetailsModal({
 	const [loading, setLoading] = useState(true);
 	const router = useRouter();
 	const { user } = useAuth();
+	const searchParams = useSearchParams();
+	const destination = searchParams.get('destination');
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -70,15 +72,14 @@ export default function TripDetailsModal({
 		setLoading(true);
 
 		try {
-			await bookRide(user.id, rideId, [ride.destination]);
 			Swal.fire({
 				title: 'Excelente!',
 				text: 'Tu cupo ha sido reservado',
 				icon: 'success',
-			}).then(() => {
-				handleClose();
-				router.push('/reservations');
 			});
+			await bookRide(user.id, rideId, [destination || ride.destination]);
+			handleClose();
+			router.push('/reservations');
 		} catch (error) {
 			if (isAxiosError(error)) {
 				Swal.fire({
