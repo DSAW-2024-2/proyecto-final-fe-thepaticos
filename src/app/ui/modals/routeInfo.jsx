@@ -3,9 +3,16 @@ import PassengersCard from '../components/driverDashboard/passengerCard';
 import { deleteRide } from '@/app/helpers/api/ride';
 import Swal from 'sweetalert2';
 import Loader from './Loader';
+import { useRouter } from 'next/navigation';
 
-export default function RouteInfo({ isRouteInfoOpen, onClose, ride }) {
+export default function RouteInfo({
+	isRouteInfoOpen,
+	onClose,
+	ride,
+	reloadRides,
+}) {
 	const [loading, setLoading] = useState(true);
+	const router = useRouter();
 	useEffect(() => {
 		setLoading(false);
 	}, []);
@@ -45,7 +52,9 @@ export default function RouteInfo({ isRouteInfoOpen, onClose, ride }) {
 		if (result.isConfirmed) {
 			const res = await deleteRide(ride.rideId);
 			Swal.fire('Cancelado!', 'El viaje ha sido cancelado.', 'success');
+			reloadRides();
 			handleClose();
+			router.push('/driverDashboard');
 		}
 	};
 

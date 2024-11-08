@@ -3,7 +3,7 @@ import { useState } from 'react';
 import RouteInfo from '../../modals/routeInfo';
 import formatTime from '@/app/helpers/timeformat';
 
-export default function RouteCard({ ride }) {
+export default function RouteCard({ ride, reloadRides }) {
 	const dateString = ride.departure;
 
 	const formattedTime = formatTime(dateString);
@@ -89,6 +89,7 @@ export default function RouteCard({ ride }) {
 				isRouteInfoOpen={isRouteInfoOpen}
 				onClose={toggleModal}
 				ride={ride}
+				reloadRides={reloadRides}
 			/>
 		</div>
 	);

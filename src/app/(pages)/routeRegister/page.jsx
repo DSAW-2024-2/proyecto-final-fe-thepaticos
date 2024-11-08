@@ -48,9 +48,7 @@ export default function Page() {
 				route: selectedStops,
 			};
 			const validation = rideSchema.safeParse(tripData);
-			console.log(validation.error);
 			if (validation.success) {
-				console.log(validation.data);
 				await createRide(validation.data);
 				Swal.fire({
 					title: 'Excelente!',
