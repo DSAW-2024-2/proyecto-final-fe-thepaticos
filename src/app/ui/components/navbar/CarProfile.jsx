@@ -9,13 +9,14 @@ export default function CarPhoto({ signout, vehicle }) {
 	const dropdownRef = useRef(null);
 	const router = useRouter();
 	const { user } = useAuth();
-	const [car, setCar] = useState(vehicle); // Change initial state to null
-	const [loading, setLoading] = useState(true); // Add loading state
+	const [car, setCar] = useState(vehicle); // Initialize with vehicle prop
+	const [loading, setLoading] = useState(true); // Loading state
 
 	const toggleMenu = () => {
 		setShowMenu(!showMenu);
 	};
 
+	// Handle outside click for dropdown menu
 	useEffect(() => {
 		const handleClickOutside = (event) => {
 			if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -38,17 +39,19 @@ export default function CarPhoto({ signout, vehicle }) {
 		router.push('/carProfile');
 	};
 
+	// Fetch vehicle data on mount and whenever `vehicle` changes
 	useEffect(() => {
+		const fetchCar = async () => {
+			setLoading(true);
+			const fetchedCar = await getVehicleByPlate(user.vehicle_plate);
+			setCar(fetchedCar);
+			setLoading(false);
+		};
+
 		if (user?.vehicle_plate) {
-			const fetchCar = async () => {
-				setLoading(true);
-				const fetchedCar = await getVehicleByPlate(user.vehicle_plate);
-				setCar(fetchedCar);
-				setLoading(false);
-			};
 			fetchCar();
 		}
-	}, [user]);
+	}, [user, vehicle]); // Re-run if `vehicle` changes
 
 	return (
 		<div
@@ -56,16 +59,14 @@ export default function CarPhoto({ signout, vehicle }) {
 			ref={dropdownRef}
 			onClick={toggleMenu}
 		>
-			{
-				<Image
-					src={vehicle?.photo || '/images/anonym.png'}
-					alt='Imagen perfil conductor'
-					className='rounded-full object-cover max-w-[40px] max-h-[40px] min-w-[40px] min-h-[40px] border-2 sm:min-w-[70px] sm:max-w-[70px] sm:min-h-[70px] sm:max-h-[70px] cursor-pointer sm:border-2'
-					width={500}
-					height={500}
-					priority
-				/>
-			}
+			<Image
+				src={car?.photo || '/images/anonym.png'}
+				alt='Imagen perfil conductor'
+				className='rounded-full object-cover max-w-[40px] max-h-[40px] min-w-[40px] min-h-[40px] border-2 sm:min-w-[70px] sm:max-w-[70px] sm:min-h-[70px] sm:max-h-[70px] cursor-pointer sm:border-2'
+				width={500}
+				height={500}
+				priority
+			/>
 			<div
 				className={`absolute right-0 mt-2 w-40 bg-white shadow-md rounded-md overflow-hidden shadow-black ${
 					showMenu ? 'block' : 'hidden'

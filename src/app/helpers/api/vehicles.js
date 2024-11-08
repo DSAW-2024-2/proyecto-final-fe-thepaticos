@@ -48,20 +48,20 @@ export async function modifyVehicle(updateData, plate) {
 			'Content-Type': 'multipart/form-data',
 		},
 	};
-
-	setAuthHeader(); // Ensure the header is set before the request
-
+	setAuthHeader();
+	const { brand, model, vehiclePhoto, soat } = updateData;
 	const formData = new FormData();
-	formData.append('brand', updateData.brand);
-	formData.append('model', updateData.model);
-	if (updateData.vehiclePhoto && updateData.vehiclePhoto.length > 0) {
-		formData.append('vehiclePhoto', updateData.vehiclePhoto[0]);
+	formData.append('brand', brand);
+	formData.append('model', model);
+	if (vehiclePhoto && vehiclePhoto.length > 0) {
+		formData.append('vehiclePhoto', vehiclePhoto[0]);
 	}
-	if (updateData.soat && updateData.soat.length > 0) {
-		formData.append('soat', updateData.soat[0]);
+	if (soat && soat.length > 0) {
+		formData.append('soat', soat[0]);
 	}
 
-	await api.patch(`/vehicle/${plate}`, formData, config);
+	const res = await api.patch(`/vehicle/${plate}`, formData, config);
+	return res;
 }
 
 export async function getVehicleByPlate(plate) {

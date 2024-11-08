@@ -151,6 +151,16 @@ export const vehicleSchema = z.object({
 			}
 		),
 });
+
+export const partialVehicleSchema = vehicleSchema
+	.pick({
+		brand: true,
+		model: true,
+		soat: true,
+		vehiclePhoto: true,
+	})
+	.partial();
+
 export const rideSchema = z.object({
 	vehicle_plate: z.string(),
 	available_seats: z.coerce.number().min(1).max(6),
@@ -160,6 +170,7 @@ export const rideSchema = z.object({
 	origin: z.string().min(1),
 	route: z.array(z.string()).min(2),
 });
+
 export const partialRideSchema = rideSchema.pick({
 	vehicle_plate: true,
 	available_seats: true,

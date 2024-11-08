@@ -70,7 +70,6 @@ export default function TripDetailsModal({
 	const bookTrip = async () => {
 		if (loading) return;
 		setLoading(true);
-
 		try {
 			Swal.fire({
 				title: 'Excelente!',
@@ -78,8 +77,8 @@ export default function TripDetailsModal({
 				icon: 'success',
 			});
 			await bookRide(user.id, rideId, [destination || ride.destination]);
-			handleClose();
 			router.push('/reservations');
+			handleClose();
 		} catch (error) {
 			if (isAxiosError(error)) {
 				Swal.fire({

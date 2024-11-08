@@ -45,8 +45,8 @@ export default function RouteInfo({
 		});
 
 		if (result.isConfirmed) {
-			const res = await deleteRide(ride.rideId);
 			Swal.fire('Cancelado!', 'El viaje ha sido cancelado.', 'success');
+			await deleteRide(ride.rideId);
 			reloadRides();
 			handleClose();
 			router.push('/driverDashboard');

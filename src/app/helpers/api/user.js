@@ -5,7 +5,7 @@ import { getUserByToken } from './auth';
 const api = axios.create({
 	baseURL: `${process.env.NEXT_PUBLIC_BACKEND_URL}`,
 	headers: {
-		Authorization: `Bearer ${Cookies.get('authToken')}`, // Ensure correct Bearer prefix
+		Authorization: `Bearer ${Cookies.get('authToken')}`,
 	},
 });
 export async function modifyUser(newData, userId) {
@@ -20,7 +20,7 @@ export async function modifyUser(newData, userId) {
 	formData.append('lastname', lastname);
 	formData.append('contact', contact);
 	if (photo && photo.length > 0) {
-		formData.append('profilePhoto', photo[0]); //
+		formData.append('profilePhoto', photo[0]);
 	}
 	const res = await api.patch(`user/${userId}`, formData, config);
 	if (res.status === 200) {

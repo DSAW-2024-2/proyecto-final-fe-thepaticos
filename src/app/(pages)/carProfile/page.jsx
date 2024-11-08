@@ -3,7 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useLoading } from '@/app/contexts/loadingContext';
 import { useAuth } from '@/app/contexts/sessionContext';
-import { carRegSchema } from '@/app/helpers/carValidator';
+import { partialVehicleSchema } from '@/app/helpers/validators';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { isAxiosError } from 'axios';
 import { ChevronLeft } from 'lucide-react';
@@ -26,11 +26,17 @@ export default function Page() {
 		register,
 		handleSubmit,
 		formState: { errors },
+		reset,
 	} = useForm({
-		resolver: zodResolver(carRegSchema),
+		resolver: zodResolver(partialVehicleSchema),
+		defaultValues: {
+			brand: '',
+			model: '',
+		},
 	});
+
 	const errorsMes = (err) => {
-		let errorMessage;
+		let errorMessage = '';
 		for (const field in err) {
 			if (err[field]._errors) {
 				const fieldErrors = err[field]._errors.join(', ');
@@ -41,22 +47,22 @@ export default function Page() {
 	};
 
 	const toggleModal = () => {
-		setSoatModal((prev) => !prev); // Toggle modal visibility
+		setSoatModal((prev) => !prev);
 	};
 
 	const onSubmit = async (data) => {
 		setLoading(true);
 		try {
-			await modifyVehicle(data, car.plate);
 			Swal.fire({
 				title: 'Excelente!',
 				text: 'Cambios Realizados Correctamente',
 				icon: 'success',
 			});
+			await modifyVehicle(data, car.plate);
 			router.push('/driverDashboard');
 		} catch (error) {
 			let validateErrors = '';
-			if (error.response.data.errors) {
+			if (error.response?.data?.errors) {
 				validateErrors = errorsMes(error.response.data.errors);
 			}
 
@@ -80,13 +86,17 @@ export default function Page() {
 
 	useEffect(() => {
 		const fetchCar = async () => {
-			const car = await getVehicleByPlate(user.vehicle_plate);
-			if (car) {
-				setCar(car);
+			const carData = await getVehicleByPlate(user.vehicle_plate);
+			if (carData) {
+				setCar(carData);
+				reset({
+					brand: carData.brand || '',
+					model: carData.model || '',
+				});
 			}
 		};
 		fetchCar();
-	}, [user.vehicle_plate]);
+	}, [user.vehicle_plate, reset]);
 
 	return (
 		<section className=' w-full h-fit flex gap-4 justify-center items-center sm:items-start p-10 flex-col sm:flex-row'>
@@ -129,27 +139,12 @@ export default function Page() {
 					{['brand', 'model'].map((field) => (
 						<div key={field} className='mb-2'>
 							<label htmlFor={field} className='text-gray-700 my-5 capitalize'>
-								{field === 'brand'
-									? 'Marca'
-									: field === 'model'
-										? 'Modelo'
-										: ''}
+								{field === 'brand' ? 'Marca' : 'Modelo'}
 							</label>
 							<input
 								type='text'
 								id={field}
 								{...register(field)}
-								value={`${
-									field === 'brand'
-										? car.brand
-											? car.brand
-											: ''
-										: field === 'model'
-											? car.model
-												? car.model
-												: ''
-											: ''
-								}`}
 								className='w-full px-3 py-2 border rounded-lg capitalize'
 							/>
 							{errors[field] && (
@@ -163,28 +158,30 @@ export default function Page() {
 						<p className='text-gray-700 my-2 capitalize'>Imagen</p>
 						<input
 							type='file'
-							id='photo'
-							{...register('photo')}
+							id='vehiclePhoto'
+							{...register('vehiclePhoto')}
 							accept='image/jpeg, image/png, image/gif'
 							className='text-xs sm:text-base w-full'
 						/>
 					</div>
-					{errors.photo && (
-						<p className='text-red-500 text-sm mt-1'>{errors.photo.message}</p>
+					{errors.vehiclePhoto && (
+						<p className='text-red-500 text-sm mt-1'>
+							{errors.vehiclePhoto.message}
+						</p>
 					)}
 
 					<div className='mb-4'>
 						<p className='text-gray-700 my-2 capitalize'>SOAT</p>
 						<input
 							type='file'
-							id='SOAT'
-							{...register('SOAT')}
+							id='soat'
+							{...register('soat')}
 							accept='image/jpeg, image/png, image/gif'
 							className='text-xs sm:text-base w-full'
 						/>
 					</div>
-					{errors.photo && (
-						<p className='text-red-500 text-sm mt-1'>{errors.photo.message}</p>
+					{errors.soat && (
+						<p className='text-red-500 text-sm mt-1'>{errors.soat.message}</p>
 					)}
 
 					<div className='flex flex-col'>
