@@ -4,7 +4,9 @@ export default function routeStop({ stops }) {
 		routeStops.push(
 			<button
 				key={i}
-				className='bg-white rounded-full px-1 text-[12px] sm:text-lg font-semibold'
+				className='bg-white rounded-full px-1 text-[12px] sm:text-lg font-semibold text-gray-800 
+				hover:bg-gradient-to-r hover:from-[#028747] hover:to-[#025C31] hover:text-white 
+				hover:shadow-md hover:scale-105 transition-all duration-300 ease-in-out hover:cursor-default'
 			>
 				{stops[i]}
 			</button>
