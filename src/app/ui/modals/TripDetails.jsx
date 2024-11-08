@@ -66,13 +66,11 @@ export default function TripDetailsModal({
 	const formattedTime = formatTime(ride.departure);
 
 	const bookTrip = async () => {
-		// Check if already loading, if yes, do nothing
 		if (loading) return;
-
-		setLoading(true); // Set loading to true to disable subsequent clicks
+		setLoading(true);
 
 		try {
-			await bookRide(user.id, rideId, [ride.origin, ride.destination]);
+			await bookRide(user.id, rideId, [ride.destination]);
 			Swal.fire({
 				title: 'Excelente!',
 				text: 'Tu cupo ha sido reservado',
