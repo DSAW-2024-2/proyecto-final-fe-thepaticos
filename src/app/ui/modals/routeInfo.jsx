@@ -4,6 +4,7 @@ import { deleteRide } from '@/app/helpers/api/ride';
 import Swal from 'sweetalert2';
 import Loader from './Loader';
 import { useRouter } from 'next/navigation';
+import formatTime from '@/app/helpers/timeformat';
 
 export default function RouteInfo({
 	isRouteInfoOpen,
@@ -28,14 +29,8 @@ export default function RouteInfo({
 	if (!isRouteInfoOpen || loading) {
 		return null;
 	}
-	const dateString = ride.departure;
-	const date = new Date(dateString);
-	const dateFormat = {
-		hour: 'numeric',
-		minute: 'numeric',
-		hour12: true,
-	};
-	const formattedTime = date.toLocaleTimeString('en-US', dateFormat);
+
+	const formattedTime = formatTime(ride.departure);
 
 	const handleCancelTrip = async () => {
 		const result = await Swal.fire({
@@ -82,7 +77,7 @@ export default function RouteInfo({
 						/>
 					</svg>
 				</button>
-				<div className='bg-[#D9D9D9] h-full px-4 py-3 rounded-lg gap-[5px] sm:gap-3 flex flex-col w-[280px] items-center justify-between border-2 border-[#696C70] border-opacity-50'>
+				<div className='bg-[#D9D9D9] h-full px-4 py-3 rounded-lg gap-[5px] sm:gap-3 flex flex-col w-[280px] sm:w-[350px] items-center justify-between border-2 border-[#696C70] border-opacity-50'>
 					<section className='flex flex-col gap-[2px] sm:gap-2 w-full py-4'>
 						<div className='flex gap-[5px] sm:gap-3 items-center w-full'>
 							<svg

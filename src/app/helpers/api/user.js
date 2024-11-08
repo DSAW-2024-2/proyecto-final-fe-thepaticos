@@ -38,3 +38,12 @@ export async function getUserById(userId) {
 	const res = await api.get(`/user/${userId}`);
 	return res.data.user;
 }
+
+export async function bookRide(userId, rideId, arrivalPoints) {
+	const data = {
+		rideId: rideId,
+		arrivalPoints: arrivalPoints,
+	};
+	const res = await api.patch(`/user/${userId}/rides`, data);
+	return res;
+}

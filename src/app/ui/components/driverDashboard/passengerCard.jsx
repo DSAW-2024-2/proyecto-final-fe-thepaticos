@@ -38,12 +38,12 @@ export default function PassengersCard({ passengersList }) {
 	}
 
 	return (
-		<div className='flex flex-col gap-2 bg-[#028747] bg-opacity-50 p-2 rounded-2xl'>
+		<div className='flex flex-col gap-2 w-full bg-opacity-50 p-2 rounded-2xl'>
 			{passengerData.length > 0 ? (
 				passengerData.map((user, index) => (
 					<div
 						key={index}
-						className='bg-white border-2 border-gray-400 font-semibold p-1 rounded-full flex items-center justify-center w-fit gap-1'
+						className='bg-white border-2 border-gray-400 font-semibold p-1 rounded-full flex items-center justify-start w-full gap-1'
 					>
 						<Image
 							src={user.photo || '/images/anonym.png'}
@@ -59,8 +59,8 @@ export default function PassengersCard({ passengersList }) {
 					</div>
 				))
 			) : (
-				<div className='bg-white border-2 border-gray-400 font-semibold p-2 rounded-full'>
-					No se encuentran registrados pasajeros
+				<div className='bg-white border-2 border-gray-400 font-semibold p-2 rounded-full flex justify-center'>
+					No tienes pasajeros
 				</div>
 			)}
 		</div>

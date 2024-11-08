@@ -107,6 +107,7 @@ export default function FilterButton() {
 			)}
 
 			<FilterSubMenu
+				button={'origin'}
 				optionsMenu={origins}
 				Visible={isOriginMenuVisible}
 				horizontalMove={'left-0'}
@@ -133,6 +134,7 @@ export default function FilterButton() {
 			)}
 
 			<FilterSubMenu
+				button={'destination'}
 				optionsMenu={destinations}
 				Visible={isDestinationMenuVisible}
 				horizontalMove={'left-[33%]'}
@@ -159,6 +161,7 @@ export default function FilterButton() {
 			)}
 
 			<FilterSubMenu
+				button={'seats'}
 				optionsMenu={['1', '2', '3', '4', '5']}
 				Visible={isCapacityMenuVisible}
 				horizontalMove={'left-[66%]'}

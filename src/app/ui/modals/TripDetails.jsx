@@ -7,6 +7,9 @@ import Swal from 'sweetalert2';
 import { useRouter } from 'next/navigation';
 import { isAxiosError } from 'axios';
 import Loader from './Loader';
+import { bookRide } from '@/app/helpers/api/user';
+import formatTime from '@/app/helpers/timeformat';
+import { useAuth } from '@/app/contexts/sessionContext';
 
 export default function TripDetailsModal({
 	rideId,
@@ -24,6 +27,7 @@ export default function TripDetailsModal({
 	const [driver, setDriver] = useState(null);
 	const [loading, setLoading] = useState(true);
 	const router = useRouter();
+	const { user } = useAuth();
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -59,17 +63,16 @@ export default function TripDetailsModal({
 		return null;
 	}
 
-	const dateString = ride.departure;
-	const date = new Date(dateString);
-	const dateFormat = {
-		hour: 'numeric',
-		minute: 'numeric',
-		hour12: true,
-	};
-	const formattedTime = date.toLocaleTimeString('en-US', dateFormat);
+	const formattedTime = formatTime(ride.departure);
 
-	const bookTrip = () => {
+	const bookTrip = async () => {
+		// Check if already loading, if yes, do nothing
+		if (loading) return;
+
+		setLoading(true); // Set loading to true to disable subsequent clicks
+
 		try {
+			await bookRide(user.id, rideId, [ride.origin, ride.destination]);
 			Swal.fire({
 				title: 'Excelente!',
 				text: 'Tu cupo ha sido reservado',
@@ -93,7 +96,7 @@ export default function TripDetailsModal({
 				});
 			}
 		} finally {
-			setLoading(false);
+			setLoading(false); // Reset loading state after the operation completes
 		}
 	};
 
@@ -177,7 +180,7 @@ export default function TripDetailsModal({
 									? `${ride.available_seats} disponibles`
 									: ride.available_seats === 1
 										? `${ride.available_seats} disponible`
-										: 'No hay cupos disponibles'}
+										: 'Cupo lleno'}
 							</div>
 						</div>
 
@@ -268,7 +271,10 @@ export default function TripDetailsModal({
 
 					<section className='flex gap-3'>
 						<button
-							onClick={bookTrip}
+							onClick={(e) => {
+								e.stopPropagation(); // Prevent the click from propagating
+								bookTrip();
+							}}
 							className='bg-[#028747] rounded-lg border-2 border-[#025C31] hover:bg-[#025C31] flex text-white font-semibold items-center justify-center px-1 text-lg sm:text-lg gap-1'
 						>
 							Reservar Viaje

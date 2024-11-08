@@ -167,7 +167,7 @@ export default function ReservationCard({ item }) {
 								? `${item.available_seats} disponibles`
 								: item.available_seats === 1
 									? `${item.available_seats} disponible`
-									: 'No hay cupos disponibles'}
+									: 'Cupo lleno'}
 						</div>
 					</div>
 

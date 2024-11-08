@@ -61,7 +61,7 @@ export default function RouteCard({ ride, reloadRides }) {
 							/>
 						</svg>
 						<div className='text-[12px] sm:text-lg font-semibold'>
-							{ride.available_seats}
+							{`${ride.passengers.length > 0 ? ride.passengers.length + ' ' + (ride.passengers.length == 1 ? 'Pasajero' : 'Pasajeros') : 'Sin pasajeros'}`}
 						</div>
 					</div>
 				</section>
