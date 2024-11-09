@@ -5,11 +5,14 @@ import RouteCard from '@/app/ui/components/driverDashboard/routeCard';
 import FilterButton from '@/app/ui/components/userDashboard/filterButton';
 import { useEffect, useState } from 'react';
 import Loader from '@/app/ui/modals/Loader';
+import { useRouter } from 'next/navigation';
+import Swal from 'sweetalert2';
 
 export default function DashboardPage() {
 	const [rides, setRides] = useState([]);
-	const { user } = useAuth();
+	const { user, vehicle } = useAuth();
 	const [loading, setLoading] = useState(true);
+	const router = useRouter();
 
 	useEffect(() => {
 		const getRides = async () => {

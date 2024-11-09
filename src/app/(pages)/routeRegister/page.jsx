@@ -9,8 +9,8 @@ import Swal from 'sweetalert2';
 import { useEffect, useState } from 'react';
 import { useAuth } from '@/app/contexts/sessionContext';
 import { createRide } from '@/app/helpers/api/ride';
-import { rideSchema } from '@/app/helpers/validators';
-//import { zodResolver } from '@hookform/resolvers/zod';
+import { partialRideSchema, rideSchema } from '@/app/helpers/validators';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 export default function Page() {
 	const router = useRouter();
@@ -23,7 +23,7 @@ export default function Page() {
 		register,
 		handleSubmit,
 		formState: { errors },
-	} = useForm();
+	} = useForm({ resolver: zodResolver(partialRideSchema) });
 
 	const errorsMes = (err) => {
 		let errorMessage = '';

@@ -11,32 +11,40 @@ export default function ToggleProfile() {
 	const { currentRole, setCurrentRole } = useRol();
 
 	useEffect(() => {
-		// Fetch the vehicle data when user has a vehicle plate
 		const fetchVehicle = async () => {
 			if (user?.vehicle_plate) {
 				try {
 					const car = await getVehicleByPlate(user.vehicle_plate);
-					setVehicle(car); // Set the fetched vehicle data
+					setVehicle(car);
+					if (pathname === '/dashboard') {
+						setCurrentRole('passenger');
+					} else {
+						setCurrentRole('driver');
+					}
 				} catch (error) {
 					setVehicle(null);
 				}
 			} else {
-				setVehicle(null); // Clear vehicle data if no vehicle plate
+				setVehicle(null);
+				setCurrentRole('passenger');
 			}
 		};
 
-		// Call the fetchVehicle function
 		fetchVehicle();
-
-		// Set the role based on the current path
-		if (pathname === '/dashboard') {
-			setCurrentRole('passenger');
-		} else if (pathname === '/driverDashboard') {
-			setCurrentRole('driver');
-		}
-	}, [pathname, setCurrentRole, user, vehicle]);
+	}, [user?.vehicle_plate, setVehicle, setCurrentRole]);
 
 	const toggle = () => {
+		if (pathname === '/driverDashboard' && vehicle == null) {
+			Swal.fire({
+				title: 'Vehículo no registrado',
+				text: 'Para acceder al panel de conductor, primero debes registrar un vehículo.',
+				icon: 'warning',
+				confirmButtonText: 'Entendido',
+			}).then(() => {
+				router.push('/dashboard');
+			});
+			return;
+		}
 		if (pathname === '/dashboard') {
 			if (vehicle) {
 				setCurrentRole('driver');
