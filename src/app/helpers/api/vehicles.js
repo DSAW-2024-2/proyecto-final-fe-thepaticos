@@ -77,3 +77,9 @@ export async function getVehicleRides(plate) {
 	const res = await api.get(`/vehicle/${plate}/rides`);
 	return res.data.vehicleRides;
 }
+
+export async function deleteVehicle(plate) {
+	setAuthHeader();
+	const res = await api.delete(`/vehicle/${plate}`);
+	return res;
+}

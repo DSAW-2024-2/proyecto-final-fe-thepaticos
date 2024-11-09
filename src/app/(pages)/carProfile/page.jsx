@@ -14,6 +14,7 @@ import Swal from 'sweetalert2';
 import { useEffect, useState } from 'react';
 import { modifyVehicle } from '@/app/helpers/api/vehicles';
 import SoatModal from '@/app/ui/modals/SOAT';
+import { deleteVehicle } from '@/app/helpers/api/vehicles';
 
 export default function Page() {
 	const { user } = useAuth();
@@ -97,6 +98,38 @@ export default function Page() {
 		};
 		fetchCar();
 	}, [user.vehicle_plate, reset]);
+
+	const handleDelete = async () => {
+		try {
+			const result = await Swal.fire({
+				title: '¿Estás seguro?',
+				text: 'Esta acción eliminará el vehículo de forma permanente',
+				icon: 'warning',
+				showCancelButton: true,
+				confirmButtonColor: '#d33',
+				cancelButtonColor: '#3085d6',
+				confirmButtonText: 'Sí, eliminar',
+				cancelButtonText: 'Cancelar',
+			});
+
+			if (result.isConfirmed) {
+				await deleteVehicle(user.vehicle_plate);
+				Swal.fire({
+					title: 'Excelente!',
+					text: 'Vehículo eliminado correctamente',
+					icon: 'success',
+				});
+				router.push('/dashboard');
+			}
+		} catch (error) {
+			Swal.fire({
+				title: 'Error!',
+				text: error.response?.data?.message || 'Error al eliminar el vehículo',
+				icon: 'error',
+			});
+			console.error('Error deleting vehicle', error);
+		}
+	};
 
 	return (
 		<section className=' w-full h-fit flex gap-4 justify-center items-center sm:items-start p-10 flex-col sm:flex-row'>
@@ -191,20 +224,24 @@ export default function Page() {
 						>
 							Guardar Cambios
 						</button>
-						<button className='w-full bg-[#9C0000] text-white py-2 rounded-md font-semibold uppercase mt-3 flex justify-center items-center gap-1'>
-							<svg
-								xmlns='http://www.w3.org/2000/svg'
-								className='h-[15px] w-[15px] sm:h-[20px] sm:w-[20px]'
-								viewBox='0 0 16 16'
-							>
-								<path
-									fill='white'
-									d='M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1l-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5'
-								/>
-							</svg>
-							Eliminar vehiculo
-						</button>
 					</div>
+					<button
+						type='button'
+						onClick={handleDelete}
+						className='w-full bg-[#9C0000] text-white py-2 rounded-md font-semibold uppercase mt-3 flex justify-center items-center gap-1'
+					>
+						<svg
+							xmlns='http://www.w3.org/2000/svg'
+							className='h-[15px] w-[15px] sm:h-[20px] sm:w-[20px]'
+							viewBox='0 0 16 16'
+						>
+							<path
+								fill='white'
+								d='M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1l-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5'
+							/>
+						</svg>
+						Eliminar vehiculo
+					</button>
 				</form>
 			</section>
 		</section>
