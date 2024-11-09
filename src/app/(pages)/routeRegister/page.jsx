@@ -9,8 +9,7 @@ import Swal from 'sweetalert2';
 import { useEffect, useState } from 'react';
 import { useAuth } from '@/app/contexts/sessionContext';
 import { createRide } from '@/app/helpers/api/ride';
-import { partialRideSchema, rideSchema } from '@/app/helpers/validators';
-import { zodResolver } from '@hookform/resolvers/zod';
+import { rideSchema } from '@/app/helpers/validators';
 
 export default function Page() {
 	const router = useRouter();
@@ -18,12 +17,14 @@ export default function Page() {
 	const { setLoading } = useLoading();
 	const [stations, setStations] = useState([]);
 	const [selectedStops, setSelectedStops] = useState([]);
+	const [isSabanaStart, setIsSabanaStart] = useState(null);
+	const MAX_STOPS = 5;
 
 	const {
 		register,
 		handleSubmit,
 		formState: { errors },
-	} = useForm({ resolver: zodResolver(partialRideSchema) });
+	} = useForm();
 
 	const errorsMes = (err) => {
 		let errorMessage = '';
@@ -42,12 +43,14 @@ export default function Page() {
 			const tripData = {
 				...data,
 				vehicle_plate: user.vehicle_plate,
-				destination: selectedStops[selectedStops.length - 1].toString(),
-				origin: selectedStops[0].toString(),
-				departure: `${data?.departure}:00Z`,
+				destination: selectedStops[selectedStops.length - 1],
+				origin: selectedStops[0],
+				departure: `${data?.departure}Z`,
 				route: selectedStops,
 			};
 			const validation = rideSchema.safeParse(tripData);
+			console.log(validation);
+
 			if (validation.success) {
 				await createRide(validation.data);
 				Swal.fire({
@@ -56,17 +59,28 @@ export default function Page() {
 					icon: 'success',
 				});
 				router.push('/driverDashboard');
+			} else {
+				let errorMessages = '';
+				validation.error.errors.forEach((err) => {
+					errorMessages +=
+						`Field: ${err.path.join('.')}, Error: ${err.message}\n\n` + '\n';
+				});
+				Swal.fire({
+					title: 'Error! Validation failed',
+					text: errorMessages,
+					icon: 'error',
+				});
 			}
 		} catch (error) {
-			let validateErros = '';
+			let validateErrors = '';
 			if (error.response.data.errors) {
-				validateErros = errorsMes(error.response.data.errors);
+				validateErrors = errorsMes(error.response.data.errors);
 			}
 
 			if (isAxiosError(error)) {
 				Swal.fire({
 					title: 'Error!',
-					text: `${error.response.data.message} ${validateErros}`,
+					text: `${error.response.data.message} ${validateErrors}`,
 					icon: 'error',
 				});
 			} else {
@@ -81,12 +95,43 @@ export default function Page() {
 		}
 	};
 
+	const handleSabanaStart = (startsAtSabana) => {
+		setIsSabanaStart(startsAtSabana);
+		console.log(startsAtSabana ? 'Si u' : 'No u');
+
+		setSelectedStops((prevStops) => {
+			const filteredStops = prevStops.filter((stop) => stop !== 'U. Sabana');
+			if (startsAtSabana == true) {
+				return ['U. Sabana', ...filteredStops];
+			} else {
+				return [...filteredStops, 'U. Sabana'];
+			}
+		});
+	};
+
 	const handleButtonClick = (stop) => {
 		setSelectedStops((prev) => {
 			if (prev.includes(stop)) {
 				return prev.filter((s) => s !== stop);
-			} else {
+			}
+			if (prev.length === MAX_STOPS) {
+				Swal.fire({
+					title: 'Límite alcanzado',
+					text: `No puedes realizar más de ${MAX_STOPS} paradas.`,
+					icon: 'warning',
+				});
+				return prev;
+			}
+			if (isSabanaStart === null) {
 				return [...prev, stop];
+			} else {
+				if (isSabanaStart == true) {
+					return [...prev, stop];
+				} else {
+					const beforeLast = [...prev];
+					beforeLast.splice(beforeLast.length - 1, 0, stop); // Insert the stop before the last element
+					return beforeLast;
+				}
 			}
 		});
 	};
@@ -108,7 +153,7 @@ export default function Page() {
 									name.includes('AV.')) &&
 								!name.includes('-')
 						);
-					setStations(['U. Sabana', 'Centro Chía', ...nombresEstacion].sort());
+					setStations(['Centro Chía', ...nombresEstacion].sort());
 				} else {
 					console.error('No features found in the response');
 				}
@@ -133,21 +178,44 @@ export default function Page() {
 			>
 				<ChevronLeft /> Volver
 			</Link>
+
 			<div className='mb-4'>
+				<label className='block text-gray-700 mb-2'>
+					¿Te encuentras en la Universidad de la Sabana?
+				</label>
+				<div className='flex gap-2'>
+					<button
+						type='button'
+						onClick={() => {
+							setIsSabanaStart(true), handleSabanaStart(true);
+						}}
+						className={`py-2 px-4 rounded-full group ${isSabanaStart === true ? 'bg-[#028747] text-white group-hover:bg-[#028747] group-hover:text-white' : 'bg-gray-200 hover:bg-[#696C70] hover:text-white'}`}
+					>
+						Sí
+					</button>
+					<button
+						type='button'
+						onClick={() => {
+							setIsSabanaStart(false), handleSabanaStart(false);
+						}}
+						className={`py-2 px-4 rounded-full group ${isSabanaStart === false ? 'bg-[#028747] text-white group-hover:bg-[#028747] group-hover:text-white' : 'bg-gray-200 hover:bg-[#696C70] hover:text-white'}`}
+					>
+						No
+					</button>
+				</div>
+			</div>
+
+			<div className={`mb-4 ${isSabanaStart == null ? 'hidden' : ''}`}>
 				<label className='block text-gray-700 mb-2'>
 					Selecciona tus paradas:
 				</label>
-				<div className='overflow-x-auto whitespace-nowrap flex gap-1'>
+				<div className='overflow-x-auto whitespace-nowrap flex flex-wrap gap-1 h-[130px] overflow-auto'>
 					{stopsList.map((stop) => (
 						<button
 							key={stop}
 							type='button'
 							onClick={() => handleButtonClick(stop)}
-							className={`py-2 px-4 rounded-full ${
-								selectedStops.includes(stop)
-									? 'bg-[#028747] text-white'
-									: 'bg-gray-200 text-black'
-							}`}
+							className={`py-2 px-4 rounded-full group ${selectedStops.includes(stop) ? 'bg-[#028747] text-white group-hover:bg-[#028747] group-hover:text-white' : 'bg-gray-200 text-black hover:bg-[#696C70] hover:text-white'}`}
 						>
 							{stop}
 						</button>
@@ -165,6 +233,7 @@ export default function Page() {
 					))}
 				</ol>
 			</div>
+
 			{['fee', 'available_seats'].map((field) => (
 				<div key={field} className='mb-4'>
 					<label
@@ -189,6 +258,7 @@ export default function Page() {
 					)}
 				</div>
 			))}
+
 			<div className='mb-4'>
 				<input
 					type='datetime-local'

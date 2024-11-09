@@ -164,7 +164,19 @@ export const partialVehicleSchema = vehicleSchema
 export const rideSchema = z.object({
 	vehicle_plate: z.string(),
 	available_seats: z.coerce.number().min(1).max(6),
-	departure: z.string().datetime(),
+	departure: z.coerce.date().refine(
+		(date) => {
+			const allowedTime = new Date();
+			allowedTime.setHours(allowedTime.getHours() - 4);
+			allowedTime.setSeconds(0);
+			allowedTime.setMinutes(allowedTime.getMinutes() - 5);
+			console.log(date, allowedTime);
+			return date.getTime() >= allowedTime.getTime();
+		},
+		{
+			message: 'La reserva debe ser al menos una hora adelante',
+		}
+	),
 	destination: z.string().min(1),
 	fee: z.coerce.number().positive(),
 	origin: z.string().min(1),
