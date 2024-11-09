@@ -1,23 +1,45 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { useAuth } from '@/app/contexts/sessionContext';
 import { useRol } from '@/app/contexts/rolContext';
 import { usePathname, useRouter } from 'next/navigation';
+import { getVehicleByPlate } from '@/app/helpers/api/vehicles';
 
-export default function ToggleProfile({ vehicle }) {
+export default function ToggleProfile() {
 	const router = useRouter();
 	const pathname = usePathname();
+	const { user, vehicle, setVehicle } = useAuth();
 	const { currentRole, setCurrentRole } = useRol();
 
 	useEffect(() => {
+		// Fetch the vehicle data when user has a vehicle plate
+		const fetchVehicle = async () => {
+			if (user?.vehicle_plate) {
+				try {
+					const car = await getVehicleByPlate(user.vehicle_plate);
+					setVehicle(car); // Set the fetched vehicle data
+				} catch (error) {
+					setVehicle(null);
+				}
+			} else {
+				setVehicle(null); // Clear vehicle data if no vehicle plate
+			}
+		};
+
+		// Call the fetchVehicle function
+		fetchVehicle();
+
+		// Set the role based on the current path
 		if (pathname === '/dashboard') {
 			setCurrentRole('passenger');
 		} else if (pathname === '/driverDashboard') {
 			setCurrentRole('driver');
 		}
-	}, [pathname, setCurrentRole]);
+	}, [pathname, setCurrentRole, user, vehicle]);
 
 	const toggle = () => {
 		if (pathname === '/dashboard') {
 			if (vehicle) {
+				setCurrentRole('driver');
 				router.push('/driverDashboard');
 			} else {
 				router.push('/carRegister');

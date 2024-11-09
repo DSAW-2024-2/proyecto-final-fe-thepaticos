@@ -20,13 +20,20 @@ export const AuthProvider = ({ children }) => {
 			getUserByToken(token)
 				.then((res) => {
 					setUser(res);
+					if (res.vehicle_plate) {
+						getVehicleByPlate(res.vehicle_plate).then((carData) => {
+							setVehicle(carData);
+						});
+					} else {
+						setVehicle(null);
+					}
 					setLoading(false);
 				})
 				.catch(() => setLoading(false));
 		} else {
 			setLoading(false);
 		}
-	}, [user]);
+	}, [user, vehicle]);
 
 	const signup = async (data) => {
 		const token = await authSignup(data);
@@ -65,14 +72,14 @@ export const AuthProvider = ({ children }) => {
 			confirmButtonText: 'Si, cerrar sesión!',
 			cancelButtonText: 'Cancelar',
 		}).then((result) => {
+			setLoading(true);
 			if (result.isConfirmed) {
-				setLoading(true);
 				Cookies.remove('authToken');
 				setUser(null);
 				setVehicle(null);
 				router.push('/');
-				setLoading(false);
 			}
+			setLoading(false);
 		});
 	};
 
@@ -89,7 +96,7 @@ export const AuthProvider = ({ children }) => {
 
 	return (
 		<AuthContext.Provider
-			value={{ user: user, vehicle: vehicle, signin, signout, signup, setUser }}
+			value={{ user, vehicle, signin, signout, signup, setUser, setVehicle }}
 		>
 			{children}
 		</AuthContext.Provider>

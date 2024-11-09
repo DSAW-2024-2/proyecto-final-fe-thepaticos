@@ -17,7 +17,7 @@ import SoatModal from '@/app/ui/modals/SOAT';
 import { deleteVehicle } from '@/app/helpers/api/vehicles';
 
 export default function Page() {
-	const { user } = useAuth();
+	const { user, setVehicle } = useAuth();
 	const router = useRouter();
 	const { setLoading } = useLoading();
 	const [car, setCar] = useState({ plate: user.vehicle_plate });
@@ -100,35 +100,34 @@ export default function Page() {
 	}, [user.vehicle_plate, reset]);
 
 	const handleDelete = async () => {
-		try {
-			const result = await Swal.fire({
-				title: '¿Estás seguro?',
-				text: 'Esta acción eliminará el vehículo de forma permanente',
-				icon: 'warning',
-				showCancelButton: true,
-				confirmButtonColor: '#d33',
-				cancelButtonColor: '#3085d6',
-				confirmButtonText: 'Sí, eliminar',
-				cancelButtonText: 'Cancelar',
-			});
-
+		// Confirm the deletion of the vehicle
+		Swal.fire({
+			title: '¿Seguro deseas eliminar el vehículo?',
+			text: 'No podrás recuperar la información del vehículo después de eliminarlo.',
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#9C0000',
+			cancelButtonColor: '#028747',
+			confirmButtonText: 'Sí, eliminar',
+			cancelButtonText: 'Cancelar',
+		}).then(async (result) => {
 			if (result.isConfirmed) {
-				await deleteVehicle(user.vehicle_plate);
-				Swal.fire({
-					title: 'Excelente!',
-					text: 'Vehículo eliminado correctamente',
-					icon: 'success',
-				});
-				router.push('/dashboard');
+				try {
+					// Perform the API call to delete the vehicle
+					await deleteVehicle(user.vehicle_plate); // Adjust based on your API
+					// Clear the vehicle from the context
+					setVehicle(null); // Clear vehicle state
+					// Redirect to the dashboard
+					router.push('/dashboard'); // Or wherever you want to go
+				} catch (error) {
+					Swal.fire({
+						title: 'Error al eliminar',
+						text: 'Hubo un error al intentar eliminar el vehículo.',
+						icon: 'error',
+					});
+				}
 			}
-		} catch (error) {
-			Swal.fire({
-				title: 'Error!',
-				text: error.response?.data?.message || 'Error al eliminar el vehículo',
-				icon: 'error',
-			});
-			console.error('Error deleting vehicle', error);
-		}
+		});
 	};
 
 	return (
