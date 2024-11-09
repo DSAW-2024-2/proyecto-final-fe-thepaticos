@@ -3,6 +3,7 @@ import { useAuth } from '@/app/contexts/sessionContext';
 import { useRol } from '@/app/contexts/rolContext';
 import { usePathname, useRouter } from 'next/navigation';
 import { getVehicleByPlate } from '@/app/helpers/api/vehicles';
+import Swal from 'sweetalert2';
 
 export default function ToggleProfile() {
 	const router = useRouter();
