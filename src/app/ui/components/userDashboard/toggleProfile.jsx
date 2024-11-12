@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react';
-import { useAuth } from '@/app/contexts/sessionContext';
 import { useRol } from '@/app/contexts/rolContext';
-import { usePathname, useRouter } from 'next/navigation';
+import { useAuth } from '@/app/contexts/sessionContext';
 import { getVehicleByPlate } from '@/app/helpers/api/vehicles';
+import { usePathname, useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 import Swal from 'sweetalert2';
 
 export default function ToggleProfile() {
@@ -32,7 +32,7 @@ export default function ToggleProfile() {
 		};
 
 		fetchVehicle();
-	}, [user?.vehicle_plate, setVehicle, setCurrentRole]);
+	}, [user?.vehicle_plate, setVehicle, setCurrentRole, pathname]);
 
 	const toggle = () => {
 		if (pathname === '/driverDashboard' && vehicle == null) {

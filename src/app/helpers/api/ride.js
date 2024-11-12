@@ -41,9 +41,7 @@ export async function deleteRide(rideId) {
 	return res;
 }
 export async function recommendedFee(start, end) {
-	const res = await api.delete(
-		`/ride/fee?startPoint=${start}&endPoint=${end}`
-	);
+	const res = await api.delete(`/ride/fee?startPoint=${start}&endPoint=${end}`);
 	return res.recommendedFee;
 }
 

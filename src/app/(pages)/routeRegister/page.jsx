@@ -1,14 +1,14 @@
 'use client';
 import { useLoading } from '@/app/contexts/loadingContext';
 import { useAuth } from '@/app/contexts/sessionContext';
-import { recommendedFee, transmilenioRoutes } from '@/app/helpers/api/ride';
+import { createRide, recommendedFee } from '@/app/helpers/api/ride';
 import { rideSchema } from '@/app/helpers/validators';
 import MapView from '@/app/ui/components/Map';
 import { isAxiosError } from 'axios';
 import { ChevronLeft } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Swal from 'sweetalert2';
 
 export default function Page() {

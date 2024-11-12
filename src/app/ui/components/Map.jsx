@@ -171,7 +171,14 @@ const MapView = ({ setRoute }) => {
 	}
 
 	return (
-		<div style={{ position: 'relative', height: '40vh', width: '100%', zIndex:'0'}}>
+		<div
+			style={{
+				position: 'relative',
+				height: '40vh',
+				width: '100%',
+				zIndex: '0',
+			}}
+		>
 			<MapContainer
 				center={universityPosition}
 				zoom={13}

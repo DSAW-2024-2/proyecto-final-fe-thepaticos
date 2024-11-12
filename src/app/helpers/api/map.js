@@ -1,5 +1,4 @@
 import axios from 'axios';
-import L from 'leaflet';
 
 const api = axios.create({
 	baseURL: `${'https://nominatim.openstreetmap.org/'}`,
