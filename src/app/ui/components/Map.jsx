@@ -1,5 +1,4 @@
 'use client';
-
 import L from 'leaflet';
 import { reverseGeocodeAndShowMarker } from '@/app/helpers/api/map';
 import { icon } from 'leaflet';
@@ -28,7 +27,6 @@ const MapView = ({ setRoute }) => {
 	const [isRouteSet, setIsRouteSet] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
 	const routeRef = useRef(null);
-
 	const handleUniversityChoice = (choice) => {
 		setIsUniversityStart(choice === 'origin');
 		const universityMarker = {

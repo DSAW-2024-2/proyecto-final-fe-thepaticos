@@ -1,15 +1,18 @@
 'use client';
+import dynamic from 'next/dynamic';
 import { useLoading } from '@/app/contexts/loadingContext';
 import { useAuth } from '@/app/contexts/sessionContext';
 import { createRide, recommendedFee } from '@/app/helpers/api/ride';
 import { rideSchema } from '@/app/helpers/validators';
-import MapView from '@/app/ui/components/Map';
 import { isAxiosError } from 'axios';
 import { ChevronLeft } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import Swal from 'sweetalert2';
+const MapView = dynamic(() => import('@/app/ui/components/Map'), {
+	ssr: false,
+});
 
 export default function Page() {
 	const router = useRouter();
@@ -49,6 +52,7 @@ export default function Page() {
 				origin: origin.name,
 				route: routeNames,
 			};
+			console.log(tripData);
 
 			const validation = rideSchema.safeParse(tripData);
 			if (validation.success) {
