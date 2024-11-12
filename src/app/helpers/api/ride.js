@@ -35,6 +35,18 @@ export async function createRide(data) {
 	const res = await api.post('/ride/', data);
 	return res;
 }
+
+export async function deleteRide(rideId) {
+	const res = await api.delete(`/ride/${rideId}`);
+	return res;
+}
+export async function recommendedFee(start, end) {
+	const res = await api.delete(
+		`/ride/fee?startPoint=${start}&endPoint=${end}`
+	);
+	return res.recommendedFee;
+}
+
 export async function transmilenioRoutes() {
 	const url =
 		'https://gis.transmilenio.gov.co/arcgis/rest/services/Troncal/consulta_estaciones_troncales/FeatureServer/0/query?where=1%3D1&outFields=nombre_estacion&outSR=4326&f=json';
@@ -50,9 +62,4 @@ export async function transmilenioRoutes() {
 				!name.includes('-')
 		);
 	return nombresEstacion;
-}
-
-export async function deleteRide(rideId) {
-	const res = await api.delete(`/ride/${rideId}`);
-	return res;
 }

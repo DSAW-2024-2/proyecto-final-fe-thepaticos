@@ -162,25 +162,36 @@ export const partialVehicleSchema = vehicleSchema
 	.partial();
 
 export const rideSchema = z.object({
-	vehicle_plate: z.string(),
-	available_seats: z.coerce.number().min(1).max(6),
+	vehicle_plate: z.string().min(1, 'La placa del vehículo es obligatoria'),
+	available_seats: z.coerce
+		.number()
+		.min(1, 'La cantidad mínima de asientos disponibles es 1')
+		.max(6, 'La cantidad máxima de asientos disponibles es 6'),
+
 	departure: z.coerce.date().refine(
 		(date) => {
 			const allowedTime = new Date();
 			allowedTime.setHours(allowedTime.getHours() - 4);
 			allowedTime.setSeconds(0);
 			allowedTime.setMinutes(allowedTime.getMinutes() - 5);
-			console.log(date, allowedTime);
 			return date.getTime() >= allowedTime.getTime();
 		},
-		{
-			message: 'La reserva debe ser al menos una hora adelante',
-		}
+		{ message: 'La reserva debe ser al menos una hora adelante' }
 	),
-	destination: z.string().min(1),
-	fee: z.coerce.number().positive(),
-	origin: z.string().min(1),
-	route: z.array(z.string()).min(2),
+
+	destination: z
+		.string()
+		.min(1, 'El destino es obligatorio y debe tener al menos un carácter'),
+
+	fee: z.coerce
+		.number()
+		.positive({ message: 'La tarifa debe ser un valor positivo' }),
+
+	origin: z
+		.string()
+		.min(1, 'El origen es obligatorio y debe tener al menos un carácter'),
+
+	route: z.array(z.string()).min(2, 'La ruta debe tener al menos dos paradas'),
 });
 
 export const partialRideSchema = rideSchema.pick({

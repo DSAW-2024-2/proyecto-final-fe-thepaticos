@@ -8,5 +8,10 @@ const api = axios.create({
 export async function reverseGeocodeAndShowMarker(latitude, longitude) {
 	const url = `reverse?format=json&lat=${latitude}&lon=${longitude}`;
 	const res = await api.get(url);
-	console.log(res.data);
+	const formattedAddress = res.data.display_name
+		.split(',')
+		.slice(0, 3)
+		.join('');
+
+	return formattedAddress;
 }
