@@ -52,8 +52,6 @@ export default function Page() {
 				origin: origin.name,
 				route: routeNames,
 			};
-			console.log(tripData);
-
 			const validation = rideSchema.safeParse(tripData);
 			if (validation.success) {
 				await createRide(validation.data);
@@ -71,8 +69,6 @@ export default function Page() {
 				});
 			}
 		} catch (error) {
-			console.log(error);
-
 			if (isAxiosError(error)) {
 				Swal.fire({
 					title: 'Error!',
