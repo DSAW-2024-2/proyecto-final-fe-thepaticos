@@ -22,7 +22,7 @@ export default function DashboardPage() {
 			}
 		};
 		getReservations();
-	}, []);
+	}, [user.id]);
 
 	const reloadReservations = async () => {
 		setLoading(true);

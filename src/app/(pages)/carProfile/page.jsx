@@ -17,7 +17,7 @@ import SoatModal from '@/app/ui/modals/SOAT';
 import { deleteVehicle } from '@/app/helpers/api/vehicles';
 
 export default function Page() {
-	const { user, setVehicle, vehicle } = useAuth();
+	const { user, setVehicle } = useAuth();
 	const router = useRouter();
 	const { setLoading } = useLoading();
 	const [car, setCar] = useState({ plate: user.vehicle_plate });

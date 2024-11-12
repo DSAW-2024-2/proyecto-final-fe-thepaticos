@@ -1,5 +1,6 @@
 import localFont from 'next/font/local';
 import './globals.css';
+import 'leaflet/dist/leaflet.css';
 import Main from './ui/layouts/Main';
 import { Suspense } from 'react';
 

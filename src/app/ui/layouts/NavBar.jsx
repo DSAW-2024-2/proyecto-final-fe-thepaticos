@@ -1,14 +1,14 @@
-import { useState, useEffect } from 'react';
 import { useAuth } from '@/app/contexts/sessionContext';
+import { getVehicleByPlate } from '@/app/helpers/api/vehicles';
 import { Menu } from 'lucide-react';
-import { usePathname } from 'next/navigation';
 import Image from 'next/image';
-import logo from '/public/images/logo.png';
-import ProfilePhoto from '../components/navbar/profilePhoto';
-import ToggleProfile from '../components/userDashboard/toggleProfile';
+import { usePathname } from 'next/navigation';
+import { useEffect, useState } from 'react';
 import AsideMenu from '../components/navbar/AsideMenu';
 import CarPhoto from '../components/navbar/CarProfile';
-import { getVehicleByPlate } from '@/app/helpers/api/vehicles';
+import ProfilePhoto from '../components/navbar/profilePhoto';
+import ToggleProfile from '../components/userDashboard/toggleProfile';
+import logo from '/public/images/logo.png';
 
 export default function NavBar() {
 	const { user, signout } = useAuth();

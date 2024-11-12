@@ -35,7 +35,7 @@ export default function DashboardPage() {
 			}
 		};
 		getRides();
-	}, [searchParams]);
+	}, [searchParams, destination, origin, seats]);
 
 	return (
 		<section className='flex flex-col justify-center w-full items-center bg-white'>

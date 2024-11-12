@@ -3,16 +3,13 @@ import { useAuth } from '@/app/contexts/sessionContext';
 import { getVehicleRides } from '@/app/helpers/api/vehicles';
 import RouteCard from '@/app/ui/components/driverDashboard/routeCard';
 import FilterButton from '@/app/ui/components/userDashboard/filterButton';
-import { useEffect, useState } from 'react';
 import Loader from '@/app/ui/modals/Loader';
-import { useRouter } from 'next/navigation';
-import Swal from 'sweetalert2';
+import { useEffect, useState } from 'react';
 
 export default function DashboardPage() {
 	const [rides, setRides] = useState([]);
-	const { user, vehicle } = useAuth();
+	const { user } = useAuth();
 	const [loading, setLoading] = useState(true);
-	const router = useRouter();
 
 	useEffect(() => {
 		const getRides = async () => {
@@ -28,7 +25,7 @@ export default function DashboardPage() {
 			}
 		};
 		getRides();
-	}, []);
+	}, [user.vehicle_plate]);
 
 	const reloadRides = async () => {
 		setLoading(true);

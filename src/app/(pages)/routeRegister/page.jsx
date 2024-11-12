@@ -1,15 +1,17 @@
 'use client';
 import { useLoading } from '@/app/contexts/loadingContext';
+import { useAuth } from '@/app/contexts/sessionContext';
+import { createRide, transmilenioRoutes } from '@/app/helpers/api/ride';
+import { rideSchema } from '@/app/helpers/validators';
+import MapView from '@/app/ui/components/Map';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { isAxiosError } from 'axios';
 import { ChevronLeft } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Swal from 'sweetalert2';
-import { useEffect, useState } from 'react';
-import { useAuth } from '@/app/contexts/sessionContext';
-import { createRide } from '@/app/helpers/api/ride';
-import { rideSchema } from '@/app/helpers/validators';
 
 export default function Page() {
 	const router = useRouter();
@@ -24,7 +26,9 @@ export default function Page() {
 		register,
 		handleSubmit,
 		formState: { errors },
-	} = useForm();
+	} = useForm({
+		resolver: zodResolver(rideSchema),
+	});
 
 	const errorsMes = (err) => {
 		let errorMessage = '';
@@ -48,6 +52,8 @@ export default function Page() {
 				departure: `${data?.departure}Z`,
 				route: selectedStops,
 			};
+			console.log(validation);
+
 			const validation = rideSchema.safeParse(tripData);
 			console.log(validation);
 
@@ -138,25 +144,9 @@ export default function Page() {
 
 	useEffect(() => {
 		async function fetchEstaciones() {
-			const url =
-				'https://gis.transmilenio.gov.co/arcgis/rest/services/Troncal/consulta_estaciones_troncales/FeatureServer/0/query?where=1%3D1&outFields=nombre_estacion&outSR=4326&f=json';
 			try {
-				const response = await fetch(url);
-				const data = await response.json();
-				if (data.features) {
-					const nombresEstacion = data.features
-						.map((feature) => feature.attributes.nombre_estacion.toString())
-						.filter(
-							(name) =>
-								(name.includes('Calle') ||
-									name.includes('Norte') ||
-									name.includes('AV.')) &&
-								!name.includes('-')
-						);
-					setStations(['Centro Chía', ...nombresEstacion].sort());
-				} else {
-					console.error('No features found in the response');
-				}
+				const nombresEstacion = await transmilenioRoutes();
+				setStations(['U. Sabana', 'Centro Chía', ...nombresEstacion].sort());
 			} catch (error) {
 				console.error('Error fetching data:', error);
 			}
@@ -277,6 +267,7 @@ export default function Page() {
 			>
 				Registrar Ruta
 			</button>
+			<MapView />
 		</form>
 	);
 }
