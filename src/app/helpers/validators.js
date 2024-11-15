@@ -184,7 +184,7 @@ export const rideSchema = z.object({
 		.min(1, 'El destino es obligatorio y debe tener al menos un carácter'),
 
 	fee: z.coerce
-		.number()
+		.number({ message: 'La tarifa debe ser un número' })
 		.positive({ message: 'La tarifa debe ser un valor positivo' }),
 
 	origin: z
