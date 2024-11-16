@@ -143,8 +143,10 @@ const MyMapComponent = () => {
 		return renderQuestionModal();
 	}
 
-	return googleMapsApiKey ? (
-		<LoadScript googleMapsApiKey={`${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}`}>
+	return (
+		<LoadScript
+			googleMapsApiKey={`${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}`}
+		>
 			<GoogleMap
 				mapContainerStyle={containerStyle}
 				center={center}
@@ -183,8 +185,6 @@ const MyMapComponent = () => {
 				)}
 			</div>
 		</LoadScript>
-	) : (
-		<p className='text-red-500'>Error: API key faltante.</p>
 	);
 };
 
