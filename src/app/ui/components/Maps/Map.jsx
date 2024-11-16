@@ -42,7 +42,7 @@ const MyMapComponent = () => {
 		const newMarker = { lat: latLng.lat(), lng: latLng.lng() };
 		setMarkers((prevMarkers) => [...prevMarkers, newMarker]);
 
-		const geocoder = new google.maps.Geocoder();
+		const geocoder = new window.google.maps.Geocoder();
 		geocoder
 			.geocode({ location: latLng })
 			.then((response) => {
@@ -75,7 +75,7 @@ const MyMapComponent = () => {
 				return;
 			}
 			Swal.fire({
-				title: `Eliminar parada`,
+				title: 'Eliminar parada',
 				text: `¿Deseas eliminar la parada ${index + 1}?`,
 				icon: 'warning',
 				showCancelButton: true,
@@ -91,7 +91,7 @@ const MyMapComponent = () => {
 						prevAddresses.filter((_, i) => i !== index)
 					);
 					Swal.fire(
-						`Eliminada!`,
+						'Eliminada!',
 						`Se elimino la parada ${index + 1}`,
 						'success'
 					);

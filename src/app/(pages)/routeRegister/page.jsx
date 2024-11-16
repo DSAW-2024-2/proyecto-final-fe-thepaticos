@@ -7,6 +7,9 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import Swal from 'sweetalert2';
+import { recommendedFee } from '@/app/helpers/api/ride';
+import { rideSchema } from '@/app/helpers/validators';
+import { isAxiosError } from 'axios';
 
 const MapView = dynamic(() => import('@/app/ui/components/Maps/Map'), {
 	ssr: false,
