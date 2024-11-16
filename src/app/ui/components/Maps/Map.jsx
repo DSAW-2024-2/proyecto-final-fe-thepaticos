@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 import Swal from 'sweetalert2';
 
-const googleMapsApiKey = 'AIzaSyCA108_XZ3nzqyzm_GWS9haD8pMOzQPGDQ';
+const googleMapsApiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
 
 const containerStyle = {
 	width: '100%',
