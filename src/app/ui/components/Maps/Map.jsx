@@ -143,10 +143,8 @@ const MyMapComponent = () => {
 		return renderQuestionModal();
 	}
 
-	const key = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
-
 	return (
-		<LoadScript googleMapsApiKey={key}>
+		<LoadScript googleMapsApiKey='AIzaSyCA108_XZ3nzqyzm_GWS9haD8pMOzQPGDQ'>
 			<GoogleMap
 				mapContainerStyle={containerStyle}
 				center={center}
