@@ -143,7 +143,7 @@ const MyMapComponent = () => {
 		return renderQuestionModal();
 	}
 
-	const key = 'AIzaSyCA108_XZ3nzqyzm_GWS9haD8pMOzQPGDQ';
+	const key = NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
 
 	return (
 		<LoadScript googleMapsApiKey={key}>
