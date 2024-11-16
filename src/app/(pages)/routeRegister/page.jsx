@@ -1,13 +1,14 @@
 'use client';
 import { useLoading } from '@/app/contexts/loadingContext';
 import { useAuth } from '@/app/contexts/sessionContext';
-import MyMapComponent from '@/app/ui/components/Map';
 import { ChevronLeft } from 'lucide-react';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-const MapView = dynamic(() => import('@/app/ui/components/Map'), {
+import Swal from 'sweetalert2';
+
+const MapView = dynamic(() => import('@/app/ui/components/Maps/Map'), {
 	ssr: false,
 });
 
@@ -27,61 +28,64 @@ export default function Page() {
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		setLoading(true);
-		// try {
-		// 	if (route.length < 2) {
-		// 		Swal.fire({
-		// 			title: 'Error!',
-		// 			text: 'Por favor selecciona una ruta',
-		// 			icon: 'error',
-		// 		});
-		// 		return;
-		// 	}
-		// 	const [origin, destination] =
-		// 		route[0].id === 'origin' ? [route[0], route[1]] : [route[1], route[0]];
-		// 	const recomFee = await recommendedFee(origin, destination);
-		// 	setRecommendedFee(recomFee);
-		// 	const routeNames = route.map((stop) => stop.name).slice(2);
+		try {
+			if (route.length < 2) {
+				Swal.fire({
+					title: 'Error!',
+					text: 'Por favor selecciona una ruta',
+					icon: 'error',
+				});
+				return;
+			}
 
-		// 	const tripData = {
-		// 		...formData,
-		// 		vehicle_plate: user.vehicle_plate,
-		// 		destination: destination.name,
-		// 		origin: origin.name,
-		// 		route: routeNames,
-		// 	};
-		// 	const validation = rideSchema.safeParse(tripData);
-		// 	if (validation.success) {
-		// 		await createRide(validation.data);
-		// 		Swal.fire({
-		// 			title: 'Excelente!',
-		// 			text: 'Ruta Registrada Correctamente',
-		// 			icon: 'success',
-		// 		});
-		// 		router.push('/driverDashboard');
-		// 	} else {
-		// 		setErrors(validation.error.flatten().fieldErrors);
-		// 		Swal.fire({
-		// 			title: 'Error! Validation failed',
-		// 			icon: 'error',
-		// 		});
-		// 	}
-		// } catch (error) {
-		// 	if (isAxiosError(error)) {
-		// 		Swal.fire({
-		// 			title: 'Error!',
-		// 			text: 'Algunos campos no estan llenos correctamente',
-		// 			icon: 'error',
-		// 		});
-		// 	} else {
-		// 		Swal.fire({
-		// 			title: 'Error!',
-		// 			text: 'Error del servidor',
-		// 			icon: 'error',
-		// 		});
-		// 	}
-		// } finally {
-		// 	setLoading(false);
-		// }
+			const [origin, destination] =
+				route[0].id === 'origin' ? [route[0], route[1]] : [route[1], route[0]];
+
+			const recomFee = await recommendedFee(origin, destination);
+			setRecommendedFee(recomFee);
+			const routeNames = route.map((stop) => stop.name).slice(2);
+
+			const tripData = {
+				...formData,
+				vehicle_plate: user.vehicle_plate,
+				destination: destination.name,
+				origin: origin.name,
+				route: routeNames,
+			};
+
+			const validation = rideSchema.safeParse(tripData);
+			if (validation.success) {
+				//await createRide(validation.data);  // Ensure this function is defined
+				Swal.fire({
+					title: 'Excelente!',
+					text: 'Ruta Registrada Correctamente',
+					icon: 'success',
+				});
+				router.push('/driverDashboard');
+			} else {
+				setErrors(validation.error.flatten().fieldErrors);
+				Swal.fire({
+					title: 'Error! Validation failed',
+					icon: 'error',
+				});
+			}
+		} catch (error) {
+			if (isAxiosError(error)) {
+				Swal.fire({
+					title: 'Error!',
+					text: 'Algunos campos no estan llenos correctamente',
+					icon: 'error',
+				});
+			} else {
+				Swal.fire({
+					title: 'Error!',
+					text: 'Error del servidor',
+					icon: 'error',
+				});
+			}
+		} finally {
+			setLoading(false);
+		}
 	};
 
 	return (
@@ -96,9 +100,12 @@ export default function Page() {
 			>
 				<ChevronLeft /> Volver
 			</Link>
-			<div className='mb-6'>
-				<MyMapComponent />
+			<div className='flex flex-col justify-center items-center h-fit'>
+				<MapView setRoute={setRoute} />{' '}
+				{/* This will dynamically render the map */}
 			</div>
+
+			{/* Display Errors */}
 			{errors.origin && (
 				<p className='text-red-500 text-sm mt-1'>Origin: {errors.origin}</p>
 			)}
@@ -111,6 +118,7 @@ export default function Page() {
 				<p className='text-red-500 text-sm mt-1'>Route: {errors.route}</p>
 			)}
 
+			{/* Form Fields */}
 			{['fee', 'available_seats'].map((field) => (
 				<div key={field} className='mb-4'>
 					<label
@@ -119,15 +127,15 @@ export default function Page() {
 					>
 						{field === 'available_seats'
 							? 'Cupos disponibles'
-							: `Valor unico del wheels, valor recomendado ${fee}`}
+							: `Valor único del Wheels, valor recomendado ${fee}`}
 					</label>
 					<input
 						type='text'
 						id={field}
 						name={field}
 						onChange={handleChange}
-						value={formData.field}
-						placeholder={`e.j: ${field === 'available_seats' ? '4' : '4000'}`}
+						value={formData[field] || ''}
+						placeholder={`e.g. ${field === 'available_seats' ? '4' : '4000'}`}
 						className='w-full px-3 py-2 border rounded-lg'
 					/>
 					{errors[field] && (
@@ -136,20 +144,25 @@ export default function Page() {
 				</div>
 			))}
 
+			{/* Departure DateTime */}
 			<div className='mb-4'>
+				<label htmlFor='departure' className='block text-gray-700 mb-2'>
+					Hora de salida
+				</label>
 				<input
 					type='datetime-local'
 					id='departure'
 					name='departure'
 					value={formData.departure || ''}
 					onChange={handleChange}
-					className='text-xs sm:text-base'
+					className='w-full px-3 py-2 border rounded-lg'
 				/>
 				{errors.departure && (
 					<p className='text-red-500 text-sm mt-1'>{errors.departure}</p>
 				)}
 			</div>
 
+			{/* Submit Button */}
 			<button
 				type='submit'
 				className='w-full bg-green-600 text-white py-2 rounded-md font-semibold uppercase'
