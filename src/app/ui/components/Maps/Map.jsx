@@ -3,6 +3,7 @@ import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 import Swal from 'sweetalert2';
 
 const googleMapsApiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
+console.log(googleMapsApiKey)
 
 const containerStyle = {
 	width: '100%',
