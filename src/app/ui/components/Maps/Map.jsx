@@ -143,8 +143,10 @@ const MyMapComponent = () => {
 		return renderQuestionModal();
 	}
 
+	const key = 'AIzaSyCA108_XZ3nzqyzm_GWS9haD8pMOzQPGDQ';
+
 	return (
-		<LoadScript googleMapsApiKey='AIzaSyCA108_XZ3nzqyzm_GWS9haD8pMOzQPGDQ'>
+		<LoadScript googleMapsApiKey={key}>
 			<GoogleMap
 				mapContainerStyle={containerStyle}
 				center={center}
