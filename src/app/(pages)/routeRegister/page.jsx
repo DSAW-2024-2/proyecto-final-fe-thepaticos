@@ -5,11 +5,12 @@ import { ChevronLeft } from 'lucide-react';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useState, useEffect, useRef } from 'react';
+import { useState } from 'react';
 import Swal from 'sweetalert2';
 import { recommendedFee } from '@/app/helpers/api/ride';
 import { rideSchema } from '@/app/helpers/validators';
 import { isAxiosError } from 'axios';
+import { createRide } from '@/app/helpers/api/ride';
 
 const MapView = dynamic(() => import('@/app/ui/components/Maps/Map'), {
 	ssr: false,
@@ -19,7 +20,6 @@ export default function Page() {
 	const router = useRouter();
 	const { user } = useAuth();
 	const { setLoading } = useLoading();
-	const [route, setRoute] = useState([]);
 	const [formData, setFormData] = useState({});
 	const [errors, setErrors] = useState({});
 	const [fee, setRecommendedFee] = useState(3000);
@@ -36,8 +36,6 @@ export default function Page() {
 				(child) => child.innerText.split(':')[1]?.trim().split(',')[0]
 			);
 		}
-		setRoute(stops);
-		console.log(stops);
 		try {
 			if (stops.length < 2) {
 				Swal.fire({
@@ -59,7 +57,6 @@ export default function Page() {
 				origin: origin,
 				route: stops,
 			};
-			console.log(tripData);
 			const validation = rideSchema.safeParse(tripData);
 			if (validation.success) {
 				await createRide(validation.data);
@@ -104,11 +101,9 @@ export default function Page() {
 				<ChevronLeft /> Volver
 			</Link>
 			<div className='flex flex-col justify-center items-center h-fit'>
-				<MapView setRoute={setRoute} />
+				<MapView />
 				{}
 			</div>
-
-			{/* Display Errors */}
 			{errors.origin && (
 				<p className='text-red-500 text-sm mt-1'>Origin: {errors.origin}</p>
 			)}
@@ -120,8 +115,6 @@ export default function Page() {
 			{errors.route && (
 				<p className='text-red-500 text-sm mt-1'>Route: {errors.route}</p>
 			)}
-
-			{/* Form Fields */}
 			{['fee', 'available_seats'].map((field) => (
 				<div key={field} className='mb-4'>
 					<label
@@ -147,7 +140,6 @@ export default function Page() {
 				</div>
 			))}
 
-			{/* Departure DateTime */}
 			<div className='mb-4'>
 				<label htmlFor='departure' className='block text-gray-700 mb-2'>
 					Hora de salida
@@ -165,7 +157,6 @@ export default function Page() {
 				)}
 			</div>
 
-			{/* Submit Button */}
 			<button
 				type='submit'
 				className='w-full bg-green-600 text-white py-2 rounded-md font-semibold uppercase'

@@ -1,4 +1,3 @@
-import { AlertOctagon } from 'lucide-react';
 import { z } from 'zod';
 const ACCEPTED_IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/jpg'];
 export const userRegSchema = z.object({
@@ -175,7 +174,6 @@ export const rideSchema = z.object({
 			allowedTime.setHours(allowedTime.getHours() + 1);
 			allowedTime.setSeconds(0);
 			allowedTime.setMinutes(allowedTime.getMinutes() - 2);
-			console.log(date, allowedTime, date.getTime() >= allowedTime.getTime());
 			return date.getTime() >= allowedTime.getTime();
 		},
 		{ message: 'La reserva debe ser al menos una hora adelante' }
