@@ -172,11 +172,9 @@ export const rideSchema = z.object({
 	departure: z.coerce.date('La fecha no es válida').refine(
 		(date) => {
 			const allowedTime = new Date();
-			allowedTime.setHours(allowedTime.getHours() - 4);
+			allowedTime.setHours(allowedTime.getHours() + 1);
 			allowedTime.setSeconds(0);
 			allowedTime.setMinutes(allowedTime.getMinutes() - 2);
-			console.log(formatTime(date));
-			console.log(date, allowedTime, date.getTime() >= allowedTime.getTime());
 			return date.getTime() >= allowedTime.getTime();
 		},
 		{ message: 'La reserva debe ser al menos una hora adelante' }

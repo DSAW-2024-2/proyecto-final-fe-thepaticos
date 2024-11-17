@@ -72,7 +72,6 @@ export default function Page() {
 				origin: origin,
 				route: stops,
 			};
-			console.log(tripData);
 			const validation = rideSchema.safeParse(tripData);
 			if (validation.success) {
 				await createRide(validation.data);
