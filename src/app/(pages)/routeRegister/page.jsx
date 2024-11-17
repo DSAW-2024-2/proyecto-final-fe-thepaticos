@@ -35,10 +35,11 @@ export default function Page() {
 			stops = Array.from(document.getElementById('paradas')?.children)?.map(
 				(child) => child.innerText.split(':')[1]?.trim().split(',')[0]
 			);
-			let origin = stops[0];
-			let destination = stops[stops.length - 1];
 			try {
-				const recomFee = await recommendedFee(origin, destination);
+				const recomFee = await recommendedFee(
+					stops[0],
+					stops[stops.length - 1]
+				);
 				setRecommendedFee(recomFee);
 			} catch (error) {
 				console.error('Error fetching recommended fee:', error.message);
@@ -61,6 +62,8 @@ export default function Page() {
 				});
 				return;
 			}
+			let origin = stops[0];
+			let destination = stops[stops.length - 1];
 			const tripData = {
 				...formData,
 				departure: formData.departure,
