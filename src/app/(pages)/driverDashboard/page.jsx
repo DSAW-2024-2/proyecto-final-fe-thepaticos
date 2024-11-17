@@ -25,7 +25,7 @@ export default function DashboardPage() {
 			}
 		};
 		getRides();
-	}, [user.vehicle_plate]);
+	}, [user]);
 
 	const reloadRides = async () => {
 		setLoading(true);

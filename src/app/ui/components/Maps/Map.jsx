@@ -120,19 +120,19 @@ const MyMapComponent = () => {
 	};
 
 	const renderQuestionModal = () => (
-		<div className='flex flex-col justify-center items-center p-4 mb-4 rounded-lg shadow-lg w-80'>
-			<h2 className='text-lg font-semibold mb-6'>
+		<div className='flex flex-col justify-center items-center p-4 text-center mb-4 rounded-lg w-80'>
+			<h2 className='text-lg mb-6'>
 				¿Esta ruta inicia o termina en la Universidad de la Sabana?
 			</h2>
 			<div className='flex space-x-4'>
 				<button
-					className='bg-blue-500 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-400'
+					className='bg-[#028747] text-white font-semibold px-4 py-2 rounded-lg shadow hover:bg-[#025C31]'
 					onClick={() => handleSabanaChoice(true)}
 				>
 					Inicia
 				</button>
 				<button
-					className='bg-blue-500 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-400'
+					className='bg-[#028747] text-white font-semibold px-4 py-2 rounded-lg shadow hover:bg-[#025C31]'
 					onClick={() => handleSabanaChoice(false)}
 				>
 					Termina

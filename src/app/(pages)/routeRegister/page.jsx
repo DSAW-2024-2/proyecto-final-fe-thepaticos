@@ -18,7 +18,7 @@ const MapView = dynamic(() => import('@/app/ui/components/Maps/Map'), {
 
 export default function Page() {
 	const router = useRouter();
-	const { user } = useAuth();
+	const { user, vehicle } = useAuth();
 	const { setLoading } = useLoading();
 	const [formData, setFormData] = useState({});
 	const [errors, setErrors] = useState({});
@@ -35,6 +35,12 @@ export default function Page() {
 			stops = Array.from(document.getElementById('paradas')?.children)?.map(
 				(child) => child.innerText.split(':')[1]?.trim().split(',')[0]
 			);
+			try {
+				const recomFee = await recommendedFee(origin, destination);
+				setRecommendedFee(recomFee);
+			} catch (error) {
+				console.error('Error fetching recommended fee:', error.message);
+			}
 		}
 		try {
 			if (stops.length < 2) {
@@ -45,18 +51,25 @@ export default function Page() {
 				});
 				return;
 			}
+			if (formData.available_seats > vehicle?.seats) {
+				Swal.fire({
+					title: 'Error!',
+					text: `Por favor elije entre 1 a ${vehicle.seats} asientos`,
+					icon: 'error',
+				});
+				return;
+			}
 			let origin = stops[0];
 			let destination = stops[stops.length - 1];
-			const recomFee = await recommendedFee(origin, destination);
-			setRecommendedFee(recomFee);
-
 			const tripData = {
 				...formData,
+				departure: formData.departure,
 				vehicle_plate: user.vehicle_plate,
 				destination: destination,
 				origin: origin,
 				route: stops,
 			};
+			console.log(tripData);
 			const validation = rideSchema.safeParse(tripData);
 			if (validation.success) {
 				await createRide(validation.data);
@@ -123,15 +136,19 @@ export default function Page() {
 					>
 						{field === 'available_seats'
 							? 'Cupos disponibles'
-							: `Valor único del Wheels, valor recomendado ${fee}`}
+							: `Tarifa única del Wheels`}
 					</label>
 					<input
 						type='text'
 						id={field}
 						name={field}
 						onChange={handleChange}
-						value={formData[field] || ' '}
-						placeholder={`e.j: ${field === 'available_seats' ? '4' : '4000'}`}
+						value={formData[field] || ''}
+						placeholder={
+							field === 'available_seats'
+								? vehicle?.seats
+								: `Tarifa Sugerida: ${fee}`
+						}
 						className='w-full px-3 py-2 border rounded-lg'
 					/>
 					{errors[field] && (
@@ -142,7 +159,7 @@ export default function Page() {
 
 			<div className='mb-4'>
 				<label htmlFor='departure' className='block text-gray-700 mb-2'>
-					Hora de salida
+					Hora de Salida
 				</label>
 				<input
 					type='datetime-local'
