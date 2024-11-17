@@ -1,3 +1,4 @@
+import { AlertOctagon } from 'lucide-react';
 import { z } from 'zod';
 const ACCEPTED_IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/jpg'];
 export const userRegSchema = z.object({
@@ -164,16 +165,17 @@ export const partialVehicleSchema = vehicleSchema
 export const rideSchema = z.object({
 	vehicle_plate: z.string().min(1, 'La placa del vehículo es obligatoria'),
 	available_seats: z.coerce
-		.number()
+		.number('Los asientos disponibles deben ser un número')
 		.min(1, 'La cantidad mínima de asientos disponibles es 1')
 		.max(6, 'La cantidad máxima de asientos disponibles es 6'),
 
-	departure: z.coerce.date().refine(
+	departure: z.coerce.date('La fecha no es válida').refine(
 		(date) => {
 			const allowedTime = new Date();
-			allowedTime.setHours(allowedTime.getHours() - 4);
+			allowedTime.setHours(allowedTime.getHours() + 1);
 			allowedTime.setSeconds(0);
-			allowedTime.setMinutes(allowedTime.getMinutes() - 5);
+			allowedTime.setMinutes(allowedTime.getMinutes() - 2);
+			console.log(date, allowedTime, date.getTime() >= allowedTime.getTime());
 			return date.getTime() >= allowedTime.getTime();
 		},
 		{ message: 'La reserva debe ser al menos una hora adelante' }

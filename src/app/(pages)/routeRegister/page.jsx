@@ -5,7 +5,7 @@ import { ChevronLeft } from 'lucide-react';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Swal from 'sweetalert2';
 import { recommendedFee } from '@/app/helpers/api/ride';
 import { rideSchema } from '@/app/helpers/validators';
@@ -23,7 +23,6 @@ export default function Page() {
 	const [formData, setFormData] = useState({});
 	const [errors, setErrors] = useState({});
 	const [fee, setRecommendedFee] = useState(3000);
-
 	const handleChange = (e) => {
 		setFormData({ ...formData, [e.target.name]: e.target.value });
 	};
@@ -31,34 +30,39 @@ export default function Page() {
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		setLoading(true);
+		let stops = [];
+		if (document.getElementById('paradas')?.children !== undefined) {
+			stops = Array.from(document.getElementById('paradas')?.children)?.map(
+				(child) => child.innerText.split(':')[1]?.trim().split(',')[0]
+			);
+		}
+		setRoute(stops);
+		console.log(stops);
 		try {
-			if (route.length < 2) {
+			if (stops.length < 2) {
 				Swal.fire({
 					title: 'Error!',
-					text: 'Por favor selecciona una ruta',
+					text: 'Por favor selecciona una ruta con origen y destino',
 					icon: 'error',
 				});
 				return;
 			}
-
-			const [origin, destination] =
-				route[0].id === 'origin' ? [route[0], route[1]] : [route[1], route[0]];
-
+			let origin = stops[0];
+			let destination = stops[stops.length - 1];
 			const recomFee = await recommendedFee(origin, destination);
 			setRecommendedFee(recomFee);
-			const routeNames = route.map((stop) => stop.name).slice(2);
 
 			const tripData = {
 				...formData,
 				vehicle_plate: user.vehicle_plate,
-				destination: destination.name,
-				origin: origin.name,
-				route: routeNames,
+				destination: destination,
+				origin: origin,
+				route: stops,
 			};
-
+			console.log(tripData);
 			const validation = rideSchema.safeParse(tripData);
 			if (validation.success) {
-				//await createRide(validation.data);  // Ensure this function is defined
+				await createRide(validation.data);
 				Swal.fire({
 					title: 'Excelente!',
 					text: 'Ruta Registrada Correctamente',
@@ -67,10 +71,6 @@ export default function Page() {
 				router.push('/driverDashboard');
 			} else {
 				setErrors(validation.error.flatten().fieldErrors);
-				Swal.fire({
-					title: 'Error! Validation failed',
-					icon: 'error',
-				});
 			}
 		} catch (error) {
 			if (isAxiosError(error)) {
@@ -104,8 +104,8 @@ export default function Page() {
 				<ChevronLeft /> Volver
 			</Link>
 			<div className='flex flex-col justify-center items-center h-fit'>
-				<MapView setRoute={setRoute} />{' '}
-				{/* This will dynamically render the map */}
+				<MapView setRoute={setRoute} />
+				{}
 			</div>
 
 			{/* Display Errors */}
@@ -137,8 +137,8 @@ export default function Page() {
 						id={field}
 						name={field}
 						onChange={handleChange}
-						value={formData[field] || ''}
-						placeholder={`e.g. ${field === 'available_seats' ? '4' : '4000'}`}
+						value={formData[field] || ' '}
+						placeholder={`e.j: ${field === 'available_seats' ? '4' : '4000'}`}
 						className='w-full px-3 py-2 border rounded-lg'
 					/>
 					{errors[field] && (

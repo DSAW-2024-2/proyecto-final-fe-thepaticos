@@ -22,7 +22,7 @@ const center = {
 const MyMapComponent = () => {
 	const [isSabanaStart, setIsSabanaStart] = useState(null);
 	const [markers, setMarkers] = useState([sabanaLocation]);
-	const [addresses, setAddresses] = useState([sabanaAddress]);
+	const [addresses, setAddressesState] = useState([sabanaAddress]);
 	const [showQuestion, setShowQuestion] = useState(true);
 	const [hoveredMarker, setHoveredMarker] = useState(null);
 
@@ -44,23 +44,21 @@ const MyMapComponent = () => {
 		geocoder
 			.geocode({ location: latLng })
 			.then((response) => {
-				if (response.results[0]) {
-					setAddresses((prevAddresses) => [
-						...prevAddresses,
-						response.results[0].formatted_address,
-					]);
-				} else {
-					setAddresses((prevAddresses) => [
-						...prevAddresses,
-						'Dirección no encontrada',
-					]);
-				}
+				const address =
+					response.results[0]?.formatted_address || 'Dirección no encontrada';
+				setAddressesState((prevAddresses) => {
+					const updatedAddresses = [...prevAddresses, address];
+					setAddressesState(updatedAddresses); // Update the shared address list
+					return updatedAddresses;
+				});
 			})
 			.catch(() => {
-				setAddresses((prevAddresses) => [
-					...prevAddresses,
-					'Error with geocoding',
-				]);
+				const errorAddress = 'Error with geocoding';
+				setAddressesState((prevAddresses) => {
+					const updatedAddresses = [...prevAddresses, errorAddress];
+					setAddressesState(updatedAddresses); // Update the shared address list
+					return updatedAddresses;
+				});
 			});
 	};
 
@@ -85,9 +83,13 @@ const MyMapComponent = () => {
 					setMarkers((prevMarkers) =>
 						prevMarkers.filter((_, i) => i !== index)
 					);
-					setAddresses((prevAddresses) =>
-						prevAddresses.filter((_, i) => i !== index)
-					);
+					setAddressesState((prevAddresses) => {
+						const updatedAddresses = prevAddresses.filter(
+							(_, i) => i !== index
+						);
+						setAddressesState(updatedAddresses); // Update the shared address list
+						return updatedAddresses;
+					});
 					Swal.fire(
 						'Eliminada!',
 						`Se elimino la parada ${index + 1}`,
@@ -173,7 +175,7 @@ const MyMapComponent = () => {
 				{finalAddresses.length === 0 ? (
 					<p>No hay ubicaciones disponibles aún.</p>
 				) : (
-					<ul className='space-y-1 list-disc pl-5'>
+					<ul className='space-y-1 list-disc pl-5' id='paradas'>
 						{finalAddresses.map((address, index) => (
 							<li key={index} className='text-sm'>
 								{`Parada ${index + 1}: ${address.replace(', Colombia', '')}`}
