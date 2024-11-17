@@ -35,6 +35,8 @@ export default function Page() {
 			stops = Array.from(document.getElementById('paradas')?.children)?.map(
 				(child) => child.innerText.split(':')[1]?.trim().split(',')[0]
 			);
+			let origin = stops[0];
+			let destination = stops[stops.length - 1];
 			try {
 				const recomFee = await recommendedFee(origin, destination);
 				setRecommendedFee(recomFee);
@@ -59,8 +61,6 @@ export default function Page() {
 				});
 				return;
 			}
-			let origin = stops[0];
-			let destination = stops[stops.length - 1];
 			const tripData = {
 				...formData,
 				departure: formData.departure,
@@ -136,7 +136,7 @@ export default function Page() {
 					>
 						{field === 'available_seats'
 							? 'Cupos disponibles'
-							: `Tarifa única del Wheels`}
+							: 'Tarifa única del Wheels'}
 					</label>
 					<input
 						type='text'
