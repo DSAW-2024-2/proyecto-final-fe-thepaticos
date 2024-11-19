@@ -1,5 +1,10 @@
-import React, { useState } from 'react';
-import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
+import React, { useState, useEffect, useCallback } from 'react';
+import {
+	GoogleMap,
+	LoadScript,
+	Marker,
+	DirectionsRenderer,
+} from '@react-google-maps/api';
 import Swal from 'sweetalert2';
 
 const containerStyle = {
@@ -24,7 +29,40 @@ const MyMapComponent = () => {
 	const [markers, setMarkers] = useState([sabanaLocation]);
 	const [addresses, setAddressesState] = useState([sabanaAddress]);
 	const [showQuestion, setShowQuestion] = useState(true);
-	const [hoveredMarker, setHoveredMarker] = useState(null);
+	const [directions, setDirections] = useState(null);
+
+	const calculateRoute = useCallback(() => {
+		if (markers.length < 2) return;
+
+		const directionsService = new window.google.maps.DirectionsService();
+		const waypoints = markers
+			.slice(1, -1)
+			.map((marker) => ({ location: marker, stopover: true }));
+
+		directionsService.route(
+			{
+				origin: markers[0],
+				destination: markers[markers.length - 1],
+				waypoints,
+				travelMode: window.google.maps.TravelMode.DRIVING,
+			},
+			(result, status) => {
+				if (status === window.google.maps.DirectionsStatus.OK) {
+					setDirections(result);
+				} else {
+					Swal.fire({
+						title: 'Error!',
+						text: 'Error del servidor al calcular la ruta',
+						icon: 'error',
+					});
+				}
+			}
+		);
+	}, [markers]);
+
+	useEffect(() => {
+		calculateRoute();
+	}, [markers, calculateRoute]);
 
 	const onMapClick = (event) => {
 		if (markers.length >= 5) {
@@ -48,7 +86,7 @@ const MyMapComponent = () => {
 					response.results[0]?.formatted_address || 'Dirección no encontrada';
 				setAddressesState((prevAddresses) => {
 					const updatedAddresses = [...prevAddresses, address];
-					setAddressesState(updatedAddresses); // Update the shared address list
+					setAddressesState(updatedAddresses);
 					return updatedAddresses;
 				});
 			})
@@ -56,7 +94,7 @@ const MyMapComponent = () => {
 				const errorAddress = 'Error with geocoding';
 				setAddressesState((prevAddresses) => {
 					const updatedAddresses = [...prevAddresses, errorAddress];
-					setAddressesState(updatedAddresses); // Update the shared address list
+					setAddressesState(updatedAddresses);
 					return updatedAddresses;
 				});
 			});
@@ -87,7 +125,7 @@ const MyMapComponent = () => {
 						const updatedAddresses = prevAddresses.filter(
 							(_, i) => i !== index
 						);
-						setAddressesState(updatedAddresses); // Update the shared address list
+						setAddressesState(updatedAddresses);
 						return updatedAddresses;
 					});
 					Swal.fire(
@@ -146,7 +184,7 @@ const MyMapComponent = () => {
 	}
 
 	return (
-		<LoadScript googleMapsApiKey='AIzaSyCA108_XZ3nzqyzm_GWS9haD8pMOzQPGDQ'>
+		<LoadScript googleMapsApiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}>
 			<GoogleMap
 				mapContainerStyle={containerStyle}
 				center={center}
@@ -159,15 +197,9 @@ const MyMapComponent = () => {
 						key={index}
 						position={marker}
 						onClick={() => onMarkerClick(index)}
-						onMouseOver={() => setHoveredMarker(index)}
-						onMouseOut={() => setHoveredMarker(null)}
 					/>
 				))}
-				{hoveredMarker !== null && (
-					<div className='absolute top-2 left-1/2 transform -translate-x-1/2 bg-black bg-opacity-70 text-white px-4 py-2 rounded-md z-10 w-fit'>
-						<p>{`Parada ${hoveredMarker + 1}: ${finalAddresses[hoveredMarker]}`}</p>
-					</div>
-				)}
+				{directions && <DirectionsRenderer directions={directions} />}
 			</GoogleMap>
 
 			<div className='flex flex-col w-full my-5'>

@@ -4,6 +4,7 @@ import { Menu } from 'lucide-react';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { BeatLoader } from 'react-spinners';
 import AsideMenu from '../components/navbar/AsideMenu';
 import CarPhoto from '../components/navbar/CarProfile';
 import ProfilePhoto from '../components/navbar/profilePhoto';
@@ -61,10 +62,15 @@ export default function NavBar() {
 					WHEEL US
 				</div>
 			)}
-			{user &&
+
+			{loading ? (
+				<BeatLoader />
+			) : (
+				user &&
 				(pathname === '/dashboard' ||
 					pathname === '/driverDashboard' ||
-					pathname === '/routesDriver') && <ToggleProfile vehicle={car} />}
+					pathname === '/routesDriver') && <ToggleProfile vehicle={car} />
+			)}
 			{user && (pathname === '/dashboard' || pathname === '/reservations') && (
 				<ProfilePhoto signout={signout} user={user} />
 			)}

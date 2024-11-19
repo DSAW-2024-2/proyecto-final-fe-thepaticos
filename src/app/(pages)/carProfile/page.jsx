@@ -100,7 +100,6 @@ export default function Page() {
 	}, [user.vehicle_plate, reset]);
 
 	const handleDelete = async () => {
-		// Confirm the deletion of the vehicle
 		Swal.fire({
 			title: '¿Seguro deseas eliminar el vehículo?',
 			text: 'No podrás recuperar la información del vehículo después de eliminarlo.',
@@ -113,18 +112,23 @@ export default function Page() {
 		}).then(async (result) => {
 			if (result.isConfirmed) {
 				try {
-					// Perform the API call to delete the vehicle
-					await deleteVehicle(user.vehicle_plate); // Adjust based on your API
-					// Clear the vehicle from the context
-					setVehicle(null); // Clear vehicle state
-					// Redirect to the dashboard
-					router.push('/dashboard'); // Or wherever you want to go
+					await deleteVehicle(user.vehicle_plate);
+					setVehicle(null);
+					router.push('/dashboard');
 				} catch (error) {
-					Swal.fire({
-						title: 'Error al eliminar',
-						text: 'Hubo un error al intentar eliminar el vehículo.',
-						icon: 'error',
-					});
+					if (isAxiosError(error)) {
+						Swal.fire({
+							title: 'Error al eliminar',
+							text: error.response.data.message,
+							icon: 'error',
+						});
+					} else {
+						Swal.fire({
+							title: 'Error al eliminar',
+							text: 'Hubo un error al intentar eliminar el vehículo.',
+							icon: 'error',
+						});
+					}
 				}
 			}
 		});

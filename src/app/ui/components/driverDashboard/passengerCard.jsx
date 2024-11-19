@@ -2,6 +2,7 @@ import { getUserById } from '@/app/helpers/api/user';
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Loader from '../../modals/Loader';
+import Swal from 'sweetalert2';
 
 export default function PassengersCard({ passengersList }) {
 	const [passengerData, setPassengerData] = useState([]);
@@ -17,8 +18,12 @@ export default function PassengersCard({ passengersList }) {
 					const user = await getUserById(userId);
 					users.push(user);
 				} catch (error) {
-					console.error('Error fetching user:', error);
-					users.push(null); // or handle it as needed
+					Swal.fire({
+						title: 'Error!',
+						text: 'Error del servidor al cargar el usuario (PassengerCard)',
+						icon: 'error',
+					});
+					users.push(null);
 				}
 			}
 

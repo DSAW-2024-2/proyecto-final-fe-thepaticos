@@ -9,8 +9,7 @@ export default function CarPhoto({ signout, vehicle }) {
 	const dropdownRef = useRef(null);
 	const router = useRouter();
 	const { user } = useAuth();
-	const [car, setCar] = useState(vehicle); // Initialize with vehicle prop
-	const [loading, setLoading] = useState(true); // Loading state
+	const [car, setCar] = useState(vehicle);
 
 	const toggleMenu = () => {
 		setShowMenu(!showMenu);
@@ -39,19 +38,16 @@ export default function CarPhoto({ signout, vehicle }) {
 		router.push('/carProfile');
 	};
 
-	// Fetch vehicle data on mount and whenever `vehicle` changes
 	useEffect(() => {
 		const fetchCar = async () => {
-			setLoading(true);
 			const fetchedCar = await getVehicleByPlate(user.vehicle_plate);
 			setCar(fetchedCar);
-			setLoading(false);
 		};
 
 		if (user?.vehicle_plate) {
 			fetchCar();
 		}
-	}, [user, vehicle]); // Re-run if `vehicle` changes
+	}, [user, vehicle]);
 
 	return (
 		<div

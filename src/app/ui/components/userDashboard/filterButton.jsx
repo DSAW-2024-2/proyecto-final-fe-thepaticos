@@ -4,6 +4,7 @@ import FilterSubMenu from './filterSubMenu';
 import { usePathname } from 'next/navigation';
 import { useRouter } from 'next/navigation';
 import { getDestinations, getOrigins } from '@/app/helpers/api/ride';
+import Swal from 'sweetalert2';
 
 export default function FilterButton() {
 	const [origins, setOrigins] = useState([]);
@@ -17,7 +18,11 @@ export default function FilterButton() {
 				setOrigins(resOrigins);
 				setDestinations(resDestinations);
 			} catch (error) {
-				console.error('Error fetching rides:', error);
+				Swal.fire({
+					title: 'Error!',
+					text: 'Error del servidor al cargar los viajes disponibles (Filter button)',
+					icon: 'error',
+				});
 			}
 		};
 		getPoints();
@@ -81,7 +86,7 @@ export default function FilterButton() {
 	};
 
 	return (
-		<div className='relative w-fit py-5 flex justify-around items-center gap-2 sm:gap-5'>
+		<div className='relative w-fit py-4 flex justify-around items-center gap-2 sm:gap-5'>
 			{pathname === '/dashboard' && (
 				<button
 					ref={originButtonRef}

@@ -13,7 +13,7 @@ export default function ReservationCard({ item, reloadReservations }) {
 	const [driver, setDriver] = useState(null);
 	const [loading, setLoading] = useState(true);
 	const { user } = useAuth();
-	const [ride, setRide] = useState(item);
+	const ride = item;
 
 	useEffect(() => {
 		const getVehicle = async () => {
@@ -24,7 +24,11 @@ export default function ReservationCard({ item, reloadReservations }) {
 				setVehicle(resVehicle);
 				setDriver(resDriver);
 			} catch (error) {
-				console.error('Error fetching rides:', error);
+				Swal.fire({
+					title: 'Error!',
+					text: 'Error del servidor al cargar la información del viaje (User Reservations)',
+					icon: 'error',
+				});
 			} finally {
 				setLoading(false);
 			}
@@ -76,15 +80,17 @@ export default function ReservationCard({ item, reloadReservations }) {
 		});
 
 		if (paymentMethod) {
-			console.log(
-				`Selected payment method: ${paymentMethod === true ? 'Cash' : ''}`
-			);
-			// Handle the selected payment method here
+			Swal.fire({
+				title: 'Success!',
+				text: `Selected payment method: ${paymentMethod === true ? 'Cash' : ''}`,
+				icon: 'success',
+			});
 		} else {
-			console.log(
-				`Selected payment method: ${paymentMethod === undefined ? 'Transfer' : ''}`
-			);
-			// Handle the selected payment method here
+			Swal.fire({
+				title: 'Success!',
+				text: `Selected payment method: ${paymentMethod === undefined ? 'Transfer' : ''}`,
+				icon: 'success',
+			});
 		}
 	};
 

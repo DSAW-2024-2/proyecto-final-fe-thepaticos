@@ -1,5 +1,4 @@
 import { z } from 'zod';
-import formatTime from './timeformat';
 
 const ACCEPTED_IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/jpg'];
 export const userRegSchema = z.object({
@@ -7,13 +6,13 @@ export const userRegSchema = z.object({
 		.string()
 		.min(1, 'Este campo es obligatorio')
 		.max(50, 'No debe contener más de 50 caracteres')
-		.regex(/^[a-zA-Z]+$/, 'Debe contener solo letras')
+		.regex(/^[a-zA-Z\s]+$/, 'Debe contener solo letras')
 		.trim(),
 	lastname: z
 		.string()
 		.min(1, 'Este campo es obligatorio')
 		.max(50, 'No debe contener más de 50 caracteres')
-		.regex(/^[a-zA-Z]+$/, 'Debe contener solo letras')
+		.regex(/^[a-zA-Z\s]+$/, 'Debe contener solo letras')
 		.trim(),
 	id: z
 		.string()
@@ -65,14 +64,14 @@ export const userModifySchema = z.object({
 		.string()
 		.min(1, 'Este campo es obligatorio')
 		.max(50, 'No debe contener más de 50 caracteres')
-		.regex(/^[a-zA-Z]+$/, 'Debe contener solo letras')
+		.regex(/^[a-zA-Z\s]+$/, 'Debe contener solo letras')
 		.trim()
 		.optional(),
 	lastname: z
 		.string()
 		.min(1, 'Este campo es obligatorio')
 		.max(50, 'No debe contener más de 50 caracteres')
-		.regex(/^[a-zA-Z]+$/, 'Debe contener solo letras')
+		.regex(/^[a-zA-Z\s]+$/, 'Debe contener solo letras')
 		.trim()
 		.optional(),
 	contact: z

@@ -4,6 +4,7 @@ import AvailableTripCard from '@/app/ui/components/userDashboard/AvailableTripCa
 import FilterButton from '@/app/ui/components/userDashboard/filterButton';
 import { useEffect, useState } from 'react';
 import { useSearchParams, useRouter, usePathname } from 'next/navigation';
+import Swal from 'sweetalert2';
 
 export default function DashboardPage() {
 	const [rides, setRides] = useState([]);
@@ -31,7 +32,11 @@ export default function DashboardPage() {
 				const AvaliableRides = await getAvaliableRides(queryParams);
 				setRides(AvaliableRides);
 			} catch (error) {
-				console.error('Error fetching rides:', error);
+				Swal.fire({
+					title: 'Error!',
+					text: 'Error del servidor al cargar los viajes disponibles',
+					icon: 'error',
+				});
 			}
 		};
 		getRides();
@@ -62,6 +67,34 @@ export default function DashboardPage() {
 						<></>
 					)}
 				</button>
+			</div>
+			<div className='flex items-center justify-between w-auto gap-2'>
+				{origin || destination || seats ? (
+					<>
+						<h2 className='text-lg font-bold'>Filtros Actuales:</h2>
+						<div>
+							{origin && (
+								<span className='font-bold'>
+									Origen: <span className='font-normal'>{origin}</span>
+								</span>
+							)}
+						</div>
+						<div>
+							{destination && (
+								<span className='font-bold'>
+									Destino: <span className='font-normal'>{destination}</span>
+								</span>
+							)}
+						</div>
+						<div>
+							{seats && (
+								<span className='font-bold'>
+									Cupos: <span className='font-normal'>{seats}</span>
+								</span>
+							)}
+						</div>
+					</>
+				) : null}
 			</div>
 			<section className='w-full h-screen p-5 pt-0 flex justify-center'>
 				<div className='flex flex-col bg-[#D9D9D9] justify-start items-start shadow-gray-600 shadow-md bg-opacity-50 w-[98%] h-[70%] overflow-auto p-3 border-solid border-[1px] border-[#696C70] border-opacity-50 rounded-lg lg:grid lg:grid-cols-2 gap-2'>

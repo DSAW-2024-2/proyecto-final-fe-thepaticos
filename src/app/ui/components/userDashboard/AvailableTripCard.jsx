@@ -6,6 +6,7 @@ import Image from 'next/image';
 import TripDetailsModal from '../../modals/TripDetails';
 import Loader from '../../modals/Loader';
 import formatTime from '@/app/helpers/timeformat';
+import Swal from 'sweetalert2';
 
 export default function AvailableTripCard(ride) {
 	const [vehicle, setvehicle] = useState({});
@@ -18,7 +19,11 @@ export default function AvailableTripCard(ride) {
 				const vehicle = await getVehicleByPlate(ride.ride.vehicle_plate);
 				setvehicle(vehicle);
 			} catch (error) {
-				console.error('Error fetching rides:', error);
+				Swal.fire({
+					title: 'Error!',
+					text: 'Error del servidor al cargar la información del viaje (AvaliableTripCard)',
+					icon: 'error',
+				});
 			} finally {
 				setLoading(false);
 			}

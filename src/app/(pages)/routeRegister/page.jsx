@@ -42,7 +42,11 @@ export default function Page() {
 				);
 				setRecommendedFee(recomFee);
 			} catch (error) {
-				console.error('Error fetching recommended fee:', error.message);
+				Swal.fire({
+					title: 'Error!',
+					text: 'Error del servidor al cargar la recomendación de tarifa',
+					icon: 'error',
+				});
 			}
 		}
 		try {

@@ -15,6 +15,7 @@
 		}
 	},
 	"rules": {
+		"no-console": "error",
 		"prettier/prettier": ["error"], // Prettier como regla de ESLint
 		"semi": ["error", "always"],
 		"quotes": ["error", "single"],

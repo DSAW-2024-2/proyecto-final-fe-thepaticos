@@ -5,6 +5,7 @@ import RouteCard from '@/app/ui/components/driverDashboard/routeCard';
 import FilterButton from '@/app/ui/components/userDashboard/filterButton';
 import Loader from '@/app/ui/modals/Loader';
 import { useEffect, useState } from 'react';
+import Swal from 'sweetalert2';
 
 export default function DashboardPage() {
 	const [rides, setRides] = useState([]);
@@ -19,7 +20,11 @@ export default function DashboardPage() {
 					setRides(resRides);
 				}
 			} catch (error) {
-				console.error('Error fetching rides:', error);
+				Swal.fire({
+					title: 'Error!',
+					text: 'Error del servidor al cargar las rutas del vehiculo',
+					icon: 'error',
+				});
 			} finally {
 				setLoading(false);
 			}
@@ -35,7 +40,11 @@ export default function DashboardPage() {
 				setRides(resRides);
 			}
 		} catch (error) {
-			console.error('Error reloading rides:', error);
+			Swal.fire({
+				title: 'Error!',
+				text: 'Error del servidor al recargar las rutas',
+				icon: 'error',
+			});
 		} finally {
 			setLoading(false);
 		}

@@ -4,6 +4,7 @@ import { getUserReservations } from '@/app/helpers/api/user';
 import ReservationCard from '@/app/ui/components/userReservations/reservationCard';
 import { useEffect, useState } from 'react';
 import Loader from '@/app/ui/modals/Loader';
+import Swal from 'sweetalert2';
 
 export default function DashboardPage() {
 	const [reservations, setReservations] = useState([]);
@@ -16,7 +17,11 @@ export default function DashboardPage() {
 				const resReservations = await getUserReservations(user.id);
 				setReservations(resReservations);
 			} catch (error) {
-				console.error('Error fetching rides:', error);
+				Swal.fire({
+					title: 'Error!',
+					text: 'Error del servidor al cargar las reservaciones (Reservations)',
+					icon: 'error',
+				});
 			} finally {
 				setLoading(false);
 			}
@@ -31,7 +36,11 @@ export default function DashboardPage() {
 				const resReservations = await getUserReservations(user.id);
 				setReservations(resReservations);
 			} catch (error) {
-				console.error('Error fetching rides:', error);
+				Swal.fire({
+					title: 'Error!',
+					text: 'Error del servidor al cargar las reservaciones (Reservations)',
+					icon: 'error',
+				});
 			} finally {
 				setLoading(false);
 			}

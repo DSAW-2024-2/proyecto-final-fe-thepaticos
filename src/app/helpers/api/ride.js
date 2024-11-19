@@ -12,9 +12,12 @@ export async function getAvaliableRides({
 	destination = '',
 	seats = 1,
 }) {
-	const res = await api.get(
-		`/ride?origin=${origin}&destination=${destination}&seats=${seats}`
-	);
+	const body = {
+		origin,
+		destination,
+		seats,
+	};
+	const res = await api.post('/ride/get-rides', body);
 	return res.data.rides;
 }
 export async function getOrigins() {
