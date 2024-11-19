@@ -1,12 +1,11 @@
-import { getUserById } from '@/app/helpers/api/user';
+import { useAuth } from '@/app/contexts/sessionContext';
+import { deleteBooking, getUserById } from '@/app/helpers/api/user';
 import { getVehicleByPlate } from '@/app/helpers/api/vehicles';
+import formatTime from '@/app/helpers/timeformat';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
-import RouteStop from '../userDashboard/routeStop';
 import Swal from 'sweetalert2';
-import formatTime from '@/app/helpers/timeformat';
-import { deleteBooking } from '@/app/helpers/api/user';
-import { useAuth } from '@/app/contexts/sessionContext';
+import RouteLine from '../../modals/RouteLine';
 
 export default function ReservationCard({ item, reloadReservations }) {
 	const [vehicle, setVehicle] = useState(null);
@@ -143,7 +142,7 @@ export default function ReservationCard({ item, reloadReservations }) {
 								d='M13.9 12.7c0-.6-.2-1.2-.6-1.6c-.8-.8-2.4-.8-3.2 0l-.3.3c-.1.1-.1.3-.2.4s-.1.3-.1.4v.8c0 .1.1.3.1.4s.1.3.2.4l.3.3c.4.4 1 .7 1.6.7s1.2-.2 1.6-.7c.3-.2.6-.8.6-1.4M54 45.9c.4-.4.7-1 .7-1.6s-.2-1.2-.7-1.6l-.3-.3c-.1-.1-.3-.1-.4-.2c-.1 0-.3-.1-.4-.1H52c-.1 0-.3.1-.4.1c-.1.1-.3.1-.4.2l-.3.3c-.4.4-.7 1-.7 1.6s.2 1.2.7 1.6l.3.3c.1.1.3.1.4.2c.1 0 .3.1.4.1h.4c.6 0 1.2-.2 1.6-.6'
 							/>
 						</svg>
-						<RouteStop stops={ride.route} />
+						<RouteLine items={ride.route} />
 					</div>
 
 					<div className='flex gap-[5px] sm:gap-3 items-center w-full'>

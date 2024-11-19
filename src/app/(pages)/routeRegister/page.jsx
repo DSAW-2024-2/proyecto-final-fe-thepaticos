@@ -11,7 +11,6 @@ import { recommendedFee } from '@/app/helpers/api/ride';
 import { rideSchema } from '@/app/helpers/validators';
 import { isAxiosError } from 'axios';
 import { createRide } from '@/app/helpers/api/ride';
-
 const MapView = dynamic(() => import('@/app/ui/components/Maps/Map'), {
 	ssr: false,
 });
@@ -20,6 +19,7 @@ export default function Page() {
 	const router = useRouter();
 	const { user, vehicle } = useAuth();
 	const { setLoading } = useLoading();
+
 	const [formData, setFormData] = useState({});
 	const [errors, setErrors] = useState({});
 	const [fee, setRecommendedFee] = useState(3000);
@@ -121,7 +121,6 @@ export default function Page() {
 			</Link>
 			<div className='flex flex-col justify-center items-center h-fit'>
 				<MapView />
-				{}
 			</div>
 			{errors.origin && (
 				<p className='text-red-500 text-sm mt-1'>Origin: {errors.origin}</p>

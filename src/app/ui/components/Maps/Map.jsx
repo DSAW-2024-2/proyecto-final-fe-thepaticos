@@ -1,11 +1,8 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import {
-	GoogleMap,
-	LoadScript,
-	Marker,
-	DirectionsRenderer,
-} from '@react-google-maps/api';
+import { DirectionsRenderer, GoogleMap, Marker } from '@react-google-maps/api';
+import React, { useCallback, useEffect, useState } from 'react';
 import Swal from 'sweetalert2';
+import useGoogleMaps from '../../../hooks/useMap';
+import { RingLoader } from 'react-spinners';
 
 const containerStyle = {
 	width: '100%',
@@ -30,6 +27,9 @@ const MyMapComponent = () => {
 	const [addresses, setAddressesState] = useState([sabanaAddress]);
 	const [showQuestion, setShowQuestion] = useState(true);
 	const [directions, setDirections] = useState(null);
+	const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
+
+	const isGoogleMapsLoaded = useGoogleMaps(apiKey);
 
 	const calculateRoute = useCallback(() => {
 		if (markers.length < 2) return;
@@ -184,39 +184,44 @@ const MyMapComponent = () => {
 	}
 
 	return (
-		<LoadScript googleMapsApiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}>
-			<GoogleMap
-				mapContainerStyle={containerStyle}
-				center={center}
-				zoom={12}
-				onClick={onMapClick}
-				options={{ streetViewControl: false }}
-			>
-				{finalMarkers.map((marker, index) => (
-					<Marker
-						key={index}
-						position={marker}
-						onClick={() => onMarkerClick(index)}
-					/>
-				))}
-				{directions && <DirectionsRenderer directions={directions} />}
-			</GoogleMap>
-
-			<div className='flex flex-col w-full my-5'>
-				<h3 className='text-lg font-semibold mb-3'>Lista de Paradas:</h3>
-				{finalAddresses.length === 0 ? (
-					<p>No hay ubicaciones disponibles aún.</p>
-				) : (
-					<ul className='space-y-1 list-disc pl-5' id='paradas'>
-						{finalAddresses.map((address, index) => (
-							<li key={index} className='text-sm'>
-								{`Parada ${index + 1}: ${address.replace(', Colombia', '')}`}
-							</li>
+		<>
+			{isGoogleMapsLoaded && (
+				<>
+					<GoogleMap
+						mapContainerStyle={containerStyle}
+						center={center}
+						zoom={12}
+						onClick={onMapClick}
+						options={{ streetViewControl: false }}
+					>
+						{finalMarkers.map((marker, index) => (
+							<Marker
+								key={index}
+								position={marker}
+								onClick={() => onMarkerClick(index)}
+							/>
 						))}
-					</ul>
-				)}
-			</div>
-		</LoadScript>
+						{directions && <DirectionsRenderer directions={directions} />}
+					</GoogleMap>
+
+					<div className='flex flex-col w-full my-5'>
+						<h3 className='text-lg font-semibold mb-3'>Lista de Paradas:</h3>
+						{finalAddresses.length === 0 ? (
+							<p>No hay ubicaciones disponibles aún.</p>
+						) : (
+							<ul className='space-y-1 list-disc pl-5' id='paradas'>
+								{finalAddresses.map((address, index) => (
+									<li key={index} className='text-sm'>
+										{`Parada ${index + 1}: ${address.replace(', Colombia', '')}`}
+									</li>
+								))}
+							</ul>
+						)}
+					</div>
+				</>
+			)}
+			{!isGoogleMapsLoaded && <RingLoader />}
+		</>
 	);
 };
 

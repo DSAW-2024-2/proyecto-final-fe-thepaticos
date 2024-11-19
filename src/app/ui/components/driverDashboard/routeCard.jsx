@@ -1,7 +1,7 @@
-import RouteStop from '../userDashboard/routeStop';
+import formatTime from '@/app/helpers/timeformat';
 import { useState } from 'react';
 import RouteInfo from '../../modals/routeInfo';
-import formatTime from '@/app/helpers/timeformat';
+import RouteLine from '../../modals/RouteLine';
 
 export default function RouteCard({ ride, reloadRides }) {
 	const dateString = ride.departure;
@@ -32,7 +32,7 @@ export default function RouteCard({ ride, reloadRides }) {
 								d='M13.9 12.7c0-.6-.2-1.2-.6-1.6c-.8-.8-2.4-.8-3.2 0l-.3.3c-.1.1-.1.3-.2.4s-.1.3-.1.4v.8c0 .1.1.3.1.4s.1.3.2.4l.3.3c.4.4 1 .7 1.6.7s1.2-.2 1.6-.7c.3-.2.6-.8.6-1.4M54 45.9c.4-.4.7-1 .7-1.6s-.2-1.2-.7-1.6l-.3-.3c-.1-.1-.3-.1-.4-.2c-.1 0-.3-.1-.4-.1H52c-.1 0-.3.1-.4.1c-.1.1-.3.1-.4.2l-.3.3c-.4.4-.7 1-.7 1.6s.2 1.2.7 1.6l.3.3c.1.1.3.1.4.2c.1 0 .3.1.4.1h.4c.6 0 1.2-.2 1.6-.6'
 							/>
 						</svg>
-						<RouteStop stops={ride.route} />
+						<RouteLine items={ride.route} />
 					</div>
 					<div className='flex gap-[3px] sm:gap-3 items-center w-full'>
 						<svg

@@ -1,44 +1,77 @@
-import { ChevronRight } from 'lucide-react';
+'use client';
 
-export default function RouteLine({ items }) {
+import { useState, useCallback, useRef, useEffect } from 'react';
+import { X } from 'lucide-react';
+import { MapWithAddresses } from '../components/Maps/RouteMap';
+import useGoogleMaps from '../../hooks/useMap';
+import { RingLoader } from 'react-spinners';
+
+export default function RouteLine({ items = [] }) {
+	const [showModal, setShowModal] = useState(false);
+	const modalRef = useRef(null);
+
+	const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
+
+	const isGoogleMapsLoaded = useGoogleMaps(apiKey);
+
+	const closeModal = useCallback(() => {
+		setShowModal(false);
+	}, []);
+
+	const handleOutsideClick = useCallback(
+		(event) => {
+			if (modalRef.current && !modalRef.current.contains(event.target)) {
+				closeModal();
+			}
+		},
+		[closeModal]
+	);
+
+	useEffect(() => {
+		if (showModal) {
+			document.addEventListener('mousedown', handleOutsideClick);
+		} else {
+			document.removeEventListener('mousedown', handleOutsideClick);
+		}
+
+		return () => {
+			document.removeEventListener('mousedown', handleOutsideClick);
+		};
+	}, [showModal, handleOutsideClick]);
+
 	return (
-		<div className='max-w-md mx-auto bg-white shadow-lg rounded-lg overflow-hidden'>
-			<div className='px-4 py-5 sm:p-6'>
-				<h3 className='text-lg font-medium leading-6 text-gray-900 mb-4'>
-					Itinerario de la Ruta
-				</h3>
-				<div className='flow-root'>
-					<ul role='list' className='-mb-8'>
-						{items.map((item, itemIdx) => (
-							<li key={itemIdx}>
-								<div className='relative pb-8'>
-									{itemIdx !== items.length - 1 ? (
-										<span
-											className='absolute top-4 left-4 -ml-px h-full w-0.5 bg-gray-200'
-											aria-hidden='true'
-										/>
-									) : null}
-									<div className='relative flex space-x-3'>
-										<div>
-											<span className='h-8 w-8 rounded-full bg-blue-500 flex items-center justify-center ring-8 ring-white'>
-												<ChevronRight
-													className='h-5 w-5 text-white'
-													aria-hidden='true'
-												/>
-											</span>
-										</div>
-										<div className='min-w-0 flex-1 pt-1.5 flex justify-between space-x-4'>
-											<div>
-												<p className='mt-1 text-sm text-gray-600'>{item}</p>
-											</div>
-										</div>
-									</div>
+		<>
+			<button
+				onClick={() => setShowModal(true)}
+				className='px-4 py-2 bg-[#028747] text-white rounded-md hover:bg-[#025C31] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2'
+			>
+				Ver ruta
+			</button>
+			{showModal && (
+				<div className='fixed inset-0 z-50 overflow-auto bg-black bg-opacity-50 flex items-center justify-center'>
+					<div
+						ref={modalRef}
+						className='bg-white rounded-lg shadow-xl w-full max-w-3xl mx-4 relative'
+					>
+						<button
+							onClick={closeModal}
+							className='absolute top-2 right-2 text-gray-500 hover:text-gray-700'
+							aria-label='Cerrar modal'
+						>
+							<X className='h-6 w-6' />
+						</button>
+						<div className='p-4'>
+							<h2 className='text-2xl font-bold mb-4'>Mapa de la Ruta</h2>
+							{isGoogleMapsLoaded && (
+								<div className='w-full h-[60vh] rounded-lg overflow-hidden'>
+									<MapWithAddresses addresses={items} />
 								</div>
-							</li>
-						))}
-					</ul>
+							)}
+							{!isGoogleMapsLoaded && <RingLoader />}
+						</div>
+					</div>
 				</div>
-			</div>
-		</div>
+			)}
+		</>
 	);
 }

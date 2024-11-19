@@ -8,6 +8,10 @@ export function middleware(req) {
 	if (url.startsWith('/_next') || url.startsWith('/static')) {
 		return NextResponse.next();
 	}
+	// Devuelve al usuario a la página de inicio si ya está autenticado
+	if (token && (url === '/' || url.startsWith('/register'))) {
+		return NextResponse.redirect(new URL('/dashboard', req.url));
+	}
 	// Permitir el acceso a '/' y '/register' sin autenticación
 	if (url === '/' || url.startsWith('/register')) {
 		return NextResponse.next();
