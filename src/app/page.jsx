@@ -37,9 +37,9 @@ export default function Home() {
 	};
 
 	return (
-		<div className='flex flex-col w-full'>
+		<div className='flex flex-col w-full h-[74vh] p-4'>
 			{showModal && <ModalLogin onClose={handleClose} />}
-			<div className='relative flex-1 shadow-gray-500 shadow-md'>
+			<div className='relative shadow-gray-500 shadow-md'>
 				<Image
 					src={carousel[currentIndex]}
 					alt='Modern university building'
@@ -64,7 +64,11 @@ export default function Home() {
 				</button>
 			</div>
 
-			<div className='p-4 flex gap-2 justify-end items-start'>
+			<div className='p-4 flex gap-2 justify-center items-center flex-1'>
+				<p className='flex text-sm sm:text-xl w-full pl-4'>
+					Conecta con tus compañeros y vive viajes inolvidables. Tu comunidad
+					universitaria viaja contigo...
+				</p>
 				<div className='flex flex-col p-1 w-1/2 justify-end items-center'>
 					<button
 						className='bg-[#028747] p-3 w-full max-w-[360px] text-white rounded-md font-semibold mb-3 text-base sm:text-3xl hover:bg-[#025C31]'
@@ -74,7 +78,7 @@ export default function Home() {
 					>
 						Iniciar Sesión
 					</button>
-					<p className='min-w-60 text-xs sm:text-xl flex justify-center gap-2'>
+					<p className='min-w-60 text-xs sm:text-lg flex justify-center gap-2'>
 						No tienes cuenta?
 						<Link
 							href='/register'
@@ -84,10 +88,6 @@ export default function Home() {
 						</Link>
 					</p>
 				</div>
-				<p className='flex text-sm sm:text-2xl w-full pl-4'>
-					Conecta con tus compañeros y vive viajes inolvidables. Tu comunidad
-					universitaria viaja contigo...
-				</p>
 			</div>
 		</div>
 	);
