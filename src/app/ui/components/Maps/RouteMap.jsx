@@ -1,6 +1,7 @@
 'use client';
 import React, { useCallback, useEffect, useState } from 'react';
 import { GoogleMap, Marker, DirectionsRenderer } from '@react-google-maps/api';
+import useGoogleMaps from '@/app/hooks/useMap';
 
 const containerStyle = {
 	width: 'full',
@@ -15,6 +16,7 @@ const center = {
 export const MapWithAddresses = ({ addresses }) => {
 	const [markers, setMarkers] = useState([]);
 	const [directionsResponse, setDirectionsResponse] = useState(null);
+	const isGoogleMapsLoaded = useGoogleMaps();
 
 	const geocodeAddresses = useCallback(async () => {
 		const geocoder = new window.google.maps.Geocoder();
@@ -62,28 +64,32 @@ export const MapWithAddresses = ({ addresses }) => {
 	}, [markers, calculateRoute, handleMapLoad]);
 
 	return (
-		<GoogleMap
-			mapContainerStyle={containerStyle}
-			center={center}
-			zoom={12}
-			options={{
-				gestureHandling: 'greedy',
-			}}
-		>
-			{markers.map((marker, index) => (
-				<Marker
-					key={index}
-					position={marker}
-					label={{
-						text: String.fromCharCode(65 + index),
-						color: 'white',
-						fontSize: '14px',
+		<>
+			{isGoogleMapsLoaded && (
+				<GoogleMap
+					mapContainerStyle={containerStyle}
+					center={center}
+					zoom={12}
+					options={{
+						gestureHandling: 'greedy',
 					}}
-				/>
-			))}
-			{directionsResponse && (
-				<DirectionsRenderer directions={directionsResponse} />
+				>
+					{markers.map((marker, index) => (
+						<Marker
+							key={index}
+							position={marker}
+							label={{
+								text: String.fromCharCode(65 + index),
+								color: 'white',
+								fontSize: '14px',
+							}}
+						/>
+					))}
+					{directionsResponse && (
+						<DirectionsRenderer directions={directionsResponse} />
+					)}
+				</GoogleMap>
 			)}
-		</GoogleMap>
+		</>
 	);
 };

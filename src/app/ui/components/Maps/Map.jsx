@@ -27,9 +27,8 @@ const MyMapComponent = () => {
 	const [addresses, setAddressesState] = useState([sabanaAddress]);
 	const [showQuestion, setShowQuestion] = useState(true);
 	const [directions, setDirections] = useState(null);
-	const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
 
-	const isGoogleMapsLoaded = useGoogleMaps(apiKey);
+	const isGoogleMapsLoaded = useGoogleMaps();
 
 	const calculateRoute = useCallback(() => {
 		if (markers.length < 2) return;
