@@ -2,12 +2,12 @@ import { ChevronRight } from 'lucide-react';
 
 export default function RouteLineItem({ items }) {
 	return (
-		<div className='max-w-md mx-auto bg-white shadow-lg rounded-lg overflow-hidden'>
+		<div className='max-w-md mx-auto bg-white shadow-lg rounded-lg'>
 			<div className='px-4 py-5 sm:p-6'>
 				<h3 className='text-lg font-medium leading-6 text-gray-900 mb-4'>
 					Paradas:
 				</h3>
-				<div className='flow-root'>
+				<div className='overflow-y-auto my-4'>
 					<ul role='list' className='-mb-8'>
 						{items.map((item, itemIdx) => (
 							<li key={itemIdx}>

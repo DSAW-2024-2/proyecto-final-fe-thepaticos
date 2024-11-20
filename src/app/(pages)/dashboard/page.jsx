@@ -68,7 +68,7 @@ export default function DashboardPage() {
 					)}
 				</button>
 			</div>
-			<div className='flex items-center justify-between w-auto gap-2'>
+			<div className='flex items-center justify-between w-auto gap-2 mb-2 flex-col sm:flex-row'>
 				{origin || destination || seats ? (
 					<>
 						<h2 className='text-lg font-bold'>Filtros Actuales:</h2>
@@ -97,11 +97,13 @@ export default function DashboardPage() {
 				) : null}
 			</div>
 			<section className='w-full h-screen p-5 pt-0 flex justify-center'>
-				<div className='w-[600px] h-[400px] p-7 flex flex-col bg-[#D9D9D9] justify-start items-start shadow-gray-600 shadow-md bg-opacity-50 overflow-auto border-solid border-[1px] border-[#696C70] border-opacity-50 rounded-lg gap-4'>
-					{rides &&
-						rides.map((ride, index) => (
-							<AvailableTripCard key={index} ride={ride} />
-						))}
+				<div className='w-full h-full p-5 bg-[#D9D9D9] bg-opacity-50 rounded-lg shadow-gray-600 shadow-md overflow-auto'>
+					<div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-6'>
+						{rides &&
+							rides.map((ride, index) => (
+								<AvailableTripCard key={index} ride={ride} />
+							))}
+					</div>
 				</div>
 			</section>
 		</section>

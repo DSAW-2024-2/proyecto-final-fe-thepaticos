@@ -67,7 +67,7 @@ export default function ModalLogin({ onClose }) {
 
 	return (
 		<div
-			className='absolute z-10 flex items-center justify-center h-screen w-screen inset-0 bg-gray-500 bg-opacity-80 transition-opacity'
+			className='absolute z-10 flex items-center justify-center h-full w-full inset-0 bg-gray-500 bg-opacity-80 transition-opacity'
 			aria-labelledby='modal-title'
 			role='dialog'
 			aria-modal='true'

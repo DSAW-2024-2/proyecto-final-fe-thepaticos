@@ -37,7 +37,7 @@ export default function NavBar() {
 	}, [user]);
 
 	return (
-		<div className='bg-[#028747] text-white p-4 flex justify-around items-center shadow-lime-950 shadow-md w-full rounded-b-xl'>
+		<div className='bg-[#028747] text-white p-4 flex justify-between items-center shadow-lime-950 shadow-md w-full rounded-b-xl'>
 			<AsideMenu isMenuOpen={isMenuOpen} toggleMenu={toggleMenu} />
 			{(user &&
 				(pathname === '/dashboard' ||

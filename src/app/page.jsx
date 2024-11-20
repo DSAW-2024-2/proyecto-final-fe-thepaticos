@@ -55,7 +55,7 @@ export default function Home() {
 				>
 					Iniciar Sesión
 				</button>
-				<p className='min-w-60 text-xs sm:text-lg'>
+				<p className='min-w-60 text-xs sm:text-lg text-center'>
 					¿No tienes cuenta?{' '}
 					<Link href='/register' className='text-blue-400'>
 						Crea una
@@ -90,14 +90,14 @@ export default function Home() {
 					Lo que dicen nuestros usuarios...
 				</h2>
 				<div className='flex gap-4 justify-center'>
-					<div className='testimonial bg-gray-100 p-4 rounded-md shadow-md w-full max-w-xs'>
+					<div className='testimonial bg-gray-100 p-4 rounded-md shadow-md w-full sm:max-w-xs max-w-[170px]'>
 						<p>
 							"¡Me encanta esta plataforma! Es muy fácil encontrar compañeros
 							para compartir viajes."
 						</p>
 						<p className='text-[#028747]'>- Juan Pérez, Estudiante</p>
 					</div>
-					<div className='testimonial bg-gray-100 p-4 rounded-md shadow-md w-full max-w-xs'>
+					<div className='testimonial bg-gray-100 p-4 rounded-md shadow-md w-full sm:max-w-xs max-w-[170px]'>
 						<p>
 							"La experiencia de viaje es increíble y segura. ¡Recomiendo 100%!"
 						</p>
