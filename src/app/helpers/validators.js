@@ -44,9 +44,9 @@ export const userRegSchema = z.object({
 		.optional()
 		.refine(
 			(fileList) =>
-				!fileList || fileList.length === 0 || fileList[0].size <= 2097152,
+				!fileList || fileList.length === 0 || fileList[0].size <= 4194304,
 			{
-				message: 'La foto no debe pesar más de 1MB',
+				message: 'La foto no debe pesar más de 4MB',
 			}
 		)
 		.refine(
@@ -84,9 +84,9 @@ export const userModifySchema = z.object({
 		.optional()
 		.refine(
 			(fileList) =>
-				!fileList || fileList.length === 0 || fileList[0].size <= 2097152,
+				!fileList || fileList.length === 0 || fileList[0].size <= 4194304,
 			{
-				message: 'La foto no debe pesar más de 2MB',
+				message: 'La foto no debe pesar más de 4MB',
 			}
 		)
 		.refine(
@@ -119,9 +119,9 @@ export const vehicleSchema = z.object({
 		.any()
 		.refine(
 			(fileList) =>
-				!fileList || fileList.length === 0 || fileList[0].size <= 1048576,
+				!fileList || fileList.length === 0 || fileList[0].size <= 4194304,
 			{
-				message: 'La foto no debe pesar más de 1MB',
+				message: 'La foto no debe pesar más de 4MB',
 			}
 		)
 		.refine(
@@ -137,9 +137,9 @@ export const vehicleSchema = z.object({
 		.any()
 		.refine(
 			(fileList) =>
-				!fileList || fileList.length === 0 || fileList[0].size <= 1048576,
+				!fileList || fileList.length === 0 || fileList[0].size <= 4194304,
 			{
-				message: 'La foto no debe pesar más de 1MB',
+				message: 'La foto no debe pesar más de 4MB',
 			}
 		)
 		.refine(

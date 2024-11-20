@@ -37,58 +37,74 @@ export default function Home() {
 	};
 
 	return (
-		<div className='flex flex-col w-full h-[74vh] p-4'>
+		<div className='w-full flex flex-col gap-0'>
 			{showModal && <ModalLogin onClose={handleClose} />}
-			<div className='relative shadow-gray-500 shadow-md'>
-				<Image
-					src={carousel[currentIndex]}
-					alt='Modern university building'
-					className='w-full h-[40vh] object-cover'
-					priority
-				/>
-				<button className='absolute left-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 hover:bg-opacity-70 text-white rounded-full p-1'>
-					<ChevronLeft
-						size={24}
-						onClick={() => {
-							changeImage(currentIndex - 1);
-						}}
-					/>
-				</button>
-				<button className='absolute right-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 hover:bg-opacity-70 text-white rounded-full p-1'>
-					<ChevronRight
-						size={24}
-						onClick={() => {
-							changeImage(currentIndex + 1);
-						}}
-					/>
-				</button>
-			</div>
 
-			<div className='p-4 flex gap-2 justify-center items-center flex-1'>
-				<p className='flex text-sm sm:text-xl w-full pl-4'>
-					Conecta con tus compañeros y vive viajes inolvidables. Tu comunidad
-					universitaria viaja contigo...
+			<section className='flex flex-col items-center justify-center bg-gradient-to-r from-[#028747] to-[#025C31] text-white p-10 rounded-t-xl mt-5'>
+				<h1 className='text-4xl sm:text-4xl mb-4 text-center'>
+					Conecta con tus compañeros y vive viajes inolvidables
+				</h1>
+				<p className='text-lg sm:text-xl mb-8'>
+					Tu comunidad universitaria viaja contigo...
 				</p>
-				<div className='flex flex-col p-1 w-1/2 justify-end items-center'>
-					<button
-						className='bg-[#028747] p-3 w-full max-w-[360px] text-white rounded-md font-semibold mb-3 text-base sm:text-3xl hover:bg-[#025C31]'
-						onClick={() => {
-							setShowModal(true);
-						}}
-					>
-						Iniciar Sesión
-					</button>
-					<p className='min-w-60 text-xs sm:text-lg flex justify-center gap-2'>
-						No tienes cuenta?
-						<Link
-							href='/register'
-							className='text-blue-400 hover:text-blue-900 font-semibold'
-						>
-							Crea una
-						</Link>
-					</p>
+				<button
+					className='cta-button bg-[#028747] capitaliza p-3 w-full max-w-[360px] text-white font-bold text-xl rounded-md hover:bg-[#025C31] mb-4'
+					onClick={() => {
+						setShowModal(true);
+					}}
+				>
+					Iniciar Sesión
+				</button>
+				<p className='min-w-60 text-xs sm:text-lg'>
+					¿No tienes cuenta?{' '}
+					<Link href='/register' className='text-blue-400'>
+						Crea una
+					</Link>
+				</p>
+			</section>
+
+			<div className='relative'>
+				<div className='carousel-container'>
+					<Image
+						src={carousel[currentIndex]}
+						alt='carousel image'
+						className='carousel-transition h-[400px] object-cover rounded-b-xl'
+						priority
+					/>
 				</div>
+				<button
+					className='absolute left-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 hover:bg-opacity-70 text-white rounded-full p-1'
+					onClick={() => changeImage(currentIndex - 1)}
+				>
+					<ChevronLeft size={24} />
+				</button>
+				<button
+					className='absolute right-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 hover:bg-opacity-70 text-white rounded-full p-1'
+					onClick={() => changeImage(currentIndex + 1)}
+				>
+					<ChevronRight size={24} />
+				</button>
 			</div>
+			<section className='my-16 text-center'>
+				<h2 className='text-3xl mb-4 text-center text-[#028747] font-semibold'>
+					Lo que dicen nuestros usuarios...
+				</h2>
+				<div className='flex gap-4 justify-center'>
+					<div className='testimonial bg-gray-100 p-4 rounded-md shadow-md w-full max-w-xs'>
+						<p>
+							"¡Me encanta esta plataforma! Es muy fácil encontrar compañeros
+							para compartir viajes."
+						</p>
+						<p className='text-[#028747]'>- Juan Pérez, Estudiante</p>
+					</div>
+					<div className='testimonial bg-gray-100 p-4 rounded-md shadow-md w-full max-w-xs'>
+						<p>
+							"La experiencia de viaje es increíble y segura. ¡Recomiendo 100%!"
+						</p>
+						<p className='text-[#028747]'>- María López, Estudiante</p>
+					</div>
+				</div>
+			</section>
 		</div>
 	);
 }

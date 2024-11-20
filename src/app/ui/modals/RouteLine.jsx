@@ -38,12 +38,13 @@ export default function RouteLine({ items = [] }) {
 			document.removeEventListener('mousedown', handleOutsideClick);
 		};
 	}, [showModal, handleOutsideClick]);
+	console.log(items);
 
 	return (
 		<>
 			<button
 				onClick={() => setShowModal(true)}
-				className='px-4 py-2 bg-[#028747] text-white rounded-md hover:bg-[#025C31] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2'
+				className='text-xs py-1 px-2 sm:text-base sm:px-4 sm:py-2 bg-[#028747] text-white rounded-full hover:bg-[#025C31] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2'
 			>
 				Ver ruta
 			</button>

@@ -33,7 +33,7 @@ export default function Page() {
 		let stops = [];
 		if (document.getElementById('paradas')?.children !== undefined) {
 			stops = Array.from(document.getElementById('paradas')?.children)?.map(
-				(child) => child.innerText.split(':')[1]?.trim().split(',')[0]
+				(child) => child.innerText.split(':')[1]?.trim().replace(',', '')
 			);
 			try {
 				const recomFee = await recommendedFee(
@@ -77,6 +77,7 @@ export default function Page() {
 				route: stops,
 			};
 			const validation = rideSchema.safeParse(tripData);
+			console.log(validation.data);
 			if (validation.success) {
 				await createRide(validation.data);
 				Swal.fire({
