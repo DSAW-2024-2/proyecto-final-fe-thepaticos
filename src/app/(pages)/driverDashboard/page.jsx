@@ -59,11 +59,11 @@ export default function DashboardPage() {
 			<FilterButton />
 			<section className='w-full h-screen p-5 flex justify-center'>
 				<div
-					className={`bg-[#D9D9D9] shadow-gray-600 shadow-md bg-opacity-50 max-w-[98%] w-fit h-fit gap-3 overflow-auto p-3 border-solid border-[1px] border-[#696C70] border-opacity-50 rounded-lg 
+					className={`w-fit h-fit p-5 bg-[#D9D9D9] bg-opacity-50 rounded-lg shadow-gray-600 shadow-md overflow-auto
 					${
 						rides.length === 1
-							? 'grid grid-cols-1 w-fit justify-center'
-							: 'grid grid-cols-1 lg:grid-cols-2 justify-center items-center'
+							? 'flex w-fit justify-center'
+							: 'grid sm:grid-cols-2 md:grid-cols-2 gap-6'
 					}`}
 				>
 					{rides.length === 0 ? (
