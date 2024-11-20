@@ -54,3 +54,7 @@ export async function deleteBooking(userId, rideId, point) {
 	});
 	return res;
 }
+export async function getNotifications() {
+	const res = await api.get('/user/notifications');
+	return res.data.notifications;
+}
