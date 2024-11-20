@@ -53,7 +53,7 @@ export default function NavBar() {
 				pathname === '/carRegister' ||
 				pathname === '/carProfile' ||
 				pathname === '/routeRegister') && (
-				<div className='flex w-full justify-center items-center gap-3 font-semibold text-xl sm:text-5xl'>
+				<div className='flex w-full justify-center items-center gap-3 font-semibold text-3xl sm:text-5xl'>
 					<Image
 						src={logo}
 						alt='Logo Wheel US'

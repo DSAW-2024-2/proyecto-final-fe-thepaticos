@@ -41,10 +41,10 @@ export default function Home() {
 			{showModal && <ModalLogin onClose={handleClose} />}
 
 			<section className='flex flex-col items-center justify-center bg-gradient-to-r from-[#028747] to-[#025C31] text-white p-10 rounded-t-xl mt-5'>
-				<h1 className='text-4xl sm:text-4xl mb-4 text-center'>
+				<h1 className='text-2xl sm:text-4xl mb-4 text-center'>
 					Conecta con tus compañeros y vive viajes inolvidables
 				</h1>
-				<p className='text-lg sm:text-xl mb-8'>
+				<p className='text-md sm:text-xl mb-8'>
 					Tu comunidad universitaria viaja contigo...
 				</p>
 				<button
@@ -55,7 +55,7 @@ export default function Home() {
 				>
 					Iniciar Sesión
 				</button>
-				<p className='min-w-60 text-xs sm:text-lg text-center'>
+				<p className='min-w-60 text-base sm:text-lg text-center'>
 					¿No tienes cuenta?{' '}
 					<Link href='/register' className='text-blue-400'>
 						Crea una
