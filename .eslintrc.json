@@ -1,0 +1,29 @@
+{
+	"extends": [
+		"next",
+		"next/core-web-vitals",
+		"eslint:recommended",
+		"plugin:react/recommended",
+		"prettier"
+	],
+	"plugins": ["react", "prettier"], // Agregamos el plugin de Prettier
+	"parserOptions": {
+		"ecmaVersion": 2020,
+		"sourceType": "module",
+		"ecmaFeatures": {
+			"jsx": true
+		}
+	},
+	"rules": {
+		"no-console": "error",
+		"prettier/prettier": ["error"], // Prettier como regla de ESLint
+		"semi": ["error", "always"],
+		"quotes": ["error", "single"],
+		"no-unused-vars": ["warn"],
+		"react/react-in-jsx-scope": "off",
+		"react/prop-types": "off",
+		"prefer-arrow-callback": ["warn"],
+		"react/no-unescaped-entities": "off",
+		"@next/next/no-page-custom-font": "off"
+	}
+}

@@ -1,50 +1,38 @@
-# React + TypeScript + Vite
+# Jhojan Jímenez & Nicolás Cáceres
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+### Link Depliegue:
 
-Currently, two official plugins are available:
+- [Front end - WheelUs](https://wheel-us-swart.vercel.app)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Link de Repositorio Back End
 
-## Expanding the ESLint configuration
+- [Repo Back end -WheelUS](https://github.com/DSAW-2024-2/proyecto-final-be-thepaticos)
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+### Link de Figma y presentación
 
-- Configure the top-level `parserOptions` property like this:
+- [Figma](https://www.figma.com/design/QZJE7o6KroUE3g5uYbQlw9/Login?node-id=1-3&t=UIxMXuMIo6VLYons-1)
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+- [Trello](https://trello.com/invite/b/66e396dfbd737d855ceb4076/ATTI5218f1f95d5e265d2bde3815106b26858447B0BF/desarrollo-web-thepaticos)
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+- [Pitch](https://www.canva.com/design/DAGW4vFgf10/Pv4a3jUEWItJwBoERvOLyg/view?utm_content=DAGW4vFgf10&utm_campaign=designshare&utm_medium=link&utm_source=editor)
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+# Sobre el proyecto
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+Nuestra plataforma, **WheelUs**, facilita la gestión de viajes y recorridos, conocidos como _wheels_, para estudiantes y personal de la Universidad de la Sabana. Es un sistema de transporte interno que busca mejorar la calidad de vida de la comunidad universitaria a través de la colaboración mutua y la unidad.
+
+Esta aplicación web permite gestionar viajes publicados por personas que ofrecen sus vehículos para transportar pasajeros a diversas zonas de Bogotá y Sabana Centro.
+
+Entre las funcionalidades de la plataforma, los usuarios pueden:
+
+- Registrarse o iniciar sesión
+- Filtrar y buscar rutas
+- Gestionar reservas
+- Administrar el perfil de pasajero
+- Registrar un vehículo
+- Publicar rutas de un vehículo
+- Gestionar el perfil de conductor y vehículo
+- Administrar rutas publicadas
+
+Además, la plataforma está integrada con mapas mediante las APIs de Google Maps, lo que permite a los usuarios visualizar la ruta y los puntos exactos donde el "wheel" realizará su recorrido. **WheelUs** está en constante evolución, con planes de integrar mejoras a largo plazo.
+
+Finalmente, el proyecto está desarrollado con **Next.js** y **JavaScript** para el front-end, y **Express** para el back-end.
