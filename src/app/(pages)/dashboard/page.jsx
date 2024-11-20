@@ -97,8 +97,8 @@ export default function DashboardPage() {
 				) : null}
 			</div>
 			<section className='w-full h-screen p-5 pt-0 flex justify-center'>
-				<div className='w-full h-full p-5 bg-[#D9D9D9] bg-opacity-50 rounded-lg shadow-gray-600 shadow-md overflow-auto'>
-					<div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-6'>
+				<div className='w-full max-h-[480px] sm:max-h-[800px] p-5 bg-[#D9D9D9] bg-opacity-50 rounded-lg shadow-gray-600 shadow-md overflow-auto'>
+					<div className='flex flex-col md:grid md:grid-cols-1 lg:grid-cols-2 gap-2 md:gap-4'>
 						{rides &&
 							rides.map((ride, index) => (
 								<AvailableTripCard key={index} ride={ride} />

@@ -26,7 +26,7 @@ export default function RootLayout({ children }) {
 			<body
 				className={`${geistSans.variable} ${geistMono.variable} antialiased`}
 			>
-				<div className='h-fit max-w-[1440px] flex flex-col justify-center'>
+				<div className='h-fit flex flex-col justify-center'>
 					<Main>
 						<Suspense fallback={<div>Cargando...</div>}>{children}</Suspense>
 					</Main>
