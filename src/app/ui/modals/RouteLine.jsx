@@ -44,7 +44,7 @@ export default function RouteLine({ items = [] }) {
 		<>
 			<button
 				onClick={() => setShowModal(true)}
-				className='px-4 py-2 bg-[#028747] text-white rounded-md hover:bg-[#025C31] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2'
+				className='text-xs py-1 px-2 sm:text-base sm:px-4 sm:py-1 bg-[#028747] text-white rounded-full hover:bg-[#025C31] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2'
 			>
 				Ver ruta
 			</button>
@@ -70,7 +70,7 @@ export default function RouteLine({ items = [] }) {
 									</div>
 								)}
 								{!isGoogleMapsLoaded && <RingLoader />}
-								<div className='w-1/2 h-[60vh] rounded-lg overflow-hidden'>
+								<div className='w-[400px] h-[60vh] rounded-lg overflow-hidden'>
 									<RouteLineItem items={items} />
 								</div>
 							</div>

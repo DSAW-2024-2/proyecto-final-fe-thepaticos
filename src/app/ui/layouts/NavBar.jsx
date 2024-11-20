@@ -37,7 +37,7 @@ export default function NavBar() {
 	}, [user]);
 
 	return (
-		<div className='bg-[#028747] text-white p-4 flex justify-between items-center shadow-lime-950 shadow-md'>
+		<div className='bg-[#028747] text-white p-4 flex justify-between items-center shadow-lime-950 shadow-md w-full rounded-b-xl'>
 			<AsideMenu isMenuOpen={isMenuOpen} toggleMenu={toggleMenu} />
 			{(user &&
 				(pathname === '/dashboard' ||
@@ -53,7 +53,7 @@ export default function NavBar() {
 				pathname === '/carRegister' ||
 				pathname === '/carProfile' ||
 				pathname === '/routeRegister') && (
-				<div className='flex w-full justify-center items-center gap-3 font-semibold text-xl sm:text-5xl'>
+				<div className='flex w-full justify-center items-center gap-3 font-semibold text-3xl sm:text-5xl'>
 					<Image
 						src={logo}
 						alt='Logo Wheel US'
@@ -64,7 +64,7 @@ export default function NavBar() {
 			)}
 
 			{loading ? (
-				<BeatLoader />
+				<BeatLoader color='#ffffff' />
 			) : (
 				user &&
 				(pathname === '/dashboard' ||

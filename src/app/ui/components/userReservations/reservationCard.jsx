@@ -114,11 +114,11 @@ export default function ReservationCard({ item, reloadReservations }) {
 
 	return (
 		<div className='flex flex-col'>
-			<div className='bg-[#D9D9D9] h-full px-4 py-3 rounded-lg gap-[5px] sm:gap-3 flex flex-col w-[280px] items-center justify-between border-2 border-[#696C70] border-opacity-50'>
+			<div className='bg-[#D9D9D9] h-full px-4 py-2 rounded-lg gap-[5px] sm:gap-2 flex flex-col w-[280px] items-center justify-between border-2 border-[#696C70] border-opacity-50'>
 				<Image
 					width={400}
 					height={400}
-					className='h-[150px] w-[150px] object-fill sm:w-[180px] sm:h-[180px] rounded-[5px] border-[2px] border-[#696C70]'
+					className='h-[100px] w-[100px] object-fill sm:w-[120px] sm:h-[120px] rounded-[5px] border-[2px] border-[#696C70]'
 					src={
 						vehicle?.photo ||
 						'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTwfoGbdjDFT0TjduR_2NklrEg6URCrDFb-cQ&s'
@@ -126,7 +126,7 @@ export default function ReservationCard({ item, reloadReservations }) {
 					alt='Imagen carro'
 					priority
 				/>
-				<section className='flex flex-col gap-[2px] sm:gap-2 w-full py-4'>
+				<section className='flex flex-col gap-[2px] sm:gap-2 w-full py-2'>
 					<div className='flex gap-[5px] sm:gap-3 items-center w-full'>
 						<svg
 							xmlns='http://www.w3.org/2000/svg'
@@ -158,26 +158,6 @@ export default function ReservationCard({ item, reloadReservations }) {
 						</svg>
 						<div className='text-base sm:text-lg font-semibold'>
 							{formattedTime}
-						</div>
-					</div>
-
-					<div className='flex gap-[5px] sm:gap-3 items-center w-full'>
-						<svg
-							xmlns='http://www.w3.org/2000/svg'
-							className='h-[20px] w-[20px] sm:w-[30px] sm:h-[30px]'
-							viewBox='0 0 24 24'
-						>
-							<path
-								fill='black'
-								d='M8.5 6q-.825 0-1.412-.587T6.5 4t.588-1.412T8.5 2t1.413.588T10.5 4t-.587 1.413T8.5 6M13 20H7.55q-.825 0-1.512-.587T5.175 18l-1.95-9.8q-.1-.475.2-.837t.8-.363q.35 0 .625.225t.35.575L7.25 18H13q.425 0 .713.288T14 19t-.288.713T13 20m6 1.125L16.6 17H9.65q-.725 0-1.263-.437T7.7 15.4l-1.1-5.35q-.275-1.2.563-2.125T9.2 7q.875 0 1.588.525T11.7 8.95L12.8 14h3.25q.525 0 .975.275t.725.725l3 5.125q.2.35.088.763t-.463.612t-.763.088t-.612-.463'
-							/>
-						</svg>
-						<div className='text-base sm:text-lg font-semibold'>
-							{ride.available_seats > 1
-								? `${ride.available_seats} disponibles`
-								: ride.available_seats === 1
-									? `${ride.available_seats} disponible`
-									: 'Cupo lleno'}
 						</div>
 					</div>
 
