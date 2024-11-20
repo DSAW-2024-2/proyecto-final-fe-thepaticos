@@ -64,7 +64,7 @@ export default function NavBar() {
 			)}
 
 			{loading ? (
-				<BeatLoader />
+				<BeatLoader color='#ffffff' />
 			) : (
 				user &&
 				(pathname === '/dashboard' ||
