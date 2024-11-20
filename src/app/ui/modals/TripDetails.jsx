@@ -47,11 +47,11 @@ export default function TripDetailsModal({
 				const resDriver = await getUserById(resVehicle.id_driver);
 				setDriver(resDriver);
 			} catch (error) {
-				Swal.fire({
-					title: 'Error!',
-					text: 'Error del servidor al cargar la información del viaje (TripDetails)',
-					icon: 'error',
-				});
+				// Swal.fire({
+				// 	title: 'Error!',
+				// 	text: 'Error del servidor al cargar la información del viaje (TripDetails)',
+				// 	icon: 'error',
+				// });
 			} finally {
 				setLoading(false);
 			}
