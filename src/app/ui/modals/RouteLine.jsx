@@ -5,6 +5,7 @@ import { X } from 'lucide-react';
 import { MapWithAddresses } from '../components/Maps/RouteMap';
 import useGoogleMaps from '../../hooks/useMap';
 import { RingLoader } from 'react-spinners';
+import RouteLineItem from '../components/Maps/RouteLineItem';
 
 export default function RouteLine({ items = [] }) {
 	const [showModal, setShowModal] = useState(false);
@@ -62,12 +63,17 @@ export default function RouteLine({ items = [] }) {
 						</button>
 						<div className='p-4'>
 							<h2 className='text-2xl font-bold mb-4'>Mapa de la Ruta</h2>
-							{isGoogleMapsLoaded && (
-								<div className='w-full h-[60vh] rounded-lg overflow-hidden'>
-									<MapWithAddresses addresses={items} />
+							<div className='flex'>
+								{isGoogleMapsLoaded && (
+									<div className='w-full h-[60vh] rounded-lg overflow-hidden'>
+										<MapWithAddresses addresses={items} />
+									</div>
+								)}
+								{!isGoogleMapsLoaded && <RingLoader />}
+								<div className='w-1/2 h-[60vh] rounded-lg overflow-hidden'>
+									<RouteLineItem items={items} />
 								</div>
-							)}
-							{!isGoogleMapsLoaded && <RingLoader />}
+							</div>
 						</div>
 					</div>
 				</div>

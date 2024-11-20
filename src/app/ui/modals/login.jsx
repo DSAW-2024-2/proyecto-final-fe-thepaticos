@@ -1,14 +1,15 @@
 import { useLoading } from '@/app/contexts/loadingContext';
 import { useAuth } from '@/app/contexts/sessionContext';
 import { isAxiosError } from 'axios';
-import { ChevronLeft } from 'lucide-react';
+import { ChevronLeft, Eye, EyeOff } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import Swal from 'sweetalert2';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 export default function ModalLogin({ onClose }) {
 	const { signin } = useAuth();
 	const { setLoading } = useLoading();
+	const [typeInput, setInputType] = useState('password');
 	const router = useRouter();
 	const formRef = useRef(null); // Create a ref for the form
 
@@ -107,13 +108,26 @@ export default function ModalLogin({ onClose }) {
 							>
 								Password
 							</label>
-							<input
-								type='password'
-								name='password'
-								id='password'
-								placeholder='ej: P@assWord_123'
-								className='w-full px-3 py-2 border rounded-lg'
-							/>
+							<div className='flex border rounded-lg'>
+								<input
+									type={typeInput}
+									name='password'
+									id='password'
+									placeholder='ej: P@assWord_123'
+									className='w-full px-3 py-2'
+								/>
+								<button
+									type='button'
+									onClick={() =>
+										setInputType((prev) =>
+											prev === 'password' ? 'text' : 'password'
+										)
+									}
+									className='text-gray-400 hover:text-gray-800 border-l px-3'
+								>
+									{typeInput === 'password' ? <Eye /> : <EyeOff />}
+								</button>
+							</div>
 						</div>
 						<button
 							type='submit'
