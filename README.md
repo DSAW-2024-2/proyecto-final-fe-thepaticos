@@ -1,4 +1,4 @@
-# Jhojan Jímenes & Nicolás Cáceres
+# Jhojan Jímenez & Nicolás Cáceres
 
 ### Link Depliegue:
 * [Front end - WheelUs](https://wheel-us-swart.vercel.app)
