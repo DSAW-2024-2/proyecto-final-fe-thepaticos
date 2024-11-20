@@ -1,38 +1,35 @@
-### Link Depliegue: https://deploy-fe-swart.vercel.app
+# Jhojan Jímenes & Nicolás Cáceres
 
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+### Link Depliegue:
+* [Front end - WheelUs](https://wheel-us-swart.vercel.app)
 
-## Getting Started
+### Link de Repositorio Back End
+* [Repo Back end -WheelUS](https://github.com/DSAW-2024-2/proyecto-final-be-thepaticos)
 
-First, run the development server:
+### Link de Figma y presentación
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+* [Figma](https://www.figma.com/design/QZJE7o6KroUE3g5uYbQlw9/Login?node-id=1-3&t=UIxMXuMIo6VLYons-1)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+* [Trello](https://trello.com/invite/b/66e396dfbd737d855ceb4076/ATTI5218f1f95d5e265d2bde3815106b26858447B0BF/desarrollo-web-thepaticos)
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+* [Pitch](https://www.canva.com/design/DAGW4vFgf10/Pv4a3jUEWItJwBoERvOLyg/view?utm_content=DAGW4vFgf10&utm_campaign=designshare&utm_medium=link&utm_source=editor )
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+# Sobre el proyecto
 
-## Learn More
+Nuestra plataforma, **WheelUs**, facilita la gestión de viajes y recorridos, conocidos como *wheels*, para estudiantes y personal de la Universidad de la Sabana. Es un sistema de transporte interno que busca mejorar la calidad de vida de la comunidad universitaria a través de la colaboración mutua y la unidad.
 
-To learn more about Next.js, take a look at the following resources:
+Esta aplicación web permite gestionar viajes publicados por personas que ofrecen sus vehículos para transportar pasajeros a diversas zonas de Bogotá y Sabana Centro.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Entre las funcionalidades de la plataforma, los usuarios pueden:
+* Registrarse o iniciar sesión
+* Filtrar y buscar rutas
+* Gestionar reservas
+* Administrar el perfil de pasajero
+* Registrar un vehículo
+* Publicar rutas de un vehículo
+* Gestionar el perfil de conductor y vehículo
+* Administrar rutas publicadas
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+Además, la plataforma está integrada con mapas mediante las APIs de Google Maps, lo que permite a los usuarios visualizar la ruta y los puntos exactos donde el "wheel" realizará su recorrido. **WheelUs** está en constante evolución, con planes de integrar mejoras a largo plazo.
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Finalmente, el proyecto está desarrollado con **Next.js**, **React** y **JavaScript**.
